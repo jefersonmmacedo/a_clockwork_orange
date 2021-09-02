@@ -2,11 +2,16 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Jeferson Macedo <jefersonmacedowgf@gmail.com> (https://github.com/jefersonmmacedo)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
 }
