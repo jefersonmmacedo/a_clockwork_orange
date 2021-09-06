@@ -41,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(p0: Animation?) {
                 Handler(Looper.getMainLooper()).postDelayed({
-                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
                     finish()
                 }, 1000)
             }

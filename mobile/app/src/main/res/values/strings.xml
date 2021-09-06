@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">A Clockwork Orange</string>
     <string name="splash_screen_title">A Clockwork Orange</string>
+    <string name="btn_access">ACESSAR</string>
+    <string name="hint_e_mail">E-mail</string>
+    <string name="tv_e_mail">E-mail</string>
 </resources>
