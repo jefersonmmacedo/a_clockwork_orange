@@ -1,12 +1,17 @@
 // Assim que importamos o css
- import './Global.css';
+import './Global.css';
+import Home from './Pages/Home/Home';
+
+
 
 // Criamos uma função, dentro dela que colocamos tudo que vamos renderizar em tela.
 // Chamamos de componente funcional
 function App() {
   return (
     <div className="App">
-     <h1>A Clockwork Orange</h1>
+      
+        <Home />
+        
     </div>
   );
 }

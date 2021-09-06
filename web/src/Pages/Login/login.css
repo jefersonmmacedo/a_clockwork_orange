@@ -1,17 +1,26 @@
-.Home{    
-    justify-content: center;    
-    margin: auto;
+
+.Login{
+    
+    justify-content: center;
+    
+margin: auto;
     flex: 1;
     width: 554px;
 }
 
-.Home .Logo{ 
-    height: 108px;    
-    margin-top: 147px;    
-    background: #C4C4C4;    
+.Login .Logo{   
+    
+    
+    height: 108px;
+    
+    margin-top: 147px;
+    
+    background: #C4C4C4;
+    
+    
 }
 
-.Home .Email{
+.Login .Password{
     font-family: Roboto; 
     margin-top: 82px;
     font-size: 18px;
@@ -19,27 +28,32 @@
     justify-content: left;
 }
 
-.Home .InputEmail{
+.Login .InputPassword{
     font-family: Roboto; 
-    font-size: 24px;
-    width: 545px;
+    width: 554px;
     height: 77px;
     margin-top: 14px;
 }
 
-.Home .Button{
+.Login .Button{
     font-family: Roboto; 
     width: 554px;
     height: 82px;
     font-size: 24px;
-    margin-top: 39px;    
+    margin-top: 39px;
+    
     background: #000000;
     color: #FFFFFF;
 }
 
-.Home .Logo2{
-    height: 69px;    
+.Login .Logo2{   
+    
+    
+    height: 69px;
+    
     margin-top: 225px;
-    margin-bottom: 160px;    
+    
     background: #C4C4C4;
+    
+    
 }
