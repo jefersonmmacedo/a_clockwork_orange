@@ -4,8 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/btn_shape.xml" value="0.1" />
-        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/activity_login.xml" value="0.5" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_close.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_corner_up_left.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_date.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_log_out.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_password.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_user.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/activity_splash.xml" value="0.15989583333333332" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/custom_progress_dialog.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_custom_email_not_registered.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_custom_unregistered_email.xml" value="0.22" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/fragment_login_passwrod.xml" value="0.13425925925925927" />
       </map>
     </option>
   </component>

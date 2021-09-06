@@ -11,14 +11,29 @@
         android:id="@+id/tv_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/metropolis_extrabold"
         android:text="@string/splash_screen_title"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="50sp"
-        android:fontFamily="@font/metropolis_extrabold"
-        android:textAlignment="center"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_squad_34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/metropolis_extrabold"
+        android:text="@string/tv_squad_34"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginBottom="@dimen/_30sdp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
