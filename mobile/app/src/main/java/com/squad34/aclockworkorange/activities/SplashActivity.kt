@@ -41,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
         val splashAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_splash)
-        splashBinding.tvAppName.animation = splashAnimation
+        splashBinding.ivAppLogo.animation = splashAnimation
 
         splashAnimation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {

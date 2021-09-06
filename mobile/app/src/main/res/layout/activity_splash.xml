@@ -4,33 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_dark"
+    android:background="@color/white"
     tools:context=".activities.SplashActivity">
 
-    <TextView
-        android:id="@+id/tv_app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/metropolis_extrabold"
-        android:text="@string/splash_screen_title"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="50sp"
+    <ImageView
+        android:id="@+id/iv_app_logo"
+        android:layout_width="@dimen/_233sdp"
+        android:layout_height="@dimen/_75sdp"
 
+        android:src="@drawable/app_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/iv_fcamara_logo"
+        android:layout_width="139dp"
+        android:layout_height="26dp"
+        android:src="@drawable/fcamara_logo"
+        android:layout_marginBottom="@dimen/_8sdp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_squad_34"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_squad_34"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_100sdp"
         android:fontFamily="@font/metropolis_extrabold"
         android:text="@string/tv_squad_34"
+
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/primary"
         android:textSize="20sp"
-        android:layout_marginBottom="@dimen/_30sdp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
