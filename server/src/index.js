@@ -9,7 +9,7 @@ const server = express();
 const routes = require('./routes/routes');
 
 
-mongoose.connect('mongodb://localhost:27017/cadUser', {
+mongoose.connect('mongodb+srv://squad34:squad34-fcamara@squad34fcamara.crfpa.mongodb.net/cadUsers?retryWrites=true&w=majority', {
    useNewUrlParser: true, 
    useUnifiedTopology: true
 }, (err) => {

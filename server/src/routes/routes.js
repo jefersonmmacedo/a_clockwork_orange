@@ -6,11 +6,11 @@ const userControllers = require('../controllers/userControllers');
 const routes = express.Router()
 
 //CREATE USERS
-routes.get('/api/users', userControllers.index)
-routes.get('/api/users/:_id', userControllers.indexOne)
-routes.delete('/api/users/:_id', userControllers.delete)
-routes.put('/api/users', userControllers.update)
-routes.post('/api/users',userControllers.create)
+routes.get('/api/user', userControllers.index)
+routes.get('/api/user/:_id', userControllers.indexOne)
+routes.delete('/api/user/:_id', userControllers.delete)
+routes.put('/api/user', userControllers.update)
+routes.post('/api/user',userControllers.create)
 
 //CREATE PERCENTAGE
 routes.get('/api/percentage', percentageControllers.index)
