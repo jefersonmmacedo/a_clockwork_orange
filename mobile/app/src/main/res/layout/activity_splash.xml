@@ -17,13 +17,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_scheduling_system"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/metropolis_bold"
+        android:text="@string/scheduling_system"
+        android:textAlignment="center"
+        android:textColor="@color/secondary"
+        android:textSize="@dimen/_16sdp"
+android:layout_marginBottom="@dimen/_138sdp"
+        app:layout_constraintBottom_toTopOf="@+id/iv_fcamara_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <ImageView
         android:id="@+id/iv_fcamara_logo"
-        android:layout_width="139dp"
-        android:layout_height="26dp"
+        android:layout_width="@dimen/_139sdp"
+        android:layout_height="@dimen/_26sdp"
+        android:layout_marginBottom="@dimen/_1sdp"
         android:src="@drawable/fcamara_logo"
-        android:layout_marginBottom="@dimen/_8sdp"
         app:layout_constraintBottom_toTopOf="@+id/tv_squad_34"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -32,13 +46,12 @@
         android:id="@+id/tv_squad_34"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_100sdp"
-        android:fontFamily="@font/metropolis_extrabold"
+        android:layout_marginBottom="@dimen/_120sdp"
+        android:fontFamily="@font/metropolis_bold"
         android:text="@string/tv_squad_34"
-
         android:textAlignment="center"
-        android:textColor="@color/primary"
-        android:textSize="20sp"
+        android:textColor="@color/secondary"
+        android:textSize="@dimen/_16sdp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

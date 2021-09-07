@@ -9,48 +9,61 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_main_activity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow">
+
+        <ImageView
+            android:id="@+id/tv_header_title"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_38sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/app_logo" />
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/tv_hello"
-        android:layout_width="wrap_content"
+        android:layout_width="296dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_34sdp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/metropolis_bold"
-        android:text="Olá, Fulano"
-        android:textSize="@dimen/_24sdp"
+        android:lineSpacingExtra=".5px"
+        android:text="Olá, Carlos Eduardo!"
+        android:textColor="@color/secondary"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_main_activity" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="@dimen/_220sdp"
-        android:layout_height="@dimen/_48sdp"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_width="296dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/btn_shape"
         android:fontFamily="@font/metropolis_semibold"
+        android:letterSpacing=".04"
+
         android:text="@string/btn_agendar"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="@dimen/_16sdp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_hello" />
 
     <TextView
-        android:id="@+id/tv_meus_agendamentos"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_my_appointments"
+        android:layout_width="296dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_39sdp"
         android:fontFamily="@font/metropolis_bold"
         android:text="@string/tv_meus_agendamentos"
-        android:textSize="@dimen/_24sdp"
+        android:textColor="@color/secondary"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
@@ -62,69 +75,108 @@
         android:layout_marginTop="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_meus_agendamentos" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_my_appointments" />
 
     <TextView
         android:id="@+id/tv_availability"
-        android:layout_width="wrap_content"
+        android:layout_width="296dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/metropolis_bold"
         android:text="@string/tv_availability"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:textSize="@dimen/_24sdp"
+        android:textColor="@color/secondary"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
 
     <TextView
         android:id="@+id/tv_sao_paulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/metropolis_bold"
         android:text="@string/sao_paulo"
-        android:textSize="@dimen/_16sdp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_santos"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/secondary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_availability"
         app:layout_constraintTop_toBottomOf="@+id/tv_availability" />
+
+    <TextView
+        android:id="@+id/tv_sao_paulo_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/metropolis_bold"
+        android:text="83/240"
+        android:textColor="@color/secondary"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_sao_paulo"
+        app:layout_constraintTop_toTopOf="@+id/tv_sao_paulo" />
+
+    <LinearLayout
+        android:id="@+id/ll_sao_paulo_chart"
+        android:layout_width="303dp"
+        android:layout_height="24dp"
+        android:background="@color/gray"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sao_paulo">
+
+        <View
+            android:id="@+id/sao_paulo_chart_param"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_gravity="start"
+            android:background="@color/success" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_santos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/metropolis_bold"
         android:text="@string/santos"
-        android:textSize="@dimen/_16sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/tv_sao_paulo"
-        app:layout_constraintTop_toBottomOf="@+id/tv_availability" />
-
-    <TextView
-        android:id="@+id/tv_sao_paulo_availability"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:fontFamily="@font/metropolis_bold"
-        android:text="30%"
-        android:textSize="@dimen/_24sdp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_sao_paulo"
+        android:textColor="@color/secondary"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/tv_sao_paulo"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sao_paulo" />
+        app:layout_constraintTop_toBottomOf="@+id/ll_sao_paulo_chart" />
 
     <TextView
-        android:id="@+id/tv_santos_availability"
+        android:id="@+id/tv_santos_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
         android:fontFamily="@font/metropolis_bold"
-        android:text="50%"
-        android:textSize="@dimen/_24sdp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_santos"
-        app:layout_constraintStart_toStartOf="@+id/tv_santos"
-        app:layout_constraintTop_toBottomOf="@+id/tv_santos" />
+        android:text="18/40"
+        android:textColor="@color/secondary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_santos"
+        app:layout_constraintStart_toEndOf="@+id/tv_santos"
+        app:layout_constraintTop_toTopOf="@+id/tv_santos" />
+
+    <LinearLayout
+        android:id="@+id/iv_santos_chart"
+        android:layout_width="303dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/gray"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_santos">
+
+        <View
+            android:id="@+id/santos_chart_param"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_gravity="start"
+            android:background="@color/success" />
+
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

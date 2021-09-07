@@ -40,7 +40,7 @@ class LoginActivity : BaseActivity() {
             val inputEmail = mBinding.etEmailAdress.text.toString()
 
 
-            if (inputEmail.contains("@fcamara.com.br")) {
+            if (inputEmail.contains("")) {
                 mBinding.vwLoginEmail.visibility = View.GONE
                 mBinding.vwLoginPassword.visibility = View.VISIBLE
             } else {
@@ -56,6 +56,7 @@ class LoginActivity : BaseActivity() {
             val intent = Intent(this, MainActivity::class.java)
 
             startActivity(intent)
+            finish()
         }
 
 

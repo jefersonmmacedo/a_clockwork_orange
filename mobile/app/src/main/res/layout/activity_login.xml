@@ -15,10 +15,10 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="@dimen/_255sdp"
-            android:layout_height="@dimen/_72sdp"
-            android:layout_marginTop="@dimen/_122sdp"
-            android:background="@color/light_gray"
+            android:layout_width="221dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="180dp"
+            android:src="@drawable/app_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,28 +27,30 @@
             android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/metropolis_regular"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="25dp"
             android:text="@string/tv_e_mail"
-            android:textColor="@color/text"
-            app:layout_constraintStart_toStartOf="@+id/iv_logo"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/til_email_adress"
             app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_email_adress"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="@dimen/_256sdp"
-            android:layout_height="@dimen/_48sdp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="303dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="@color/white"
             android:ems="10"
             android:fontFamily="@font/metropolis_regular"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/text"
-            app:boxCornerRadiusBottomEnd="@dimen/_16sdp"
-            app:boxCornerRadiusBottomStart="@dimen/_16sdp"
-            app:boxCornerRadiusTopEnd="@dimen/_16sdp"
-            app:boxCornerRadiusTopStart="@dimen/_16sdp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
             app:boxStrokeColor="@color/text"
 
             app:hintTextColor="@color/text"
@@ -66,28 +68,44 @@
 
         <Button
             android:id="@+id/btn_access"
-            android:layout_width="@dimen/_256sdp"
-            android:layout_height="@dimen/_48sdp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="303dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/btn_shape"
+            android:elevation="200dp"
             android:fontFamily="@font/metropolis_semibold"
+            android:letterSpacing=".04"
             android:text="@string/btn_access"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_email_adress" />
 
 
         <ImageView
-            android:id="@+id/iv_logo2"
-            android:layout_width="@dimen/_256sdp"
-            android:layout_height="@dimen/_36sdp"
-            android:layout_marginTop="@dimen/_114sdp"
-            android:background="@color/light_gray"
+            android:id="@+id/iv_fcamara_logo"
+            android:layout_width="106dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="114dp"
+            android:src="@drawable/fcamara_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_access" />
+
+        <TextView
+            android:id="@+id/tv_squad_34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/metropolis_bold"
+            android:text="@string/tv_squad_34"
+            android:textAlignment="center"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_fcamara_logo" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -103,10 +121,10 @@
 
         <ImageView
             android:id="@+id/iv_logo3"
-            android:layout_width="@dimen/_255sdp"
-            android:layout_height="@dimen/_72sdp"
-            android:layout_marginTop="@dimen/_122sdp"
-            android:background="@color/light_gray"
+            android:layout_width="221dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="180dp"
+            android:src="@drawable/app_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -115,31 +133,33 @@
             android:id="@+id/tv_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
             android:fontFamily="@font/metropolis_regular"
             android:text="@string/password"
-            android:textColor="@color/text"
-            app:layout_constraintStart_toStartOf="@+id/iv_logo3"
+            android:textColor="@color/secondary"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="25dp"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/til_password"
             app:layout_constraintTop_toBottomOf="@+id/iv_logo3" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="@dimen/_256sdp"
-            android:layout_height="@dimen/_48sdp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="303dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="@color/white"
             android:ems="10"
             android:fontFamily="@font/metropolis_regular"
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             android:textColorHint="@color/text"
-            app:boxCornerRadiusBottomEnd="@dimen/_16sdp"
-            app:boxCornerRadiusBottomStart="@dimen/_16sdp"
-            app:boxCornerRadiusTopEnd="@dimen/_16sdp"
-            app:boxCornerRadiusTopStart="@dimen/_16sdp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
             app:boxStrokeColor="@color/text"
 
-            app:hintTextColor="@color/text"
+            app:hintTextColor="@color/secondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_password">
@@ -149,33 +169,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/metropolis_regular"
-                android:textColor="@color/text" />
+                android:textColor="@color/secondary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="@dimen/_256sdp"
-            android:layout_height="@dimen/_48sdp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="303dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/btn_shape"
+            android:elevation="200dp"
             android:fontFamily="@font/metropolis_semibold"
-            android:text="@string/btn_login"
-            android:textSize="@dimen/_16sdp"
+            android:letterSpacing=".04"
+            android:text="@string/btn_access"
             android:textColor="@color/white"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
 
         <ImageView
-            android:id="@+id/iv_logo4"
-            android:layout_width="@dimen/_256sdp"
-            android:layout_height="@dimen/_36sdp"
-            android:layout_marginTop="@dimen/_114sdp"
-            android:background="@color/light_gray"
+            android:id="@+id/iv_fcamara_logo_2"
+            android:layout_width="106dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="114dp"
+            android:src="@drawable/fcamara_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+        <TextView
+            android:id="@+id/tv_squad_34_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/metropolis_bold"
+            android:text="@string/tv_squad_34"
+            android:textAlignment="center"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_fcamara_logo_2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
