@@ -1,18 +1,17 @@
-import './home.css';
+import './password.css';
 import React from 'react';
 import work from '../../assets/images/work.svg';
-import logoAside from '../../assets/images/logoAside.svg';
+import logoAside2 from '../../assets/images/logoAside2.svg';
 import logoFcamaraSquad34 from '../../assets/images/logoFcamaraSquad34.svg';
 import {useHistory} from 'react-router-dom'
 
 
 
-export default function Home() {
-
+export default function Password() {
   const history = useHistory();
-  
+
   function handleRedirect() {
-   history.push("/login")
+   history.push("/codesecurity")
   }
 
   return (
@@ -24,9 +23,10 @@ export default function Home() {
                 <img src={work} alt="image-computer" />
             </div>
             <div className="itens">
-                <img src={logoAside} alt="Logo" />
-                <h4>SISTEMA DE AGENDAMENTO</h4>
-                <button className="button-primary" onClick={handleRedirect}>Acessar</button>
+                <img src={logoAside2} alt="Logo" />
+                <span>Senha</span>
+                <input type="text" placeholder="Digite sua senha"/>
+                <button className="button-primary" onClick={handleRedirect}>Entrar</button>
             </div>
           </div>
           <div className="footer">

@@ -1,17 +1,17 @@
-import './login.css';
+import './codeSecurity.css';
 import React from 'react';
-import work from '../../assets/images/work.svg';
 import logoAside2 from '../../assets/images/logoAside2.svg';
+import smartphoneAside from '../../assets/images/smartphoneAside.svg';
 import logoFcamaraSquad34 from '../../assets/images/logoFcamaraSquad34.svg';
 import {useHistory} from 'react-router-dom'
 
 
 
-export default function Login() {
+export default function CodeSecurity() {
   const history = useHistory();
 
   function handleRedirect() {
-   history.push("/password")
+   history.push("/register")
   }
 
   return (
@@ -20,13 +20,18 @@ export default function Login() {
         <div className="home">
           <div className="infos">
             <div className="image">
-                <img src={work} alt="image-computer" />
+                <img src={smartphoneAside} alt="image-computer" />
             </div>
             <div className="itens">
                 <img src={logoAside2} alt="Logo" />
-                <span>E-mail</span>
-                <input type="text" placeholder="Digite seu e-mail fcamara"/>
-                <button className="button-primary" onClick={handleRedirect}>Acessar</button>
+                <div className="text">
+                  <p>Esse é o seu primeiro acesso ao sistema,
+                    por favor informe seu código de acesso.
+                  </p>
+                </div>
+                <span>Código de acesso</span>
+                <input type="text" placeholder="Digiteseu código de acesso"/>
+                <button className="button-primary" onClick={handleRedirect}>Validar</button>
             </div>
           </div>
           <div className="footer">

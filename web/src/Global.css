@@ -1,38 +1,107 @@
-.App {
-  text-align: center;
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1, h2, h3, h4, h5, h6, p, span, label {
+  color: var(--Secondary);
+  font-family: "Metropolis", sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+:root{
+--Primary: #FE4400;
+--PrimaryDark: #D03800;
+--PrimaryLight: #FE662E;
+--Secondary: #36357E;
+--SecondaryDark: #2A2962;
+--SecondaryLight: #7474B4;
+--Success: #1D8C1B;
+--Error: #EC0909;
+--Info: #0C69F4;
+--Warning: #EEBC09;
+--Text: #232353;
+--DarkGray: #575772;
+--Gray: #9F9FB4;
+--LightGray: #DFDFE8;
+--White: #FFFFFF;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+@font-face {
+  font-family: "Metropolis";
+  src: url ("./assets/font/Metropolis-Regular.otf") format("otf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url ("./assets/font/Metropolis-Bold.otf") format("otf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url ("./assets/font/Metropolis-ExtraBold.otf") format("otf");
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+.container {
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.content {
+  width: 80%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+button {
+  height: 48px;
+  border-radius: 18px;
+  border: none;
+  font-family: "Metropolis", sans-serif;
+  font-weight: 600;
+  line-height: 40px;
+  font-size: 16px;
 }
 
-.App-link {
-  color: #61dafb;
+.button-primary {
+  background-color: var(--Primary);
+  color: var(--White);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.button-Secondary {
+  background-color: var(--Secondary);
+  color: var(--White);
+}
+
+.button-White {
+  background-color: var(--White);
+  color: var(--White);
+  border: 1px solid var(--Primary);
+  
+}
+
+input, select, textarea {
+  color: var(--Secondary);
+  border: 1px solid var(--Secondary);
+  border-radius: 18px;
+  height: 48px;
+  width: 358px;
+  font-size: 16px;
+  padding: 0 30px;
+}
+
+::placeholder {
+  font-size: 16px;
+  color: var(--SecondaryLight);
 }
