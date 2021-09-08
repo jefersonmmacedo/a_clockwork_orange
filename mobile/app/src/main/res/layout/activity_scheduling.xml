@@ -38,8 +38,8 @@
 
                 <ImageView
                     android:id="@+id/tv_header_title"
-                    android:layout_width="@dimen/_120sdp"
-                    android:layout_height="@dimen/_38sdp"
+                    android:layout_width="120dp"
+                    android:layout_height="38dp"
                     android:layout_gravity="center"
                     android:src="@drawable/app_logo" />
             </androidx.appcompat.widget.Toolbar>
@@ -179,8 +179,7 @@
                 <AutoCompleteTextView
                     android:id="@+id/actv_scheduling_type"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:layout_height="wrap_content"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -280,7 +279,6 @@
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
                 app:boxCornerRadiusTopEnd="16dp"
-
                 app:boxCornerRadiusTopStart="16dp"
                 app:boxStrokeColor="?attr/colorSecondary"
                 app:boxStrokeWidth="2dp"
@@ -293,10 +291,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_date">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_email_adress"
+                    android:id="@+id/et_date"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/metropolis_regular"
+                    android:inputType="none"
                     android:textColor="@color/text"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -352,6 +351,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/til_shift" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_dates_selected"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_marginTop="8dp" />
@@ -359,16 +359,17 @@
 
             </LinearLayout>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_confirm"
                 android:layout_width="303dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/btn_shape"
-                android:elevation="200dp"
                 android:fontFamily="@font/metropolis_semibold"
                 android:letterSpacing=".04"
                 android:text="@string/confirm"
+                android:shadowColor="@color/gray"
+                android:elevation="20dp"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -387,7 +388,7 @@
                 android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:shadowColor="@color/gray"
-                android:elevation="10dp"
+                android:elevation="20dp"
                 android:textColor="@color/primary"
                 android:textSize="16sp"
                 app:iconTint="#FFFFFF"
