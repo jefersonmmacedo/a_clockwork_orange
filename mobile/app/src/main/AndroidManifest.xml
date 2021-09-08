@@ -13,7 +13,9 @@
         android:theme="@style/Theme.AClockworkOrange">
         <activity
             android:name=".activities.SchedulingActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AClockworkOrange.NoActionBar"/>
         <activity
             android:name=".activities.BaseActivity"
             android:exported="true" />

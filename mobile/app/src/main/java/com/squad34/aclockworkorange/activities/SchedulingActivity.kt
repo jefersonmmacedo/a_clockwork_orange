@@ -8,7 +8,7 @@ import android.widget.AutoCompleteTextView
 import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.databinding.ActivitySchedulingBinding
 
-class SchedulingActivity : AppCompatActivity() {
+class SchedulingActivity : BaseActivity() {
 
     private lateinit var mBinding: ActivitySchedulingBinding
 
@@ -20,7 +20,14 @@ class SchedulingActivity : AppCompatActivity() {
         setContentView(mBinding.root)
 
 
+        setupActionBar()
 
+        setupDropDownMenus()
+
+
+    }
+
+    private fun setupDropDownMenus() {
         val textFieldUnits = mBinding.actvUnit as? AutoCompleteTextView
         val units = arrayListOf("São Paulo", "Santos")
         val adapterUnit = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, units)
@@ -31,7 +38,16 @@ class SchedulingActivity : AppCompatActivity() {
         val adapterWork = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, workStation)
         textFieldWorkStation?.setAdapter(adapterWork)
 
+        val textFieldSchedulingType = mBinding.actvSchedulingType as? AutoCompleteTextView
+        val schedulingType = arrayListOf("Recorrente", "Normal")
+        val adapterSchedulingType =
+            ArrayAdapter(this, R.layout.list_items, R.id.tv_item, schedulingType)
+        textFieldSchedulingType?.setAdapter(adapterSchedulingType)
 
+        val textFieldShift = mBinding.actvShift as? AutoCompleteTextView
+        val shift = arrayListOf("Manhã", "Tarde", "Integral")
+        val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
+        textFieldShift?.setAdapter(adapterShift)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -39,18 +55,19 @@ class SchedulingActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    /*private fun setupActionBar() {
-        setSupportActionBar(mBinding.toolbarScheduliongActivity)
+    private fun setupActionBar() {
+        setSupportActionBar(mBinding.toolbarSchedulingActivity)
 
         supportActionBar?.title = ""
 
 
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        mBinding.toolbarMainActivity.setNavigationOnClickListener {
+        mBinding.toolbarSchedulingActivity.setNavigationOnClickListener {
             doubleBackToExit()
         }
 
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
 
-    }*/
+    }
+
 }

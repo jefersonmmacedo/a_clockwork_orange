@@ -6,120 +6,406 @@
     android:layout_height="match_parent"
     tools:context=".activities.SchedulingActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_scheduling_activity"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow">
+        app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
-            android:id="@+id/tv_header_title"
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_38sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/app_logo" />
-    </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/tv_schedule"
-        android:layout_width="296dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/metropolis_bold"
-        android:text="@string/tv_schedule"
-        android:textColor="@color/secondary"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_scheduling_activity"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_scheduling_activity" />
-
-    <TextView
-        android:id="@+id/tv_select_unit"
-        android:layout_width="296dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/metropolis_regular"
-        android:lineSpacingExtra=".5px"
-        android:text="@string/tv_select_unit"
-        android:textColor="@color/secondary"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_schedule" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_unit"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="303dp"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:fontFamily="@font/metropolis_regular"
-        android:hint="@string/select_an_option"
-        android:textColorHint="@color/gray"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp"
-        app:boxStrokeColor="?attr/colorSecondary"
-        app:boxStrokeWidth="2dp"
-        app:hintTextColor="@color/gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_select_unit">
-
-        <AutoCompleteTextView
-            android:id="@+id/actv_unit"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none" />
+            android:layout_marginBottom="37dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_scheduling_activity"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow">
+
+                <ImageView
+                    android:id="@+id/tv_header_title"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_38sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/app_logo" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <TextView
+                android:id="@+id/tv_schedule"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/metropolis_bold"
+                android:text="@string/tv_schedule"
+                android:textColor="@color/secondary"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="@+id/toolbar_scheduling_activity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_scheduling_activity" />
+
+            <TextView
+                android:id="@+id/tv_select_unit"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/metropolis_regular"
+                android:lineSpacingExtra=".5px"
+                android:text="@string/tv_select_unit"
+                android:textColor="@color/secondary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_schedule" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_unit"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="303dp"
+                android:layout_height="60dp"
+                android:ems="10"
+                android:fontFamily="@font/metropolis_regular"
+                android:hint="@string/select_an_option"
+                android:textColorHint="@color/gray"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="?attr/colorSecondary"
+                app:boxStrokeWidth="2dp"
+                app:hintTextColor="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_select_unit">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv_unit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tv_work_station_or_meeting_room"
-        android:layout_width="296dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/metropolis_regular"
-        android:lineSpacingExtra=".5px"
-        android:text="@string/tv_work_station_or_meeting_room"
-        android:textColor="@color/secondary"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til_unit" />
+            <TextView
+                android:id="@+id/tv_work_station_or_meeting_room"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/metropolis_regular"
+                android:lineSpacingExtra=".5px"
+                android:text="@string/tv_work_station_or_meeting_room"
+                android:textColor="@color/secondary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_unit" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_station_or_meeting"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="303dp"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:fontFamily="@font/metropolis_regular"
-        android:hint="@string/select_an_option"
-        android:textColorHint="@color/gray"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp"
-        app:boxStrokeColor="?attr/colorSecondary"
-        app:boxStrokeWidth="2dp"
-        app:hintTextColor="@color/gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_work_station_or_meeting_room">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_station_or_meeting"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="303dp"
+                android:layout_height="60dp"
+                android:ems="10"
+                android:fontFamily="@font/metropolis_regular"
+                android:hint="@string/select_an_option"
+                android:textColorHint="@color/gray"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="?attr/colorSecondary"
+                app:boxStrokeWidth="2dp"
+                app:hintTextColor="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_work_station_or_meeting_room">
 
-    <AutoCompleteTextView
-        android:id="@+id/actv_work_station"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="none" />
+                <AutoCompleteTextView
+                    android:id="@+id/actv_work_station"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_scheduling_type"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/metropolis_regular"
+                android:lineSpacingExtra=".5px"
+                android:text="@string/tv_scheduling_type"
+                android:textColor="@color/secondary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_station_or_meeting" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_scheduling_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="303dp"
+                android:layout_height="60dp"
+                android:ems="10"
+                android:fontFamily="@font/metropolis_regular"
+                android:hint="@string/select_an_option"
+                android:textColorHint="@color/gray"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="?attr/colorSecondary"
+                app:boxStrokeWidth="2dp"
+                app:hintTextColor="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_scheduling_type">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv_scheduling_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_recurrent_explanation"
+                android:layout_width="303dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="4dp"
+                app:cardBackgroundColor="@color/light_gray"
+                app:cardCornerRadius="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_scheduling_type">
+
+                <TextView
+                    android:id="@+id/tv_recurrent_explanation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/metropolis_regular"
+                    android:gravity="center"
+                    android:text="@string/tv_recurrent_explanation"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary"
+                    android:textSize="11sp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_shift"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/metropolis_regular"
+                android:lineSpacingExtra=".5px"
+                android:text="@string/tv_shift"
+                android:textColor="@color/secondary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cv_recurrent_explanation" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_shift"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="303dp"
+                android:layout_height="60dp"
+                android:ems="10"
+                android:fontFamily="@font/metropolis_regular"
+                android:hint="@string/select_an_option"
+                android:textColorHint="@color/gray"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="?attr/colorSecondary"
+                app:boxStrokeWidth="2dp"
+                app:hintTextColor="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_shift">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv_shift"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/metropolis_regular"
+                android:lineSpacingExtra=".5px"
+                android:text="@string/tv_date"
+                android:textColor="@color/secondary"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_shift" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_date"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="303dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:fontFamily="@font/metropolis_regular"
+                android:hint="@string/date"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/gray"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxStrokeColor="?attr/colorSecondary"
+                app:boxStrokeWidth="2dp"
+                app:endIconDrawable="@drawable/ic_date"
+                app:endIconMode="custom"
+                app:endIconTint="@color/secondary"
+                app:hintTextColor="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email_adress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/metropolis_regular"
+                    android:textColor="@color/text"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_add_more_dates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/metropolis_regular"
+                android:gravity="start"
+                android:lineSpacingExtra=".5px"
+                android:text="@string/tv_add_more_dates"
+                android:textColor="@color/secondary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_date"
+                app:layout_constraintTop_toBottomOf="@+id/til_date" />
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_add_more_dates"
+                app:layout_constraintEnd_toEndOf="@+id/tv_date"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/tv_add_more_dates"
+                app:layout_constraintTop_toTopOf="@+id/tv_add_more_dates"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <LinearLayout
+                android:id="@+id/ll_selected_dates"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_add_more_dates">
+
+                <TextView
+                    android:id="@+id/tv_selected_date"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/metropolis_regular"
+                    android:lineSpacingExtra=".5px"
+                    android:text="@string/selected_date"
+                    android:textColor="@color/secondary"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_shift" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="8dp" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="303dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/btn_shape"
+                android:elevation="200dp"
+                android:fontFamily="@font/metropolis_semibold"
+                android:letterSpacing=".04"
+                android:text="@string/confirm"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_selected_dates" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="303dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_shape_secondary"
+                android:fontFamily="@font/metropolis_semibold"
+                android:letterSpacing=".04"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:shadowColor="@color/gray"
+                android:elevation="10dp"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
+                app:iconTint="#FFFFFF"
+                app:layout_constraintCircleRadius="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_confirm"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_cancel"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

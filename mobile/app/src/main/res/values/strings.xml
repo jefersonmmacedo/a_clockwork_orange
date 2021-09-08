@@ -18,7 +18,16 @@
     <string name="main_activity_title">Dashboard</string>
     <string name="scheduling_system">SISTEMA DE AGENDAMENTO</string>
     <string name="tv_schedule">Fazer Agendamentos</string>
-    <string name="tv_select_unit">Você quer fazer um agendamento em qual escritório</string>
+    <string name="tv_select_unit">Você quer fazer um agendamento em qual escritório?</string>
     <string name="select_an_option">Selecione uma opção</string>
     <string name="tv_work_station_or_meeting_room">O que você quer agendar?</string>
+    <string name="tv_scheduling_type">Que tipo de agendamento você quer fazer?</string>
+    <string name="tv_recurrent_explanation">O agendamento recorrente se refere a selecionar o mesmo dia da semana 4 vezes seguidas, começando na data escolhida abaixo</string>
+    <string name="tv_shift">Escolha o turno</string>
+    <string name="date">DD/MM/AAAA</string>
+    <string name="tv_date">Escolha uma data</string>
+    <string name="tv_add_more_dates">Adicionar nova data</string>
+    <string name="selected_date">Data selecionada:</string>
+    <string name="confirm">Confirmar</string>
+    <string name="cancel">Cancelar</string>
 </resources>
