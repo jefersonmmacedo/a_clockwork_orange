@@ -7,6 +7,8 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.databinding.ActivityLoginBinding
 
 
@@ -32,6 +34,7 @@ class LoginActivity : BaseActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
+
 
 
 

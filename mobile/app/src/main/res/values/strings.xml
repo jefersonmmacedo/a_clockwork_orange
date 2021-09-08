@@ -17,4 +17,8 @@
     <string name="santos">Santos - </string>
     <string name="main_activity_title">Dashboard</string>
     <string name="scheduling_system">SISTEMA DE AGENDAMENTO</string>
+    <string name="tv_schedule">Fazer Agendamentos</string>
+    <string name="tv_select_unit">Você quer fazer um agendamento em qual escritório</string>
+    <string name="select_an_option">Selecione uma opção</string>
+    <string name="tv_work_station_or_meeting_room">O que você quer agendar?</string>
 </resources>

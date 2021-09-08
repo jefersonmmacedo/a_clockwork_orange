@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SchedulingActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_scheduling_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow">
+
+        <ImageView
+            android:id="@+id/tv_header_title"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_38sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/app_logo" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/tv_schedule"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/metropolis_bold"
+        android:text="@string/tv_schedule"
+        android:textColor="@color/secondary"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_scheduling_activity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_scheduling_activity" />
+
+    <TextView
+        android:id="@+id/tv_select_unit"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/metropolis_regular"
+        android:lineSpacingExtra=".5px"
+        android:text="@string/tv_select_unit"
+        android:textColor="@color/secondary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_schedule" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_unit"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="303dp"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:fontFamily="@font/metropolis_regular"
+        android:hint="@string/select_an_option"
+        android:textColorHint="@color/gray"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxStrokeColor="?attr/colorSecondary"
+        app:boxStrokeWidth="2dp"
+        app:hintTextColor="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_select_unit">
+
+        <AutoCompleteTextView
+            android:id="@+id/actv_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_work_station_or_meeting_room"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/metropolis_regular"
+        android:lineSpacingExtra=".5px"
+        android:text="@string/tv_work_station_or_meeting_room"
+        android:textColor="@color/secondary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_unit" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_station_or_meeting"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="303dp"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:fontFamily="@font/metropolis_regular"
+        android:hint="@string/select_an_option"
+        android:textColorHint="@color/gray"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxStrokeColor="?attr/colorSecondary"
+        app:boxStrokeWidth="2dp"
+        app:hintTextColor="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_work_station_or_meeting_room">
+
+    <AutoCompleteTextView
+        android:id="@+id/actv_work_station"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

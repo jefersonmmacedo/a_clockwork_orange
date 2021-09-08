@@ -1,5 +1,6 @@
 package com.squad34.aclockworkorange.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -41,6 +42,11 @@ class MainActivity : BaseActivity() {
         saoPauloChartView = mBinding.saoPauloChartParam
         saoPauloChartView.layoutParams.width =
             convertNumberToDisplayInChart(saoPauloOccupation, saoPauloWidht)
+
+        mBinding.btnSchedule.setOnClickListener {
+            val intent = Intent(this, SchedulingActivity::class.java)
+            startActivity(intent)
+        }
 
 
     }

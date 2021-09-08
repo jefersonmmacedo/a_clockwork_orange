@@ -33,13 +33,13 @@
         android:lineSpacingExtra=".5px"
         android:text="Olá, Carlos Eduardo!"
         android:textColor="@color/secondary"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_main_activity" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_schedule"
         android:layout_width="296dp"
         android:layout_height="48dp"
         android:layout_marginTop="28dp"
@@ -56,17 +56,17 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_hello" />
 
     <TextView
-        android:id="@+id/tv_my_appointments"
+        android:id="@+id/tv_my_schedules"
         android:layout_width="296dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_39sdp"
         android:fontFamily="@font/metropolis_bold"
         android:text="@string/tv_meus_agendamentos"
         android:textColor="@color/secondary"
+        android:layout_marginTop="56dp"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_schedule" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -75,7 +75,7 @@
         android:layout_marginTop="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_my_appointments" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_my_schedules" />
 
     <TextView
         android:id="@+id/tv_availability"
@@ -118,9 +118,9 @@
         android:id="@+id/ll_sao_paulo_chart"
         android:layout_width="303dp"
         android:layout_height="24dp"
+        android:layout_marginTop="8dp"
         android:background="@color/gray"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_sao_paulo">
