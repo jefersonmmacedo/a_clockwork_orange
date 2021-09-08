@@ -13,20 +13,22 @@
 }
 
 .home .infos .image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    position: relative;
-    padding: 50px;
+   margin-right: 50px;
 }
+
+.home .infos .image img {
+    align-items: center;
+    margin-right: 50px;
+}
+
 
 .home .infos .itens{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    position: relative;
+    width: 50%;
+    padding: 15px;
 }
 
 .home .infos .itens img {
@@ -35,12 +37,21 @@
 
 .home .infos .itens span {
     text-align: left;
-    margin: 0 0 10px -240px;
+    margin: 0 0 10px -160px;
     font-weight: 400;
     font-size: 16px;
     line-height: 16px;
 }
+.home .infos .itens .text {
+    width: 358px;
+    background-color: var(--LightGray);
+    font-size: 16px;
+    text-align: center;
+    line-height: 24px;
+    padding: 10px;
+    margin-bottom: 20px;
 
+}
 .home .infos .itens input {
     margin-bottom: 20px;
 }
@@ -49,6 +60,6 @@
     width: 358px;
 }
 
-.home .footer img{
-    margin-top: -150px;
+.home .footer {
+    margin-top: 100px;
 }

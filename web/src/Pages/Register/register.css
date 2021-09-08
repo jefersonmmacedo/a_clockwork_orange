@@ -13,20 +13,22 @@
 }
 
 .home .infos .image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    position: relative;
-    padding: 50px;
+   margin-right: 50px;
 }
+
+.home .infos .image img {
+    align-items: center;
+    margin-right: 50px;
+}
+
 
 .home .infos .itens{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    position: relative;
+    width: 50%;
+    padding: 15px;
 }
 
 .home .infos .itens img {
@@ -49,6 +51,6 @@
     width: 358px;
 }
 
-.home .footer img{
-    margin-top: -150px;
+.home .footer {
+    margin-top: 100px;
 }
