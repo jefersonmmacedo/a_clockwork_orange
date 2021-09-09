@@ -1,6 +1,6 @@
 package com.squad34.aclockworkorange.models
 
-data class Date (
+open class Date (
     val location: String,
     val type: String,
     val shift: String,

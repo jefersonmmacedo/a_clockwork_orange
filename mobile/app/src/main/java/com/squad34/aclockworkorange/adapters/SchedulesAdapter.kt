@@ -10,13 +10,16 @@ import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.activities.MainActivity
 import com.squad34.aclockworkorange.activities.SchedulingActivity
 import kotlinx.android.synthetic.main.item_date.view.*
+import android.widget.AdapterView.OnItemClickListener
+import com.squad34.aclockworkorange.models.DateSelected
+
 
 open class SchedulesAdapter(
     private val context: Context,
-    private var list: ArrayList<String>
+    private var list: ArrayList<DateSelected>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var onClickListener: OnClickListener? = null
+    private var onItemClickListener: OnItemClickListener? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -35,13 +38,12 @@ open class SchedulesAdapter(
         val model = list[position]
 
         if (holder is MyViewHolder) {
-            holder.itemView.tv_date_in_recycler.text = model
-            /*holder.itemView.setOnClickListener {
+            holder.itemView.tv_date_in_recycler.text = model.date
+            holder.itemView.ib_cancel_date_schedule.setOnClickListener {
 
-                if (onClickListener != null) {
-                    onClickListener!!.onClick(position)
-                }
-            }*/
+                onClick(position)
+
+            }
         }
     }
 
@@ -49,16 +51,30 @@ open class SchedulesAdapter(
         return list.size
     }
 
-
+/*
     fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener
     }
 
 
+    open fun setOnItemClickListener(mItemClickListener: OnItemClickListener) {
+        this.onItemClickListener = mItemClickListener
+    }
+
 
     interface OnClickListener {
-        fun onClick(position: Int)
+        fun onClick(holder: RecyclerView.ViewHolder, position: Int) {
+
+
+        }
+    }*/
+
+    private fun onClick(position: Int)
+    {
+        list.removeAt(position)
+        notifyDataSetChanged()
     }
+
 
 
     private class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)

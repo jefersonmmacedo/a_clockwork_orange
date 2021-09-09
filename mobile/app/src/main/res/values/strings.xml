@@ -30,4 +30,9 @@
     <string name="selected_date">Data selecionada:</string>
     <string name="confirm">Confirmar</string>
     <string name="cancel">Cancelar</string>
+    <string name="tv_confirm_scheduling">Confirmar Agendamento?</string>
+    <string name="tv_unit">Escritório: </string>
+    <string name="tv_type_confirmation">Tipo: </string>
+    <string name="tv_day_of_week">Dia da semana: </string>
+    <string name="tv_shift_selected">Turno: </string>
 </resources>

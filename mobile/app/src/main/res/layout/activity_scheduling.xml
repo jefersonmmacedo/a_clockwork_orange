@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -179,7 +179,7 @@
                 <AutoCompleteTextView
                     android:id="@+id/actv_scheduling_type"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -265,6 +265,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/til_shift" />
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_date"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -273,8 +274,8 @@
                 android:layout_marginTop="8dp"
                 android:ems="10"
                 android:fontFamily="@font/metropolis_regular"
-                android:hint="@string/date"
-                android:inputType="textEmailAddress"
+
+                android:focusedByDefault="true"
                 android:textColorHint="@color/gray"
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
@@ -295,46 +296,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/metropolis_regular"
+                    android:editable="false"
                     android:inputType="none"
                     android:textColor="@color/text"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/tv_add_more_dates"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/metropolis_regular"
-                android:gravity="start"
-                android:lineSpacingExtra=".5px"
-                android:text="@string/tv_add_more_dates"
-                android:textColor="@color/secondary"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/tv_date"
-                app:layout_constraintTop_toBottomOf="@+id/til_date" />
 
-            <ImageButton
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@color/white"
-                android:src="@drawable/ic_add"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_add_more_dates"
-                app:layout_constraintEnd_toEndOf="@+id/tv_date"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/tv_add_more_dates"
-                app:layout_constraintTop_toTopOf="@+id/tv_add_more_dates"
-                app:layout_constraintVertical_bias="0.0" />
 
             <LinearLayout
                 android:id="@+id/ll_selected_dates"
                 android:layout_width="296dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_add_more_dates">
+                app:layout_constraintTop_toBottomOf="@+id/til_date">
 
                 <TextView
                     android:id="@+id/tv_selected_date"
@@ -365,11 +343,11 @@
                 android:layout_height="55dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/btn_shape"
+                android:elevation="20dp"
                 android:fontFamily="@font/metropolis_semibold"
                 android:letterSpacing=".04"
-                android:text="@string/confirm"
                 android:shadowColor="@color/gray"
-                android:elevation="20dp"
+                android:text="@string/confirm"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -383,26 +361,26 @@
                 android:layout_height="55dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/btn_shape_secondary"
+                android:elevation="20dp"
                 android:fontFamily="@font/metropolis_semibold"
                 android:letterSpacing=".04"
+                android:shadowColor="@color/gray"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
-                android:shadowColor="@color/gray"
-                android:elevation="20dp"
                 android:textColor="@color/primary"
                 android:textSize="16sp"
                 app:iconTint="#FFFFFF"
                 app:layout_constraintCircleRadius="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_confirm"/>
+                app:layout_constraintTop_toBottomOf="@+id/btn_confirm" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_cancel"/>
+                app:layout_constraintTop_toBottomOf="@+id/btn_cancel" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
