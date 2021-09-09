@@ -3,8 +3,11 @@ const mongoose = require('mongoose');
 const DataSchema = new mongoose.Schema({
     location: String,
     shift: String,
+    type: String,
     createdAt: {type: Date, default: Date.now},
-    date: Object,
+    date: String,
+    day: String,
+    _idUser: String,
     user: String,
     email: String,
     role: String,
