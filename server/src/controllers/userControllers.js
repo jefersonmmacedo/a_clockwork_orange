@@ -13,6 +13,23 @@ module.exports = {
         console.log(data)
         res.json(data)
      },
+
+     async indexFcamara(req, res) {
+        const {email} = req.body;
+        console.log({email});
+
+        if(email.includes('@fcamara.com.br')) {
+           const data = await User.findOne({email});
+           if(data === null) {
+            res.json('Seja bem vindo. Este é seu primeiro acesso');           
+           } else {
+            console.log(data)
+            res.json(data)
+           }
+        } else {
+            res.json('Acesso negado, utilize seu email corporativo');
+        }
+     },
     async delete(req, res) {
         const {_id} = req.params;
         const data = await User.findByIdAndDelete({_id});
@@ -40,4 +57,8 @@ module.exports = {
         }
 
     }
+
+    // async login(req, res){
+
+    // }
 }
