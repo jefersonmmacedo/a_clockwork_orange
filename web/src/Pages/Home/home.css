@@ -10,10 +10,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 50px;
 }
 
-.home .infos .image img {
-    margin-left: 20px;
+.home .infos .image {
+  padding: 20px;
 }
 
 
@@ -22,8 +23,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    margin-left: -190px;
+    justify-content: space-between;
+    padding: 20px;
 }
 
 .home .infos .itens h4 {
@@ -35,8 +36,4 @@
 
 .home .infos .itens button {
     width: 100%;
-}
-
-.home .footer {
-    margin-top: 100px;
 }

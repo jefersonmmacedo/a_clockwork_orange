@@ -17,7 +17,7 @@ export default function Login() {
   return (
     <div className="container">
       <div className="content">
-        <div className="home">
+        <div className="login">
           <div className="infos">
             <div className="image">
                 <img src={work} alt="image-computer" />

@@ -1,54 +1,49 @@
-.home{
+.login{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
 }
 
-.home .infos{
+.login .infos{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 50px;
 }
 
-.home .infos .image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    position: relative;
-    padding: 50px;
+
+.login .infos .image {
+    padding: 20px;
+
 }
 
-.home .infos .itens{
+.login .infos .itens{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    position: relative;
+    padding: 70px;
 }
 
-.home .infos .itens img {
+.login .infos .itens img {
     margin-bottom: 30px;
 }
 
-.home .infos .itens span {
-    text-align: left;
-    margin: 0 0 10px -240px;
+.login .infos .itens span {
+    margin: 0 0 10px 16px;
     font-weight: 400;
     font-size: 16px;
     line-height: 16px;
+    align-self: start;
 }
 
-.home .infos .itens input {
+.login .infos .itens input {
     margin-bottom: 20px;
 }
 
-.home .infos .itens button {
+.login .infos .itens button {
     width: 358px;
 }
 
-.home .footer img{
-    margin-top: -150px;
-}

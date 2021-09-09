@@ -17,7 +17,7 @@ export default function Password() {
   return (
     <div className="container">
       <div className="content">
-        <div className="home">
+        <div className="password">
           <div className="infos">
             <div className="image">
                 <img src={work} alt="image-computer" />
@@ -27,6 +27,7 @@ export default function Password() {
                 <span>Senha</span>
                 <input type="text" placeholder="Digite sua senha"/>
                 <button className="button-primary" onClick={handleRedirect}>Entrar</button>
+                <span>Esqueci a Senha</span>
             </div>
           </div>
           <div className="footer">

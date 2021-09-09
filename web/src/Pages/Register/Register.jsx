@@ -17,7 +17,7 @@ export default function Register() {
   return (
     <div className="container">
       <div className="content">
-        <div className="home">
+        <div className="register">
           <div className="infos">
             <div className="image">
                 <img src={smartphoneAside} alt="image-computer" />
@@ -27,7 +27,7 @@ export default function Register() {
 
                 <span>Nome Completo</span>
                 <input type="text" placeholder="Digite seu nome completo"/>
-                <span>Qual é a sua função?</span>
+                 <span>Qual é a sua função?</span>
                 <input type="text" placeholder="Digite seu código de acesso"/>
                 <span>Senha</span>
                 <input type="text" placeholder="Senha"/>

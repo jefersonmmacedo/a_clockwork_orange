@@ -1,48 +1,43 @@
-.home{
+.code-security{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
 }
 
-.home .infos{
+.code-security .infos{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 50px;
 }
 
-.home .infos .image {
-   margin-right: 50px;
-}
-
-.home .infos .image img {
-    align-items: center;
-    margin-right: 50px;
+.code-security .infos .image {
+    padding: 20px;
 }
 
 
-.home .infos .itens{
+.code-security .infos .itens{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    width: 50%;
-    padding: 15px;
+    padding: 70px;
 }
 
-.home .infos .itens img {
+.code-security .infos .itens img {
     margin-bottom: 30px;
 }
 
-.home .infos .itens span {
-    text-align: left;
-    margin: 0 0 10px -160px;
+.code-security .infos .itens span {
+    margin: 0 0 10px 16px;
     font-weight: 400;
     font-size: 16px;
     line-height: 16px;
+    align-self: start;
 }
-.home .infos .itens .text {
+.code-security .infos .itens .text {
     width: 358px;
     background-color: var(--LightGray);
     font-size: 16px;
@@ -52,14 +47,10 @@
     margin-bottom: 20px;
 
 }
-.home .infos .itens input {
+.code-security .infos .itens input {
     margin-bottom: 20px;
 }
 
-.home .infos .itens button {
+.code-security .infos .itens button {
     width: 358px;
-}
-
-.home .footer {
-    margin-top: 100px;
 }

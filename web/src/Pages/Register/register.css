@@ -1,56 +1,47 @@
-.home{
+.register{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
 }
 
-.home .infos{
+.register .infos{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
+    margin-bottom: 50px;
+    margin-right: 40px;
 }
 
-.home .infos .image {
-   margin-right: 50px;
-}
-
-.home .infos .image img {
-    align-items: center;
+.register .infos .image {
     margin-right: 50px;
 }
 
 
-.home .infos .itens{
+.register .infos .itens{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    width: 50%;
-    padding: 15px;
+    margin-left: 50px;
 }
 
-.home .infos .itens img {
-    margin-bottom: 30px;
+.register .infos .itens img {
+    margin-bottom: 15px;
 }
 
-.home .infos .itens span {
-    text-align: left;
-    margin: 0 0 10px -240px;
+.register .infos .itens span {
+    margin: 0 0 10px 16px;
     font-weight: 400;
     font-size: 16px;
     line-height: 16px;
+    align-self: start;
 }
-
-.home .infos .itens input {
+.register .infos .itens input {
     margin-bottom: 20px;
 }
 
-.home .infos .itens button {
+.register .infos .itens button {
     width: 358px;
-}
-
-.home .footer {
-    margin-top: 100px;
 }

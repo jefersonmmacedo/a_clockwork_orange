@@ -17,7 +17,7 @@ export default function CodeSecurity() {
   return (
     <div className="container">
       <div className="content">
-        <div className="home">
+        <div className="code-security">
           <div className="infos">
             <div className="image">
                 <img src={smartphoneAside} alt="image-computer" />
