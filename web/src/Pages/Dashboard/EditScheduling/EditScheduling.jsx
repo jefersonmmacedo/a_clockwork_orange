@@ -68,7 +68,8 @@ export default function EditScheduling() {
                 </div>
 
                 <span>Escolha uma data</span>
-                <input type="text" placeholder="10/01/2021"/>
+                <input id="date" type="date"/>
+
 
                 <p>Deseja adicionar mais um período de dias? <FiPlusCircle />
                   </p>
