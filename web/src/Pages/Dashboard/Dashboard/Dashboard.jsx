@@ -2,9 +2,9 @@ import './dashboard.css';
 import React from 'react';
 import userScheduling from '../../../assets/images/userScheduling.svg';
 import {useHistory} from 'react-router-dom'
-import Navbar from '../../../Components/Navbar/Navbar';
 import Footer from '../../../Components/Footer/Footer';
 import {FiUser, FiCalendar, FiEdit, FiTrash2} from 'react-icons/fi';
+import Navbar from '../../../Components/Navbar/Navbar';
 
  
 
@@ -13,7 +13,7 @@ export default function Dashboard() {
   const history = useHistory();
 
   function handleRedirect() {
-   history.push("/password")
+   history.push("/scheduling")
   }
 
   return (

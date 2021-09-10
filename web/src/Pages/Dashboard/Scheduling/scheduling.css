@@ -1,0 +1,90 @@
+.Scheduling{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Scheduling .infos{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 60px;
+}
+
+.Scheduling .infos .itens{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 30px;
+    width: 50%;
+}
+
+.Scheduling .infos .itens span {
+    margin: 0 0 10px 16px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    align-self: start;
+}
+.Scheduling .infos .itens input {
+    margin-bottom: 20px;
+}
+
+.Scheduling .infos .itens select {
+    margin-bottom: 20px;
+}
+
+.Scheduling .infos .itens .saudation {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.Scheduling .infos .itens .saudation p {
+    margin-left: -25px;
+    padding: 0 40px;
+}
+
+
+.Scheduling .infos .itens button {
+    margin: 10px 5px;
+    width: 167px;
+}
+
+.Scheduling .infos .itens .text {
+    width: 358px;
+    background-color: var(--LightGray);
+    font-size: 16px;
+    text-align: center;
+    line-height: 24px;
+    padding: 10px;
+    margin-bottom: 20px;
+
+}
+
+.Scheduling .infos .itens .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.Scheduling .infos .itens .schedules{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+.Scheduling .infos .itens h3 {
+    font-size: 32px;
+    font-weight: 700;
+}
