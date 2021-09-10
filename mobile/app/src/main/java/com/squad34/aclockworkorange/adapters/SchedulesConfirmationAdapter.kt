@@ -6,22 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squad34.aclockworkorange.R
-import kotlinx.android.synthetic.main.item_date.view.*
-import android.widget.AdapterView.OnItemClickListener
 import com.squad34.aclockworkorange.models.DateSelected
+import kotlinx.android.synthetic.main.item_date_in_confirmation.view.*
 
-open class SchedulesAdapter(
+open class SchedulesConfirmationAdapter(
     private val context: Context,
     private var list: ArrayList<DateSelected>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private var onItemClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return MyViewHolder(
             LayoutInflater.from(context).inflate(
-                R.layout.item_date,
+                R.layout.item_date_in_confirmation,
                 parent,
                 false
             )
@@ -32,23 +29,13 @@ open class SchedulesAdapter(
         val model = list[position]
 
         if (holder is MyViewHolder) {
-            holder.itemView.tv_date_in_recycler.text = model.date
-            holder.itemView.ib_cancel_date_schedule.setOnClickListener {
-
-                onClick(position)
-
-            }
+            holder.itemView.tv_date_in_recycler_confirmation.text = model.date
+            holder.itemView.tv_day_of_week_in_recycler_confirmation.text = model.dayOfWeek
         }
     }
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    private fun onClick(position: Int)
-    {
-        list.removeAt(position)
-        notifyDataSetChanged()
     }
 
     private class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)

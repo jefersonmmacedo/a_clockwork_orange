@@ -111,16 +111,6 @@
                 android:textColor="@color/secondary"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tv_selected_day_of_week_recurrent_confirmation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/metropolis_regular"
-                android:lineSpacingExtra=".5px"
-                android:text="Terça"
-                android:textColor="@color/secondary"
-                android:textSize="16sp" />
-
 
         </LinearLayout>
 
