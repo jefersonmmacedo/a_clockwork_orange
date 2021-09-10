@@ -1,6 +1,7 @@
 import { Switch } from "react-router-dom";
 import CodeSecurity from "../Pages/CodeSecurity/CodeSecurity";
 import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
+import EditScheduling from "../Pages/Dashboard/EditScheduling/EditScheduling";
 import Scheduling from "../Pages/Dashboard/Scheduling/Scheduling";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -20,6 +21,7 @@ function Routes() {
         <RouteWrapper exact path="/register" component={Register}/>
         <RouteWrapper exact path="/dashboard" component={Dashboard}/>
         <RouteWrapper exact path="/scheduling" component={Scheduling}/>
+        <RouteWrapper exact path="/editscheduling" component={EditScheduling}/>
     </Switch>
     )
 }
