@@ -29,34 +29,33 @@ export default function Register() {
                 <span>Nome Completo</span>
                 <input type="text" placeholder="Digite seu nome completo"/>
                  <span>Qual é a sua função?</span>
-                <select name="" id="">
+                <select value="">
                   <option value="">Selecione Sua Função</option>
-                  <option value="">Fullstack Developer Jr</option>
-                  <option value="">Fullstack Developer Pleno</option>
-                  <option value="">Fullstack Developer Senior</option>
-                  <option value="">Front-end Developer Jr</option>
-                  <option value="">Front-end Developer Pleno</option>
-                  <option value="">Front-end Developer Senior</option>
-                  <option value="">Back-end Developer Jr</option>
-                  <option value="">Back-end Developer Pleno</option>
-                  <option value="">Back-end Developer Senior</option>
-                  <option value="">Mobile Developer Jr</option>
-                  <option value="">Mobile Developer Pleno</option>
-                  <option value="">Mobile Developer Senior</option>
-                  <option value="">UI/UX Designer</option>
-                  <option value="">Scrum Master</option>
-                  <option value="">Product Owner</option>
-                  <option value="">Agile Coacho</option>
-                  <option value="">Gerente de Projetos</option>
-                  <option value="">Analista de Dados</option>
-                  <option value="">Analista de Dados</option>
-                  <option value="">Analista de Dados</option>
-                  <option value="">Analista de Dados</option>
+                  <option value="Fullstack Developer Jr">Fullstack Developer Jr</option>
+                  <option value="Fullstack Developer Pleno">Fullstack Developer Pleno</option>
+                  <option value="Fullstack Developer Senior">Fullstack Developer Senior</option>
+                  <option value="Front-end Developer Jr">Front-end Developer Jr</option>
+                  <option value="Front-end Developer Pleno">Front-end Developer Pleno</option>
+                  <option value="Front-end Developer Senior">Front-end Developer Senior</option>
+                  <option value="Back-end Developer Jr">Back-end Developer Jr</option>
+                  <option value="Back-end Developer Pleno">Back-end Developer Pleno</option>
+                  <option value="Back-end Developer Senior">Back-end Developer Senior</option>
+                  <option value="Mobile Developer Jr">Mobile Developer Jr</option>
+                  <option value="Mobile Developer Pleno">Mobile Developer Pleno</option>
+                  <option value="Mobile Developer Senior">Mobile Developer Senior</option>
+                  <option value="UI/UX Designer Jr">UI/UX Designer Jr</option>
+                  <option value="UI/UX Designer Pleno">UI/UX Designer Pleno</option>
+                  <option value="UI/UX Designer Senior">UI/UX Designer Senior</option>
+                  <option value="Scrum Master">Scrum Master</option>
+                  <option value="Product Owner">Product Owner</option>
+                  <option value="Agile Coach">Agile Coach</option>
+                  <option value="Gerente de Projetos">Gerente de Projetos</option>
+                  <option value="QA">QA</option>
                 </select>
                 <span>Senha</span>
-                <input type="text" placeholder="Senha"/>
+                <input type="password" placeholder="Senha"/>
                 <span>Confirmar senha</span>
-                <input type="text" placeholder="Confirmar senha"/>
+                <input type="password" placeholder="Confirmar senha"/>
                 <button className="button-primary" onClick={handleRedirect}>Criar conta</button>
             </div>
           </div>
