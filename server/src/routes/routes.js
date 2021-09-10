@@ -7,6 +7,7 @@ const routes = express.Router()
 
 //CREATE USERS
 routes.get('/api/user', userControllers.index)
+routes.post('/api/user/login', userControllers.login)
 routes.get('/api/user/:_id', userControllers.indexOne)
 routes.get('/api/validator', userControllers.indexFcamara)
 routes.delete('/api/user/:_id', userControllers.delete)

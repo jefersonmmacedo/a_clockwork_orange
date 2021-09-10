@@ -1,4 +1,6 @@
-const User = require('../models/userModel')
+const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const secret = 'secretpasswordkey';
 
 module.exports = {
     async index(req, res) {
@@ -56,9 +58,29 @@ module.exports = {
             return res.status(500).json(new_user);
         }
 
+    },
+
+    async login(req, res){
+        const {email, password} = req.body;
+        console.log(email, password);
+        
+
+        User.findOne({email: email}, function(err, data) {
+            console.log(data)
+            if(err) {
+                console.log(err);
+                res.status(200).json({error: "Erro ao acessar o sistema. Tenta novamente mais tarde"})
+            } else if(!data) {
+                console.log(data)
+                res.status(200).json({error: "Email ou senha não conferem"})
+            } else {
+                const payload = {email};
+                const token = jwt.sign(payload, secret, {
+                    expiresIn: '24h'
+                })
+                res.cookie('token', token, {httpOnly: true})
+                res.status(200).json({auth: true, token: token, user: data.user, role: data.role, email: data.email, _id: data._id})
+            }
+        })
     }
-
-    // async login(req, res){
-
-    // }
 }
