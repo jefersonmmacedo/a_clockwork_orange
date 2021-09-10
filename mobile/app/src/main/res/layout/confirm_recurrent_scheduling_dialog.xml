@@ -6,6 +6,7 @@
     android:layout_height="420dp">
 
     <ImageButton
+        android:id="@+id/ib_cancel_dialog_recurrent"
         android:layout_width="24dp"
         android:layout_height="28dp"
         android:layout_marginTop="18.67dp"
@@ -101,7 +102,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_day_of_week_confirmation"
+                android:id="@+id/tv_day_of_week_recurrent_confirmation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/metropolis_regular"
@@ -111,7 +112,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/tv_selected_day_of_week_confirmation"
+                android:id="@+id/tv_selected_day_of_week_recurrent_confirmation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/metropolis_regular"
@@ -129,7 +130,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_dates_selected_confirmation"
+                android:id="@+id/tv_dates_selected_recurrent_confirmation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/metropolis_regular"
@@ -157,7 +158,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/tv_shift_selected_confirmation"
+                android:id="@+id/tv_shift_selected_recurrent_confirmation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/metropolis_regular"

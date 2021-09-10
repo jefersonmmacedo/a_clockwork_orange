@@ -2,7 +2,10 @@ package com.squad34.aclockworkorange.activities
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.os.Build
 import android.os.Bundle
+import android.support.v4.os.IResultReceiver
+import android.text.TextUtils
 import android.view.Menu
 import android.view.View
 import android.view.Window
@@ -16,18 +19,24 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import android.widget.AutoCompleteTextView
+import androidx.annotation.RequiresApi
+import androidx.core.view.get
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.Calendar.LONG_FORMAT
 
 
 class SchedulingActivity : BaseActivity() {
 
     private lateinit var mBinding: ActivitySchedulingBinding
     private var mSelectedDates = ArrayList<DateSelected>()
-    private var mSelectedDateMilliseconds: Long = 0
-    private var recurrent: Boolean = false
     private var mSelecetdUnit = ""
     private var mSelectedType = ""
+    private var mWorkOrMeet = ""
+    private var mShift = ""
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,16 +52,70 @@ class SchedulingActivity : BaseActivity() {
             showDatePicker()
         }
 
+        mBinding.actvSchedulingType.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                mSelectedType = p0?.getItemAtPosition(p2).toString()
+                Toast.makeText(this@SchedulingActivity, "$mSelectedType", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+
+        }
+
+
+
         mBinding.btnConfirm.setOnClickListener {
 
-            mSelecetdUnit = " " + mBinding.actvUnit.text.toString()
-            mSelectedType = " " + mBinding.actvSchedulingType.toString()
-            
+            mSelecetdUnit = mBinding.actvUnit.text.toString()
+            mWorkOrMeet = mBinding.actvWorkStation.text.toString()
+            mSelectedType = mBinding.actvSchedulingType.text.toString()
+            mShift = mBinding.actvShift.text.toString()
+
+            when {
+                TextUtils.isEmpty(mSelecetdUnit) -> {
+                    Toast.makeText(
+                        this,
+                        "Você deve selecionar uma unidade!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                TextUtils.isEmpty(mWorkOrMeet) -> {
+                    Toast.makeText(
+                        this,
+                        "Você deve selecionar oque você quer agendar!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                TextUtils.isEmpty(mSelectedType) -> {
+                    Toast.makeText(
+                        this,
+                        "Você deve selecionar o tipo de agendamento!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                TextUtils.isEmpty(mShift) -> {
+                    Toast.makeText(
+                        this,
+                        "Você deve selecionar um turno!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                mSelectedDates.isEmpty() -> {
+                    Toast.makeText(
+                        this,
+                        "Você deve selecionar uma data!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {
+                    showDialog()
+                }
+            }
 
 
-
-
-            showDialog()
         }
 
 
@@ -65,7 +128,6 @@ class SchedulingActivity : BaseActivity() {
         textFieldUnits.setAdapter(adapterUnit)
 
         mSelecetdUnit = textFieldUnits?.text.toString()
-        Toast.makeText(this, "$mSelecetdUnit", Toast.LENGTH_LONG).show()
 
         val textFieldWorkStation = mBinding.actvWorkStation as? AutoCompleteTextView
         val workStation = arrayListOf("Estação de trabalho", "Sala de reunião")
@@ -77,22 +139,6 @@ class SchedulingActivity : BaseActivity() {
         val adapterSchedulingType =
             ArrayAdapter(this, R.layout.list_items, R.id.tv_item, schedulingType)
         textFieldSchedulingType?.setAdapter(adapterSchedulingType)
-
-        textFieldSchedulingType?.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val result = schedulingType[p2]
-                if (result == "Recorrente") {
-                    recurrent = true
-                }
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-
-        }
-
 
         val textFieldShift = mBinding.actvShift as? AutoCompleteTextView
         val shift = arrayListOf("Manhã", "Tarde", "Integral")
@@ -110,35 +156,46 @@ class SchedulingActivity : BaseActivity() {
 
         supportActionBar?.title = ""
 
-
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         mBinding.toolbarSchedulingActivity.setNavigationOnClickListener {
             doubleBackToExit()
         }
-
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showDatePicker() {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        val dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
         val dpd = DatePickerDialog(
             this,
             { view, year, monthOfYear, dayOfMonth ->
 
-                if (!recurrent) {
+
+                mBinding.tilSchedulingType.isEnabled = false
+                mBinding.tilShift.isEnabled = false
+                mBinding.tilUnit.isEnabled = false
+                mBinding.tilStationOrMeeting.isEnabled = false
+
+
+                if (mSelectedType == "Normal") {
                     val sDayOfMonth = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
                     val sMonthOfYear =
                         if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
                     val selectedDate = "$sDayOfMonth/$sMonthOfYear/$year"
 
+                    val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+                    val theDate = sdf.parse(selectedDate)
+                    val format = SimpleDateFormat("EEEE", Locale.getDefault())
+                    var dow = format.format(theDate)
+
+
                     var contain = false
-                    val wdf = SimpleDateFormat("EEEEEE", Locale("PT-BR"))
-                    val dow = wdf.format(dayOfWeek)
+
+
                     for (i in mSelectedDates.indices) {
                         if (mSelectedDates[i].date.contains(selectedDate)) {
                             Toast.makeText(this, "Esta data já foi selecionada!", Toast.LENGTH_LONG)
@@ -146,8 +203,28 @@ class SchedulingActivity : BaseActivity() {
                             contain = true
                         }
                     }
+
+                    when (dow) {
+                        "segunda-feira" -> {
+                            dow = "Segunda"
+                        }
+                        "terça-feira" -> {
+                            dow = "Terça"
+                        }
+                        "quarta-feira" -> {
+                            dow = "Quarta"
+                        }
+                        "quinta-feira" -> {
+                            dow = "Quinta"
+                        }
+                        "sexta-feira" -> {
+                            dow = "Sexta"
+                        }
+                    }
+
+
                     if (!contain) {
-                        var mSelectedDateFormater: DateSelected = DateSelected(selectedDate, dow)
+                        var mSelectedDateFormater = DateSelected(selectedDate, dow)
 
                         mSelectedDates.add(mSelectedDateFormater)
 
@@ -157,34 +234,61 @@ class SchedulingActivity : BaseActivity() {
 
                 } else {
 
-                    /* val sDayOfMonth = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
-                     val sMonthOfYear =
-                         if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
-                     val selectedDate = "$sDayOfMonth/$sMonthOfYear/$year"
+                    val sDayOfMonth = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
+                    val sMonthOfYear =
+                        if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
+                    val selectedDate2 = "$sDayOfMonth/$sMonthOfYear/$year"
 
-                     mSelectedDates.add(selectedDate)
-                     val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
-                     val theDate = sdf.parse(selectedDate)
-                     mSelectedDateMilliseconds = theDate!!.time
+                    val dom = sDayOfMonth.toInt()
+                    val moy = sMonthOfYear.toInt()
+
+                    val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+                    val theDate = sdf.parse(selectedDate2)
+                    val format = SimpleDateFormat("EEEE", Locale.getDefault())
+                    var dow = format.format(theDate)
+
+                    when (dow) {
+                        "segunda-feira" -> {
+                            dow = "Segunda"
+                        }
+                        "terça-feira" -> {
+                            dow = "Terça"
+                        }
+                        "quarta-feira" -> {
+                            dow = "Quarta"
+                        }
+                        "quinta-feira" -> {
+                            dow = "Quinta"
+                        }
+                        "sexta-feira" -> {
+                            dow = "Sexta"
+                        }
+                    }
+
+                    var mSelectedDateFormater = DateSelected(selectedDate2, dow)
+                    mSelectedDates.add(mSelectedDateFormater)
 
 
-                     var i = 1
-                     var day = 8.64e+7
-                     while (i <= 4) {
-                         val dateInMili: Long = mSelectedDateMilliseconds + (day * i).toLong()
-                         val calendar = Calendar.getInstance()
-                         calendar.timeInMillis = dateInMili
-                         sdf.format(calendar.time)
-                         val year2 = calendar.get(Calendar.YEAR)
-                         val month2 = calendar.get(Calendar.MONTH)
-                         val day2 = calendar.get(Calendar.DAY_OF_MONTH)
-                         val sDayOfMonth2 = if (day2 < 10) "0$day2" else "$day2"
-                         val sMonthOfYear2 =
-                             if ((month2 + 1) < 10) "0${month2 + 1}" else "${month2 + 1}"
-                         val selectedDate2 = "$sDayOfMonth2/$sMonthOfYear2/$year2"
-                         mSelectedDates.add(selectedDate2)
-                         i++
-                         populateDatesList(mSelectedDates) */
+                    var i = 1
+                    while (i <= 3) {
+
+                        val days = (7*i).toLong()
+
+                        val date = LocalDate.of(year,moy,dom).plusDays(days)
+                        val dateWrong = SimpleDateFormat("yyyy-MM-dd")
+                        val dateNew = dateWrong.parse(date.toString())
+                        val dateNewFormat = SimpleDateFormat("dd/MM/yyyy")
+                        val dateFinal = dateNewFormat.format(dateNew)
+                        Toast.makeText(this,"$dateFinal", Toast.LENGTH_LONG).show()
+
+                        var mSelectedDateFormater = DateSelected(dateFinal, dow)
+                        mSelectedDates.add(mSelectedDateFormater)
+
+                        populateDatesList(mSelectedDates)
+                        i++
+                    }
+
+                    mBinding.tilDate.isEnabled = false
 
                 }
             },
@@ -192,7 +296,7 @@ class SchedulingActivity : BaseActivity() {
             month,
             day
         )
-        dpd.show() // It is used to show the datePicker Dialog.
+        dpd.show()
     }
 
     private fun populateDatesList(date: ArrayList<DateSelected>) {
@@ -223,22 +327,44 @@ class SchedulingActivity : BaseActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.confirm_recurrent_scheduling_dialog)
-        val unit = dialog.findViewById(R.id.tv_selected_unit_recurrent_confirmation) as TextView
-        unit.text = mSelecetdUnit
-        val type = dialog.findViewById(R.id.tv_selected_type_recurrent_confirmation) as TextView
-        type.text = if (recurrent) {
-            "Recorrente"
-        } else {
-            "Normal"
-        }
-        val dayOfWeek = mSelectedDates[0].dayOfWeek
 
-        val yesBtn = dialog.findViewById(R.id.btn_confirm_recurrent_confirmation) as Button
-        val noBtn = dialog.findViewById(R.id.btn_cancel_recurrent_confirmation) as Button
-        yesBtn.setOnClickListener {
+        val unit = dialog.findViewById(R.id.tv_selected_unit_recurrent_confirmation) as TextView
+        unit.text = " " + mSelecetdUnit
+
+        val type = dialog.findViewById(R.id.tv_selected_type_recurrent_confirmation) as TextView
+        type.text = " " + mSelectedType
+
+        val dayOfWeek = mSelectedDates[0].dayOfWeek
+        val dayOfWeekText =
+            dialog.findViewById(R.id.tv_selected_day_of_week_recurrent_confirmation) as TextView
+        dayOfWeekText.text = " " + dayOfWeek
+
+        val dates = dialog.findViewById(R.id.tv_dates_selected_recurrent_confirmation) as TextView
+        if (mSelectedDates.size > 1) {
+            var createDates = "Datas:"
+            for (i in mSelectedDates.indices) {
+                if (i == mSelectedDates.size - 1) {
+                    createDates += " e " + mSelectedDates[i].date
+                } else if (i == 0) {
+                    createDates += " " + mSelectedDates[i].date
+                } else {
+                    createDates += ", " + mSelectedDates[i].date
+                }
+            }
+            dates.text = createDates
+        }
+
+        val shift = dialog.findViewById(R.id.tv_shift_selected_recurrent_confirmation) as TextView
+        shift.text = mShift
+
+        val confirmationButton =
+            dialog.findViewById(R.id.btn_confirm_recurrent_confirmation) as Button
+        val cancelButton = dialog.findViewById(R.id.btn_cancel_recurrent_confirmation) as Button
+        confirmationButton.setOnClickListener {
+            //TODO Fazer a implementação para criar o objeto Scheduling, que será enviado ao banco de dados
             dialog.dismiss()
         }
-        noBtn.setOnClickListener { dialog.dismiss() }
+        cancelButton.setOnClickListener { dialog.dismiss() }
         dialog.show()
 
     }
