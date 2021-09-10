@@ -4,6 +4,7 @@ import logoAside2 from '../../assets/images/logoAside2.svg';
 import smartphoneAside from '../../assets/images/smartphoneAside.svg';
 import logoFcamaraSquad34 from '../../assets/images/logoFcamaraSquad34.svg';
 import {useHistory} from 'react-router-dom'
+import Footer from '../../Components/Footer/Footer';
 
 
 
@@ -34,10 +35,8 @@ export default function CodeSecurity() {
                 <button className="button-primary" onClick={handleRedirect}>Validar</button>
             </div>
           </div>
-          <div className="footer">
-               <img src={logoFcamaraSquad34} alt="image-computer" />
           </div>
-        </div>
+          <Footer />
       </div>
     </div>
   );
