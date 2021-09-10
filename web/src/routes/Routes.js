@@ -1,5 +1,6 @@
 import { Switch } from "react-router-dom";
 import CodeSecurity from "../Pages/CodeSecurity/CodeSecurity";
+import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Password from "../Pages/Password/Password";
@@ -16,6 +17,7 @@ function Routes() {
         <RouteWrapper exact path="/codesecurity" component={CodeSecurity}/>
         <RouteWrapper exact path="/password" component={Password}/>
         <RouteWrapper exact path="/register" component={Register}/>
+        <RouteWrapper exact path="/dashboard" component={Dashboard}/>
     </Switch>
     )
 }

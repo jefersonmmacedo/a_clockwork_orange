@@ -1,0 +1,79 @@
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dashboard .infos{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+.dashboard .infos .image {
+    padding: 20px;
+
+}
+
+.dashboard .infos .itens{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 30px;
+    width: 50%;
+}
+
+.dashboard .infos .itens .saudation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+.dashboard .infos .itens button {
+    margin-bottom: 40px;
+}
+
+.dashboard .infos .itens .schedules{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.dashboard .infos .itens .schedules table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+}
+
+.dashboard .infos .itens .schedules thead {
+    padding: 5px;
+}
+.dashboard .infos .itens h3 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.dashboard .infos .itens .disponible {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.dashboard .infos .itens .disponible h5 {
+    font-size: 18px;
+    margin: 5px 0 2px 0;
+}

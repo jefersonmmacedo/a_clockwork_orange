@@ -65,7 +65,7 @@ module.exports = {
         console.log(email, password);
         
 
-        User.findOne({email: email}, function(err, data) {
+        User.find({email, password}, function(err, data) {
             console.log(data)
             if(err) {
                 console.log(err);
@@ -74,7 +74,7 @@ module.exports = {
                 console.log(data)
                 res.status(200).json({error: "Email ou senha não conferem"})
             } else {
-                const payload = {email};
+                const payload = {email, password};
                 const token = jwt.sign(payload, secret, {
                     expiresIn: '24h'
                 })

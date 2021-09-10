@@ -42,6 +42,11 @@
     margin-bottom: 20px;
 }
 
+.register .infos .itens select {
+    margin-bottom: 20px;
+}
+
+
 .register .infos .itens button {
     width: 358px;
 }
