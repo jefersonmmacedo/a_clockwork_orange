@@ -2,9 +2,9 @@ import './home.css';
 import React from 'react';
 import work from '../../assets/images/work.svg';
 import logoAside from '../../assets/images/logoAside.svg';
-import logoFcamaraSquad34 from '../../assets/images/logoFcamaraSquad34.svg';
 import {useHistory} from 'react-router-dom'
 import Footer from '../../Components/Footer/Footer';
+import ImageBody from '../../Components/ImageBody/ImageBody';
 
 
 
@@ -21,9 +21,7 @@ export default function Home() {
       <div className="content">
         <div className="home">
           <div className="infos">
-            <div className="image">
-                <img src={work} alt="image-computer" />
-            </div>
+           <ImageBody image={work} alt="Image Work"/>
             <div className="itens">
                 <img src={logoAside} alt="Logo" />
                 <h4>SISTEMA DE AGENDAMENTO</h4>

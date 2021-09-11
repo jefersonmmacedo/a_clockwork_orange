@@ -5,6 +5,7 @@ import {useHistory} from 'react-router-dom'
 import Footer from '../../../Components/Footer/Footer';
 import {FiUser, FiPlusCircle} from 'react-icons/fi';
 import Navbar from '../../../Components/Navbar/Navbar';
+import ImageBody from '../../../Components/ImageBody/ImageBody';
 
  
 
@@ -22,9 +23,7 @@ export default function EditScheduling() {
         <Navbar />
         <div className="editScheduling">
          <div className="infos">
-            <div className="image">
-                <img src={userScheduling} alt="image-computer" />
-            </div>
+         <ImageBody image={userScheduling} alt='user-scheduling' />
             <div className="itens">
                 <div className="saudation">
                   <p>Olá, Jeferson Macedo</p>
