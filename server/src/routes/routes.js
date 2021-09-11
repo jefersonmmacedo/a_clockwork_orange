@@ -6,13 +6,13 @@ const userControllers = require('../controllers/userControllers');
 const routes = express.Router()
 
 //CREATE USERS
-routes.get('/api/user', userControllers.index)
-routes.post('/api/user/login', userControllers.login)
-routes.get('/api/user/:_id', userControllers.indexOne)
-routes.get('/api/validator', userControllers.indexFcamara)
-routes.delete('/api/user/:_id', userControllers.delete)
-routes.put('/api/user', userControllers.update)
-routes.post('/api/user',userControllers.create)
+routes.get('/api/user', userControllers.index) // Buscar usuarios
+routes.post('/api/user/login', userControllers.login) //Logar
+routes.get('/api/user/:_id', userControllers.indexOne)  //Buscar usuario pelo id ( ID passado na rota como parametro)
+routes.get('/api/validator', userControllers.indexFcamara) //Validar o email
+routes.delete('/api/user/:_id', userControllers.delete) //Deletar usuario ( ID passado na rota como parametro)
+routes.put('/api/user', userControllers.update) //Atualizar
+routes.post('/api/user',userControllers.create) //Criar usuario
 
 //CREATE PERCENTAGE
 routes.get('/api/percentage', percentageControllers.index)

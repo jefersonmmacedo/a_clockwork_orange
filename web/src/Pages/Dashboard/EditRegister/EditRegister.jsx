@@ -1,10 +1,10 @@
 import './editRegister.css';
 import React from 'react';
-import logoAside2 from '../../../assets/images/logoAside2.svg';
 import editUser from '../../../assets/images/editUser.svg';
-import logoFcamaraSquad34 from '../../../assets/images/logoFcamaraSquad34.svg';
 import {useHistory} from 'react-router-dom'
 import Navbar from '../../../Components/Navbar/Navbar';
+import ImageBody from '../../../Components/ImageBody/ImageBody';
+import Footer from '../../../Components/Footer/Footer';
 
 
 
@@ -21,9 +21,7 @@ export default function EditRegister() {
         <Navbar />
         <div className="editRegister">
           <div className="infos">
-            <div className="image">
-                <img src={editUser} alt="image-computer" />
-            </div>
+          <ImageBody image={editUser} alt="User-register"/>
             <div className="itens">
               <h3>Atualizar Cadastro</h3>
                 <span>Nome Completo</span>
@@ -62,10 +60,8 @@ export default function EditRegister() {
                 <button className="button-primary" onClick={handleRedirect}>Atualizar Cadastro</button>
             </div>
           </div>
-          <div className="footer">
-               <img src={logoFcamaraSquad34} alt="image-computer" />
-          </div>
         </div>
+        <Footer />
       </div>
     </div>
   );

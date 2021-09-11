@@ -2,9 +2,9 @@ import './login.css';
 import React from 'react';
 import work from '../../assets/images/work.svg';
 import logoAside2 from '../../assets/images/logoAside2.svg';
-import logoFcamaraSquad34 from '../../assets/images/logoFcamaraSquad34.svg';
 import {useHistory} from 'react-router-dom'
 import Footer from '../../Components/Footer/Footer';
+import ImageBody from '../../Components/ImageBody/ImageBody';
 
 
 
@@ -20,9 +20,7 @@ export default function Login() {
       <div className="content">
         <div className="login">
           <div className="infos">
-            <div className="image">
-                <img src={work} alt="image-computer" />
-            </div>
+            <ImageBody image={work} alt="image-computer"/>
             <div className="itens">
                 <img src={logoAside2} alt="Logo" />
                 <span>E-mail</span>

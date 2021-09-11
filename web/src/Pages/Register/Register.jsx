@@ -2,9 +2,9 @@ import './register.css';
 import React from 'react';
 import logoAside2 from '../../assets/images/logoAside2.svg';
 import smartphoneAside from '../../assets/images/smartphoneAside.svg';
-import logoFcamaraSquad34 from '../../assets/images/logoFcamaraSquad34.svg';
 import {useHistory} from 'react-router-dom'
 import Footer from '../../Components/Footer/Footer';
+import ImageBody from '../../Components/ImageBody/ImageBody';
 
 
 
@@ -20,9 +20,7 @@ export default function Register() {
       <div className="content">
         <div className="register">
           <div className="infos">
-            <div className="image">
-                <img src={smartphoneAside} alt="image-computer" />
-            </div>
+          <ImageBody image={smartphoneAside} alt="image-smartphoneUser"/>
             <div className="itens">
                 <img src={logoAside2} alt="Logo" />
 

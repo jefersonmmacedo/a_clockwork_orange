@@ -5,6 +5,7 @@ import {useHistory} from 'react-router-dom'
 import Footer from '../../../Components/Footer/Footer';
 import {FiUser, FiCalendar, FiEdit, FiTrash2} from 'react-icons/fi';
 import Navbar from '../../../Components/Navbar/Navbar';
+import ImageBody from '../../../Components/ImageBody/ImageBody';
 
  
 
@@ -22,9 +23,7 @@ export default function Dashboard() {
       <Navbar />
         <div className="dashboard">
          <div className="infos">
-            <div className="image">
-                <img src={userScheduling} alt="image-computer" />
-            </div>
+         <ImageBody image={userScheduling} alt="User-calendar"/>
             <div className="itens">
                 <div className="saudation">
                   <p>Olá, Jeferson Macedo</p>
