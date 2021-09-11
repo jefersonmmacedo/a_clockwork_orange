@@ -9,7 +9,7 @@ const routes = express.Router()
 routes.get('/api/user', userControllers.index) // Buscar usuarios
 routes.post('/api/user/login', userControllers.login) //Logar
 routes.get('/api/user/:_id', userControllers.indexOne)  //Buscar usuario pelo id ( ID passado na rota como parametro)
-routes.get('/api/validator', userControllers.indexFcamara) //Validar o email
+routes.get('/api/validator/:email', userControllers.indexFcamara) //Validar o email
 routes.delete('/api/user/:_id', userControllers.delete) //Deletar usuario ( ID passado na rota como parametro)
 routes.put('/api/user', userControllers.update) //Atualizar
 routes.post('/api/user',userControllers.create) //Criar usuario
