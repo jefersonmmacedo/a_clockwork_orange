@@ -39,7 +39,8 @@ module.exports = {
         return res.json(data)
      },
     async update(req, res) {
-        const {_id, user, email, role, password} = req.body;
+        const {_id} = req.params;
+        const {user, email, role, password} = req.body;
         const dataUser = {user, email, role, password}
         const data = await User.findOneAndUpdate({_id}, dataUser, {new: true});
         return res.json(data)

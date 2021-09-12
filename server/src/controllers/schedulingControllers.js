@@ -19,7 +19,8 @@ module.exports = {
         return res.json(data)
      },
     async update(req, res) {
-        const {_id, location, shift, date, user, email, role} = req.body;
+        const {_id} = req.params;
+        const {location, shift, date, user, email, role} = req.body;
         const dataUser = {location, shift, date, user, email, role}
         const data = await Scheduling.findOneAndUpdate({_id}, dataUser, {new: true});
         return res.json(data)

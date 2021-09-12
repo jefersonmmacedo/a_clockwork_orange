@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <AuthProvider>
         <BrowserRouter>
-          <ToastContainer autoClose={3000} />
+          <ToastContainer autoClose={3000} theme="colored"/>
           <Routes />
         </BrowserRouter>
       </ AuthProvider>
