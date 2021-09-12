@@ -8,12 +8,12 @@ import AuthProvider from './Contexts/Auth';
 function App() {
   return (
     <div className="App">
-      <AuthProvider>
         <BrowserRouter>
+         <AuthProvider>
           <ToastContainer autoClose={3000} theme="colored"/>
           <Routes />
+         </ AuthProvider>
         </BrowserRouter>
-      </ AuthProvider>
     </div>
   );
 }
