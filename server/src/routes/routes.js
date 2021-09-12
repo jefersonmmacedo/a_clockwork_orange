@@ -22,6 +22,7 @@ routes.post('/api/percentage',percentageControllers.create)
 
 //SECURITY CODE
 routes.get('/api/securitycode', securityCodeControllers.index)
+routes.get('/api/securitycode/:securityCode', securityCodeControllers.indexOne)
 routes.delete('/api/securitycode/:_id', securityCodeControllers.delete)
 routes.put('/api/securitycode/:_id', securityCodeControllers.update)
 routes.post('/api/securitycode',securityCodeControllers.create)

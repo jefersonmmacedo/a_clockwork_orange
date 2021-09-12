@@ -8,7 +8,7 @@ const DataSchema = new mongoose.Schema({
     date: String,
     day: String,
     _idUser: String,
-    user: String,
+    name: String,
     email: String,
     role: String,
 });
