@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.databinding.ActivityLoginBinding
 import com.squad34.aclockworkorange.databinding.ActivityMainBinding
@@ -45,6 +46,7 @@ class MainActivity : BaseActivity() {
 
         mBinding.btnSchedule.setOnClickListener {
             val intent = Intent(this, SchedulingActivity::class.java)
+
             startActivity(intent)
         }
 

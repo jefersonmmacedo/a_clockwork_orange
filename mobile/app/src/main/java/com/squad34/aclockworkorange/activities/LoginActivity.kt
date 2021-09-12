@@ -7,10 +7,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.databinding.ActivityLoginBinding
-
 
 class LoginActivity : BaseActivity() {
 
@@ -20,9 +17,9 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -35,13 +32,8 @@ class LoginActivity : BaseActivity() {
             )
         }
 
-
-
-
-
         mBinding.btnAccess.setOnClickListener {
             val inputEmail = mBinding.etEmailAdress.text.toString()
-
 
             if (inputEmail.contains("")) {
                 mBinding.vwLoginEmail.visibility = View.GONE
@@ -61,7 +53,7 @@ class LoginActivity : BaseActivity() {
             startActivity(intent)
             finish()
         }
-
-
     }
+
+
 }
