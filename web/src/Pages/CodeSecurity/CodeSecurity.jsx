@@ -1,18 +1,24 @@
 import './codeSecurity.css';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import logoAside2 from '../../assets/images/logoAside2.svg';
 import smartphoneAside from '../../assets/images/smartphoneAside.svg';
-import {useHistory} from 'react-router-dom'
 import Footer from '../../Components/Footer/Footer';
 import ImageBody from '../../Components/ImageBody/ImageBody';
+import { AuthContext } from '../../Contexts/Auth';
 
 
 
 export default function CodeSecurity() {
-  const history = useHistory();
+  const [codeSecurity, setCodeSecurity] = useState('')
+  const {validateCode} = useContext(AuthContext)
 
-  function handleRedirect() {
-   history.push("/register")
+  function handleValidateCode(e) {
+    e.preventDefault()
+
+    //console.log(codeSecurity)
+    if(codeSecurity !== '') {
+      validateCode(codeSecurity)
+    }
   }
 
   return (
@@ -29,8 +35,8 @@ export default function CodeSecurity() {
                   </p>
                 </div>
                 <span>Código de acesso</span>
-                <input type="text" placeholder="Digiteseu código de acesso"/>
-                <button className="button-primary" onClick={handleRedirect}>Validar</button>
+                <input type="text" placeholder="Digiteseu código de acesso" defaultValue={codeSecurity} onChange={(e) => setCodeSecurity(e.target.value)}/>
+                <button className="button-primary" onClick={handleValidateCode}>Validar</button>
             </div>
           </div>
           </div>

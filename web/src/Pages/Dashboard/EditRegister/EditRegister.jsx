@@ -1,5 +1,5 @@
 import './editRegister.css';
-import React from 'react';
+import React, { useState } from 'react';
 import editUser from '../../../assets/images/editUser.svg';
 import {useHistory} from 'react-router-dom'
 import Navbar from '../../../Components/Navbar/Navbar';
@@ -9,12 +9,7 @@ import Footer from '../../../Components/Footer/Footer';
 
 
 export default function EditRegister() {
-  const history = useHistory();
-
-  function handleRedirect() {
-   history.push("/")
-  }
-
+ 
   return (
     <div className="container">
       <div className="content">
@@ -57,7 +52,7 @@ export default function EditRegister() {
                 <input type="text" placeholder="Senha"/>
                 <span>Confirmar senha</span>
                 <input type="text" placeholder="Confirmar senha"/>
-                <button className="button-primary" onClick={handleRedirect}>Atualizar Cadastro</button>
+                <button className="button-primary">Atualizar Cadastro</button>
             </div>
           </div>
         </div>

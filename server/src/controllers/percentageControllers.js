@@ -12,7 +12,8 @@ module.exports = {
         return res.json(data)
      },
     async update(req, res) {
-        const {_id, percentage} = req.body;
+        const {_id} = req.params;
+        const {percentage} = req.body;
         const dataUser = {percentage}
         const data = await Percentage.findOneAndUpdate({_id}, dataUser, {new: true});
         return res.json(data)

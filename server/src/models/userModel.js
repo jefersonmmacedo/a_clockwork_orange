@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const brypt = require('bcrypt');
 
 const DataSchema = new mongoose.Schema({
-    user: String,
+    name: String,
     email: String,
     role: String,
     password: String

@@ -1,18 +1,32 @@
 import './register.css';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import logoAside2 from '../../assets/images/logoAside2.svg';
 import smartphoneAside from '../../assets/images/smartphoneAside.svg';
-import {useHistory} from 'react-router-dom'
 import Footer from '../../Components/Footer/Footer';
 import ImageBody from '../../Components/ImageBody/ImageBody';
+import { AuthContext } from '../../Contexts/Auth';
+import { toast } from 'react-toastify';
 
 
 
 export default function Register() {
-  const history = useHistory();
+  const {createUser, newEmail} = useContext(AuthContext)
+  const [name, setName] = useState('');
+  const [role, setRole] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  function handleRedirect() {
-   history.push("/")
+  function handleCreateUser() {
+    if(passwordConfirm === password) {
+      createUser(name, newEmail, role, password)
+    } else {
+      toast.error('As senhas não conferem.')
+    }
+  }
+
+  function handleSelectRole(e) {
+    setRole(e.target.value);
+    console.log(e.target.value)
   }
 
   return (
@@ -25,9 +39,11 @@ export default function Register() {
                 <img src={logoAside2} alt="Logo" />
 
                 <span>Nome Completo</span>
-                <input type="text" placeholder="Digite seu nome completo"/>
+                <input type="text" placeholder="Digite seu nome completo" defaultValue={name} onChange={(e) => setName(e.target.value)}/>
+                <span>Nome Completo</span>
+                <input type="text" placeholder="Digite seu nome completo" defaultValue={newEmail} />
                  <span>Qual é a sua função?</span>
-                <select value="">
+                <select defaultValue={role} onChange={handleSelectRole}>
                   <option value="">Selecione Sua Função</option>
                   <option value="Fullstack Developer Jr">Fullstack Developer Jr</option>
                   <option value="Fullstack Developer Pleno">Fullstack Developer Pleno</option>
@@ -51,10 +67,10 @@ export default function Register() {
                   <option value="QA">QA</option>
                 </select>
                 <span>Senha</span>
-                <input type="password" placeholder="Senha"/>
+                <input type="password" placeholder="Senha" defaultValue={password} onChange={(e) => setPassword(e.target.value)}/>
                 <span>Confirmar senha</span>
-                <input type="password" placeholder="Confirmar senha"/>
-                <button className="button-primary" onClick={handleRedirect}>Criar conta</button>
+                <input type="password" placeholder="Confirmar senha" defaultValue={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
+                <button className="button-primary" onClick={handleCreateUser}>Criar conta</button>
             </div>
           </div>
           </div>

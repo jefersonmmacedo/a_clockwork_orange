@@ -6,13 +6,28 @@ module.exports = {
        res.json(data)
     },
 
+    async indexOne(req, res) {
+        const {securityCode} = req.params;
+        console.log({securityCode});
+        const data = await SecurityCode.findOne({securityCode});
+        if(!data) {  
+            res.json(data)           
+         } else {
+            console.log(data)
+            res.json(data)
+         
+        }
+     },
+
+
     async delete(req, res) {
         const {_id} = req.params;
         const data = await SecurityCode.findByIdAndDelete({_id});
         return res.json(data)
      },
     async update(req, res) {
-        const {_id, securityCode} = req.body;
+        const {_id} = req.params;
+        const {securityCode} = req.body;
         const dataUser = {securityCode}
         const data = await SecurityCode.findOneAndUpdate({_id}, dataUser, {new: true});
         return res.json(data)

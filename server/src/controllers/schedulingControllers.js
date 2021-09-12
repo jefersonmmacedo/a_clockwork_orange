@@ -19,15 +19,16 @@ module.exports = {
         return res.json(data)
      },
     async update(req, res) {
-        const {_id, location, shift, date, user, email, role} = req.body;
-        const dataUser = {location, shift, date, user, email, role}
+        const {_id} = req.params;
+        const {location, shift, date, name, email, role} = req.body;
+        const dataUser = {location, shift, date, name, email, role}
         const data = await Scheduling.findOneAndUpdate({_id}, dataUser, {new: true});
         return res.json(data)
      },
 
     async create(req, res){
-        const {location, shift, date, user, email, role} = req.body;
-        const data = {location, shift, date, user, email, role};
+        const {location, shift, date, name, email, role} = req.body;
+        const data = {location, shift, date, name, email, role};
         const  new_scheduling = await Scheduling.create(data);
            
         return res.json(new_scheduling);
