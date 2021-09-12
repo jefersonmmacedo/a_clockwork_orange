@@ -40,19 +40,19 @@ module.exports = {
      },
     async update(req, res) {
         const {_id} = req.params;
-        const {name, email, role, password} = req.body;
-        const dataUser = {name, email, role, password}
+        const {name, lastname, email, role, password} = req.body;
+        const dataUser = {name, lastname, email, role, password}
         const data = await User.findOneAndUpdate({_id}, dataUser, {new: true});
         return res.json(data)
      },
 
     async create(req, res){
-        const {name, email, role, password} = req.body;
+        const {name, lastname, email, role, password} = req.body;
         let data = {}
 
         let new_user =  await User.findOne({email});
         if(!new_user) {
-            data = {name, email, role, password};
+            data = {name, lastname, email, role, password};
             new_user = await User.create(data);
            
             return res.status(200).json(new_user);
@@ -81,7 +81,7 @@ module.exports = {
                     expiresIn: '24h'
                 })
                 res.cookie('token', token, {httpOnly: true})
-                res.status(200).json({auth: true, token: token, user: data.name, role: data.role, email: data.email, _id: data._id})
+                res.status(200).json({auth: true, token: token, name: data.name, lastname: data.lastname, role: data.role, email: data.email, _id: data._id})
             }
         })
     }
