@@ -10,9 +10,8 @@ import { AuthContext } from '../../Contexts/Auth';
 
 
 export default function Login() {
-
-  const [email, setEmail] = useState('');
-  const {validateEmail, userEmail} = useContext(AuthContext);
+   const [email, setEmail] = useState('');
+  const {validateEmail} = useContext(AuthContext);
   
 
   async function handleClick(e) {
