@@ -17,12 +17,12 @@ interface ClockworkService {
     @GET("validator/{email}")
     fun getEmailValidation(
         @Path("email") email: String
-    ): Call<UserFromValidator>
+    ): Call<String>
 
 
     @POST("user/login")
     fun login(
         @Query("email") email: String,
         @Query("password") password: String
-    ) : Call<Token.TokenId>
+    ) : Call<UserFromValidator>
 }

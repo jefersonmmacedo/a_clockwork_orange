@@ -36,9 +36,11 @@ class MainActivity : BaseActivity() {
 
         if (intent.hasExtra(USER)) {
             mUser = intent.getParcelableExtra(USER)!!
+            println(mUser)
+            mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
         }
 
-        mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
+
 
 
 

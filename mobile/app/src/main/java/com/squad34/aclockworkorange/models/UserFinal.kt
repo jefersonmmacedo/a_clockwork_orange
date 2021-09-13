@@ -14,10 +14,12 @@ object UserFinal {
     val name: String?,
     val password: String?,
     val role: String?,
-    val updatedAt: String?
+    val updatedAt: String?,
+    val error: String?
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -42,8 +44,8 @@ object UserFinal {
         parcel.writeString(name)
         parcel.writeString(password)
         parcel.writeString(role)
-
-
+        parcel.writeString(updatedAt)
+        parcel.writeString(error)
     }
 
     companion object CREATOR : Parcelable.Creator<UserFromValidator> {

@@ -11,6 +11,8 @@ object Schedulingdata class Scheduling(
     val name: String,
     val role: String,
     val shift: String
+
+
 )
 
 data class Id(
@@ -19,5 +21,4 @@ data class Id(
 
 data class CreatedAt(
     val `$date`: String
-) {
-}
+)
