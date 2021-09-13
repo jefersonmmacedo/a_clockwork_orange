@@ -104,18 +104,22 @@ class LoginActivity : BaseActivity() {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                 val service: ClockworkService = retrofit.create(ClockworkService::class.java)
-                val listCall= service.login(
-                    mUser.email,
-                    inputPassword
-                )
-                listCall.enqueue(object : Callback<Token.TokenId> {
+                val listCall= mUser.email?.let { it1 ->
+                    service.login(
+                        it1,
+                        inputPassword
+                    )
+                }
+                listCall?.enqueue(object : Callback<Token.TokenId> {
                     override fun onResponse(
                         call: Call<Token.TokenId>,
                         response: Response<Token.TokenId>
                     ) {
                         if (response.isSuccessful){
                             Log.d("Resposta", "$response")
-                            showProgressDialog()
+
+                            intent()
+
 
                         }
 
@@ -133,7 +137,7 @@ class LoginActivity : BaseActivity() {
         }
     }
     private fun intent() {
-        val intent = Intent(this, SchedulingActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(USER, mUser)
         startActivity(intent)
     }

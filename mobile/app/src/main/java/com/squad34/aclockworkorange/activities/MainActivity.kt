@@ -9,8 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.squad34.aclockworkorange.R
+import com.squad34.aclockworkorange.activities.LoginActivity.Companion.USER
 import com.squad34.aclockworkorange.databinding.ActivityLoginBinding
 import com.squad34.aclockworkorange.databinding.ActivityMainBinding
+import com.squad34.aclockworkorange.models.User
+import com.squad34.aclockworkorange.models.UserFinal
+import com.squad34.aclockworkorange.models.UserFromValidator
 import com.squad34.aclockworkorange.utils.Constants
 
 class MainActivity : BaseActivity() {
@@ -19,12 +23,24 @@ class MainActivity : BaseActivity() {
     private lateinit var saoPauloChartView: View
     private val saoPauloWidht:Double = 1.2625
     private val santosWidht:Double = 7.575
+    private lateinit var mUser: UserFromValidator
+    private lateinit var mUserScheduling: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
+
+
+        if (intent.hasExtra(USER)) {
+            mUser = intent.getParcelableExtra(USER)!!
+        }
+
+        mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
+
+
 
         setupActionBar()
 

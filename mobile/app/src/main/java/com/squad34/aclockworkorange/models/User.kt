@@ -32,7 +32,7 @@ fun main() {
     //getUser()
 
     //Funciona mas a api aceita qualquer parametro
-    login()
+    //login()
 
     //Funcionando
     //getId()
@@ -44,7 +44,7 @@ fun main() {
     //createUser()
 
     //Funciona
-    //createScheduledDate()
+    createScheduledDate()
 
     //Funciona
     //getScheduling()
@@ -129,7 +129,7 @@ fun createUser() {
 
 fun createScheduledDate() {
     val (_, _, result) = "http://127.0.0.1:3001/api/scheduling"
-        .httpPost(listOf("location" to "São Paulo", "shift" to "Manhã", "type" to "Estação de Trabalho", "date" to "15/09/2021", "_idUser" to "613d339a72fd2051842d6eb0", "user" to "Carlos Alberto", "email" to "carlosalberto@fcamara.com.br", "role" to "Scrum Master"))
+        .httpPost(listOf("location" to "São Paulo", "shift" to "Manhã", "type" to "Estação de Trabalho", "date" to "16/09/2021", "day" to "Quinta", "_idUser" to "613df39d0248015f4766f9e8", "name" to "Marcos", "lastname" to "Fonseca", "email" to "marcos@fcamara.com.br", "role" to "Scrum Master"))
         .responseString()
     println(result)
 }
