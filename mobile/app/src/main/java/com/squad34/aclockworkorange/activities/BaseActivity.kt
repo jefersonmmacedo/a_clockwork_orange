@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
 import com.squad34.aclockworkorange.R
 
 open class BaseActivity : AppCompatActivity() {
@@ -29,7 +27,7 @@ open class BaseActivity : AppCompatActivity() {
     fun showProgressDialog() {
 
         mProgressDialog = Dialog(this)
-        mProgressDialog.setContentView(R.layout.custom_progress_dialog)
+        mProgressDialog.setContentView(R.layout.dialog_custom_progress)
 
         mProgressDialog.show()
     }

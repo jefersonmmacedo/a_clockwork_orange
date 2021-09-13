@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.View
-import android.view.Window
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squad34.aclockworkorange.R
@@ -24,12 +23,12 @@ import java.time.LocalDate
 import android.util.Log
 import com.squad34.aclockworkorange.adapters.SchedulesConfirmationAdapter
 import com.squad34.aclockworkorange.databinding.DialogConfirmMultipleSchedulingBinding
+import com.squad34.aclockworkorange.databinding.DialogConfirmRecurrentSchedulingBinding
 import com.squad34.aclockworkorange.models.Schedulingdata
 import com.squad34.aclockworkorange.models.UserFromValidator
 import com.squad34.aclockworkorange.network.ClockworkService
 import com.squad34.aclockworkorange.utils.Constants
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import okhttp3.internal.notifyAll
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -164,6 +163,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 }
                 else -> {
                     if (mSelectedType == "Recorrente" || mSelectedDates.size == 1) {
+                        Toast.makeText(this, "Recurrent yyy", Toast.LENGTH_LONG).show()
                         showDialogRecurrent()
                     } else {
                         showDialogNormal()
@@ -242,23 +242,18 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
     }
 
     private fun showDialogRecurrent() {
-        /*val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val dialog = Dialog(this)
+        val bindingRecurrent: DialogConfirmRecurrentSchedulingBinding = DialogConfirmRecurrentSchedulingBinding.inflate(layoutInflater)
         dialog.setCancelable(false)
-        dialog.setContentView(R.layout.confirm_recurrent_scheduling_dialog)
+        dialog.setContentView(bindingRecurrent.root)
 
-        val unit = dialog.findViewById(R.id.tv_selected_unit_recurrent_confirmation) as TextView
-        unit.text = " " + mSelecetdUnit
+        bindingRecurrent.tvSelectedUnitRecurrentConfirmation.text = " " + mSelecetdUnit
 
-        val type = dialog.findViewById(R.id.tv_selected_type_recurrent_confirmation) as TextView
-        type.text = " " + mSelectedType
+        bindingRecurrent.tvSelectedTypeRecurrentConfirmation.text = " " + mSelectedType
 
-        val dayOfWeek = mSelectedDates[0].dayOfWeek
-        val dayOfWeekText =
-            dialog.findViewById(R.id.tv_day_of_week_recurrent_confirmation) as TextView
-        dayOfWeekText.text = "Dia da semana: " + dayOfWeek
+        bindingRecurrent.tvDayOfWeekRecurrentConfirmation.text = "Dia da semana: " + mSelectedDates[0].dayOfWeek
 
-        val dates = dialog.findViewById(R.id.tv_dates_selected_recurrent_confirmation) as TextView
+        val dates = bindingRecurrent.tvDatesSelectedRecurrentConfirmation
         if (mSelectedDates.size > 1) {
             var createDates = "Datas:"
             for (i in mSelectedDates.indices) {
@@ -272,27 +267,25 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             }
             dates.text = createDates
         } else {
-            var createDates = "Data: " + mSelectedDates[0].date
+            val createDates = "Data: " + mSelectedDates[0].date
             dates.text = createDates
+        }
+        bindingRecurrent.tvShiftSelectedRecurrentConfirmation.text = mShift
 
+        bindingRecurrent.btnConfirmRecurrentConfirmation.setOnClickListener {
+            for (i in mSelectedDates.indices) {
+                scheduleToBD(mSelectedDates[i])
+            }
         }
 
-        val shift = dialog.findViewById(R.id.tv_shift_selected_recurrent_confirmation) as TextView
-        shift.text = mShift
-
-        //val confirmationButton =
-        //    dialog.findViewById(R.id.btn_confirm_recurrent_confirmation) as Button
-        //val cancelButton = dialog.findViewById(R.id.btn_cancel_recurrent_confirmation) as Button
-
-        val dismissButton = dialog.findViewById(R.id.ib_cancel_dialog_recurrent) as ImageButton
-        dismissButton.setOnClickListener { dialog.dismiss() }
-        confirmationButton.setOnClickListener {
-            //TODO Fazer a implementação para criar o objeto Scheduling, que será enviado ao banco de dados
+        bindingRecurrent.ibCancelDialogRecurrent.setOnClickListener {
             dialog.dismiss()
         }
-        cancelButton.setOnClickListener { dialog.dismiss() }
 
-        dialog.show()*/
+        bindingRecurrent.btnCancelRecurrentConfirmation.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     private fun showDialogNormal() {
@@ -320,7 +313,6 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             for (i in mSelectedDates.indices) {
                 scheduleToBD(mSelectedDates[i])
             }
-
         }
 
         dialog.show()

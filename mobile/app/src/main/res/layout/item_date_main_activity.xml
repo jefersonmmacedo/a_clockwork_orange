@@ -11,7 +11,7 @@
 
         <TextView
             android:id="@+id/tv_unit_in_main_recycler"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="São Paulo"
             android:gravity="center"
@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/tv_shift_in_main_recycler"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="Manhã"
             android:gravity="center"
@@ -35,7 +35,7 @@
 
         <TextView
             android:id="@+id/tv_date_in_main_recycler"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="16/09/2021"
             android:gravity="center"
