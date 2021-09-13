@@ -74,8 +74,12 @@ class LoginActivity : BaseActivity() {
                         ) {
 
                             if (response.body() == null) {
-                                Toast.makeText(this@LoginActivity, "Email não cadastrado no sistema!", Toast.LENGTH_LONG).show()
-                            }else{
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Email não cadastrado no sistema!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
 
                                 email = response.body().toString()
                                 mBinding.vwLoginEmail.visibility = View.GONE
@@ -94,8 +98,9 @@ class LoginActivity : BaseActivity() {
                     })
 
                 }
-            }else{
-                Toast.makeText(this, "Você deve digitar seu email corporativo!", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Você deve digitar seu email corporativo!", Toast.LENGTH_LONG)
+                    .show()
             }
 
 
@@ -105,24 +110,25 @@ class LoginActivity : BaseActivity() {
 
         mBinding.btnLogin.setOnClickListener {
 
-           val inputPassword = mBinding.etPassword.text.toString()
+            val inputPassword = mBinding.etPassword.text.toString()
 
             if (Constants.isNetworkAvailable(this)) {
                 val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                 val service: ClockworkService = retrofit.create(ClockworkService::class.java)
-                val listCall= service.login(
-                        email,
-                        inputPassword
-                    )
+                val listCall = service.login(
+                    email,
+                    inputPassword
+                )
+
 
                 listCall.enqueue(object : Callback<UserFromValidator> {
                     override fun onResponse(
                         call: Call<UserFromValidator>,
                         response: Response<UserFromValidator>
                     ) {
-                        if (response.isSuccessful){
+                        if (response.isSuccessful) {
 
                             mUser = UserFromValidator(0,"613df39d0248015f4766f9e8", "2021-09-12T12:33:33.067+00:00", "marcos@fcamara.com.br", "Fonseca", "Marcos", "", "Scrum Master", "2021-09-13T03:31:18.797+00:00", "")
                             intent()
@@ -130,16 +136,23 @@ class LoginActivity : BaseActivity() {
 
                             println("Mensagem de retorno : ${response.body().toString()}")
                             if (mUser.error == "User not found.") {
-                                Toast.makeText(this@LoginActivity, "Email não cadastrado!", Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Email não cadastrado!",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             } else if (mUser.error == "Invalid password.") {
-                                Toast.makeText(this@LoginActivity, "Senha incorreta!", Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Senha incorreta!",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             } else {
                                 mUser = response.body()!!
 
                                 println(mUser.name)
                                 intent()
                             }*/
-
 
 
                         }
@@ -157,6 +170,7 @@ class LoginActivity : BaseActivity() {
             }
         }
     }
+
     private fun intent() {
         val intent = Intent(this, MainActivity::class.java)
         println(mUser)

@@ -32,7 +32,7 @@ fun main() {
     //getUser()
 
     //Funciona mas a api aceita qualquer parametro
-    login()
+    //login()
 
     //Funcionando
     //getId()
@@ -47,7 +47,7 @@ fun main() {
     //createScheduledDate()
 
     //Funciona
-    //getScheduling()
+    getScheduling()
 
     //Não funciona
     //updateUser()
@@ -77,13 +77,15 @@ fun validator() {
 }
 
 fun login() {
-    val email = "eduardo@fcamara.com.br"
+    val email = "eduardowasem@fcamara.com.br"
     val password = "12345"
 
-    val (_, _, result) = ("http://127.0.0.1:3001/api/user/login/?email=$email&password=$password")
+    val (_, _, result) = ("http://127.0.0.1:3001/api/user/login/:email=$email&password=$password")
         .httpPost()
         .responseString()
     println(result)
+
+   // "http://127.0.0.1:3001/api/user/login/?email=eduardowasem@fcamara.com.br&password=12345"
 }
 
 fun getId() {
