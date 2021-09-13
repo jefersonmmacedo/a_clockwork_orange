@@ -21,7 +21,7 @@ export default function Scheduling() {
   const [recurrent, setRecurrent] = useState('');
 
   function handleScheduling () {
-    scheduling(location, shift, type, date, user._id, user.name,user.lastname, user.email, user.role)
+    scheduling(location, shift, type, date, user._id, user.name,user.lastname, user.email, user.role, recurrent)
   }
 
   function handleRedirect() {
@@ -84,8 +84,8 @@ export default function Scheduling() {
                 <span>Que tipo de agendamento deseja fazer?</span>
                 <select defaultValue={recurrent} onChange={handleSelectRecurrent}>
                   <option value="">Dia único / Recorrente</option>
-                  <option value="Dia único">Dia único</option>
-                  <option value="Recorrente">Recorrente</option>
+                  <option value="unic">Dia único</option>
+                  <option value="recurrent">Recorrente</option>
                 </select>
 
 

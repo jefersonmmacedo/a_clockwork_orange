@@ -80,6 +80,47 @@ function AuthProvider({children}) {
 
         }
     }
+    async function schedulingRecurrent(location, shift, type, date, _idUser, name,lastname, email, role) {
+        const dateNew = date.split('-').reverse().join('/');
+        const Day = new Date(date) ;
+        const dateDay = Day.getDay() + 1;
+        let bdDay = '';
+        switch(dateDay) {
+            case 1:
+            bdDay = 'Segunda-Feira';
+            break;
+            case 2:
+            bdDay = 'Terça-Feira';
+            break;
+            case 3:
+            bdDay = 'Quarta-Feira';
+            break;
+            case 4:
+            bdDay = 'Quinta-Feira';
+            break;
+            case 5:
+            bdDay = 'Sexta-Feira';
+            break;
+            case 6:
+            bdDay = 'Sábado';
+            break;
+            case 7:
+            bdDay = 'Domingo';
+            break;
+        }
+
+        
+        const data = {location, shift, type, date: dateNew, day: bdDay, _idUser, name,lastname, email, role};
+
+       const res = await api.post('/api/scheduling', data);
+       console.log(res.data)
+       if(res.status === 200) {
+           toast.success('Agendamento efetuado com sucesso. Efetue seu login');
+           history.push('/dashboard/dashboard')
+         } else {
+           toast.error('Ops. Ocorreu um erro.');
+         }
+    }
 
     async function scheduling(location, shift, type, date, _idUser, name,lastname, email, role) {
         const dateNew = date.split('-').reverse().join('/');
@@ -110,7 +151,6 @@ function AuthProvider({children}) {
             break;
         }
         const data = {location, shift, type, date: dateNew, day: bdDay, _idUser, name,lastname, email, role};
-        
 
        const res = await api.post('/api/scheduling', data);
        console.log(res.data)
