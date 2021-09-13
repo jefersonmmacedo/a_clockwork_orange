@@ -8,12 +8,13 @@ const routes = express.Router()
 //CREATE USERS
 routes.get('/api/user', userControllers.index) // Buscar usuarios
 routes.post('/api/user/login', userControllers.login) //Logar
+routes.post('/api/user/ckeckToken', userControllers.token) //Logar
 routes.get('/api/user/:_id', userControllers.indexOne)  //Buscar usuario pelo id ( ID passado na rota como parametro)
 routes.get('/api/validator/:email', userControllers.indexFcamara) //Validar o email
 routes.delete('/api/user/:_id', userControllers.delete) //Deletar usuario ( ID passado na rota como parametro)
 routes.put('/api/user/:_id', userControllers.update) //Atualizar
 routes.post('/api/user',userControllers.create) //Criar usuario
-
+-
 //CREATE PERCENTAGE
 routes.get('/api/percentage', percentageControllers.index)
 routes.delete('/api/percentage/:_id', percentageControllers.delete)

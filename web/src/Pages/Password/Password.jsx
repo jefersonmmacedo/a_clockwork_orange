@@ -31,7 +31,7 @@ export default function Password() {
             <div className="itens">
                 <img src={logoAside2} alt="Logo" />
                 <span>Senha</span>
-                <input type="text" placeholder="Digite sua senha" defaultValue={password} onChange={(e) => setPassword(e.target.value)}/>
+                <input type="password" placeholder="Digite sua senha" defaultValue={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button className="button-primary" onClick={handleLogin}>Entrar</button>
                 <span>Esqueci a Senha</span>
             </div>

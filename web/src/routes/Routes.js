@@ -18,12 +18,11 @@ function Routes() {
         <RouteWrapper exact path="/login" component={Login}/>
         <RouteWrapper exact path="/password" component={Password}/>
         <RouteWrapper exact path="/codesecurity" component={CodeSecurity}/>
-        <RouteWrapper exact path="/password" component={Password}/>
         <RouteWrapper exact path="/register" component={Register}/>
-        <RouteWrapper exact path="/dashboard" component={Dashboard}/>
-        <RouteWrapper exact path="/scheduling" component={Scheduling}/>
-        <RouteWrapper exact path="/editscheduling" component={EditScheduling}/>
-        <RouteWrapper exact path="/editregister" component={EditRegister}/>
+        <RouteWrapper exact path="/dashboard/dashboard" component={Dashboard} isPrivate/>
+        <RouteWrapper exact path="/dashboard/scheduling" component={Scheduling} isPrivate/>
+        <RouteWrapper exact path="/dashboard/editscheduling" component={EditScheduling} isPrivate/>
+        <RouteWrapper exact path="/dashboard/editregister" component={EditRegister} isPrivate/>
     </Switch>
     )
 }

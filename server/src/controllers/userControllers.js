@@ -27,8 +27,8 @@ module.exports = {
            if(!data) {  
                res.json(data)           
             } else {
-               console.log(data)
-               res.json(data)
+               console.log(data.email)
+               res.json(data.email)
             
            }
    
@@ -70,11 +70,12 @@ module.exports = {
         const user = await User.findOne({ email }).select('+password')
     
     if(!user) {
-      return res.status(400).json({ error: 'User not found.' })
+      return res.status(200).json({ error: 'User not found.' })
     }
 
     if(!await bcrypt.compare(password, user.password)) {
-      return res.status(400).json({ error: 'Invalid password.' });
+     // return res.status(200).json(null);
+      return res.status(200).json({ error: 'Invalid password.' });
     }
 
     user.password = undefined;
@@ -87,5 +88,20 @@ module.exports = {
     res.cookie('token', token, {httpOnly: true})
     res.status(200).json({auth: true, token: token, name: user.name, lastname: user.lastname, role: user.role, email: user.email, _id: user._id})   
 
+    },
+
+    async token(req, res) {
+        const token = req.body.token || req.query.token || req.cookies.token || req.headers['x-access-token'];
+        if(!token){
+            res.json({status: 401, msg: 'Não Autorizado'})
+        } else {
+            jwt.verify(token, secret, function(err, decoded) {
+                if(err) {
+                    res.json({status: 401, msg: 'Não Autorizado' })
+                } else {
+                    res.json({status:200})
+                }
+            })
+        }
     }
 }

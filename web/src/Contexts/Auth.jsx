@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
 import {toast} from 'react-toastify';
@@ -8,10 +8,24 @@ export const AuthContext = createContext({});
 
 function AuthProvider({children}) {
     const history = useHistory();
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState(null);
     const [newEmail, setNewEmail] = useState('');
     const [email, setEmail] = useState('');
     const [codeSecurity, setCodeSecurity] = useState('');
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        function loadStorage() {
+            const storageUser = localStorage.getItem("fcamara");
+
+        if(storageUser) {
+            setUser(JSON.parse(storageUser));
+            setLoading(false);
+        }
+        setLoading(false);
+        }
+        loadStorage();
+    },[])
   
 
     async function validateEmail(email) {
@@ -59,9 +73,21 @@ function AuthProvider({children}) {
             toast.error('Senha incorreta.');
         } else {
             toast.success(`Seja bem-vindo(a), ${res.data.name}`);
+            setUser(res.data);
+            storageUser(res.data);
+            setLoading(false)
             console.log(res.data)
 
         }
+    }
+
+    function storageUser(data) {
+        localStorage.setItem("fcamara", JSON.stringify(data));
+    }
+
+    function logout() {
+        localStorage.removeItem("fcamara")
+        setUser(null)
     }
 
     return (
@@ -71,10 +97,14 @@ function AuthProvider({children}) {
             validateCode,
             createUser,
             login,
+            storageUser,
+            logout,
             email,
             newEmail,
             codeSecurity,
-            user
+            signed: !!user,
+            user,
+            loading
         }}
         >
          {children}   
