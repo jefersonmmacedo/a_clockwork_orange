@@ -31,4 +31,20 @@ interface ClockworkService {
         @Field("password") password: String
     ): Call<UserFromValidator>
 
+    @FormUrlEncoded
+    @POST("scheduling")
+    fun scheduleDate(
+        @Field("location") location: String,
+        @Field("shift") shift: String,
+        @Field("type") type: String,
+        @Field("date") date: String,
+        @Field("day") day: String,
+        @Field("_idUser") _idUser: String,
+        @Field("name") name: String,
+        @Field("lastname") lastname: String,
+        @Field("email") email: String,
+        @Field("role") role: String
+
+    ): Call<Schedulingdata.DateScheduling>
+
 }

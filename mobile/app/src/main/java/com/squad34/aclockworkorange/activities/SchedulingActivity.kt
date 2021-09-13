@@ -1,10 +1,10 @@
 package com.squad34.aclockworkorange.activities
 
-import android.R.attr
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.os.IResultReceiver
 import android.text.TextUtils
 import android.view.Menu
 import android.view.View
@@ -20,23 +20,22 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.widget.AutoCompleteTextView
 import androidx.annotation.RequiresApi
-import androidx.core.view.get
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.Calendar.LONG_FORMAT
-import android.R.attr.maxDate
-import android.content.DialogInterface
-import android.net.sip.SipSession
-import android.widget.DatePicker
-import androidx.recyclerview.widget.RecyclerView
+import android.util.Log
 import com.squad34.aclockworkorange.adapters.SchedulesConfirmationAdapter
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-import kotlinx.android.synthetic.main.confirm_multiple_scheduling_dialog.*
-import kotlinx.android.synthetic.main.confirm_recurrent_scheduling_dialog.*
-import java.lang.reflect.Array.newInstance
+import com.squad34.aclockworkorange.databinding.DialogConfirmMultipleSchedulingBinding
+import com.squad34.aclockworkorange.models.Schedulingdata
+import com.squad34.aclockworkorange.models.UserFromValidator
+import com.squad34.aclockworkorange.network.ClockworkService
+import com.squad34.aclockworkorange.utils.Constants
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import okhttp3.internal.notifyAll
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.Calendar.getInstance
-import kotlin.properties.Delegates
 
 
 open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
@@ -54,11 +53,17 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
     private lateinit var calendar: Calendar
     private val dateFake = arrayListOf("13/09/2021", "14/09/2021", "15/09/2021")
     private var datesToDisable = ArrayList<Calendar>()
+    private lateinit var mUser: UserFromValidator
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        mUser = intent.getParcelableExtra(MainActivity.USERSCHEDULE)!!
+
+
 
         mBinding = ActivitySchedulingBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
@@ -168,6 +173,8 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             }
         }
         mBinding.btnCancel.setOnClickListener {
+            val intent = Intent()
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }
@@ -190,7 +197,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         textFieldSchedulingType?.setAdapter(adapterSchedulingType)
 
         val textFieldShift = mBinding.actvShift as? AutoCompleteTextView
-        val shift = arrayListOf("Manhã", "Tarde", "Integral")
+        val shift = arrayListOf("Manhã", "Tarde", "Dia Inteiro")
         val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
         textFieldShift?.setAdapter(adapterShift)
     }
@@ -235,7 +242,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
     }
 
     private fun showDialogRecurrent() {
-        val dialog = Dialog(this)
+        /*val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.confirm_recurrent_scheduling_dialog)
@@ -273,9 +280,9 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         val shift = dialog.findViewById(R.id.tv_shift_selected_recurrent_confirmation) as TextView
         shift.text = mShift
 
-        val confirmationButton =
-            dialog.findViewById(R.id.btn_confirm_recurrent_confirmation) as Button
-        val cancelButton = dialog.findViewById(R.id.btn_cancel_recurrent_confirmation) as Button
+        //val confirmationButton =
+        //    dialog.findViewById(R.id.btn_confirm_recurrent_confirmation) as Button
+        //val cancelButton = dialog.findViewById(R.id.btn_cancel_recurrent_confirmation) as Button
 
         val dismissButton = dialog.findViewById(R.id.ib_cancel_dialog_recurrent) as ImageButton
         dismissButton.setOnClickListener { dialog.dismiss() }
@@ -285,39 +292,35 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         }
         cancelButton.setOnClickListener { dialog.dismiss() }
 
-        dialog.show()
+        dialog.show()*/
     }
 
     private fun showDialogNormal() {
         val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.confirm_multiple_scheduling_dialog)
+        val bindingDialogNormal: DialogConfirmMultipleSchedulingBinding =
+            DialogConfirmMultipleSchedulingBinding.inflate(layoutInflater)
+        dialog.setContentView(bindingDialogNormal.root)
 
-        val unit = dialog.findViewById(R.id.tv_selected_unit_multiple_confirmation) as TextView
-        unit.text = " " + mSelecetdUnit
+        bindingDialogNormal.tvSelectedUnitMultipleConfirmation.text = " " + mSelecetdUnit
 
-        val rvDates =
-            dialog.findViewById(R.id.rv_dates_selected_multiple_confirmation) as RecyclerView
+        val rvDates = bindingDialogNormal.rvDatesSelectedMultipleConfirmation
         rvDates.layoutManager = LinearLayoutManager(this)
         rvDates.setHasFixedSize(true)
         val adapter = SchedulesConfirmationAdapter(this, mSelectedDates)
         rvDates.adapter = adapter
 
-        val shift = dialog.findViewById(R.id.tv_shift_selected_multiple_confirmation) as TextView
-        shift.text = mShift
-
-        val confirmationButton =
-            dialog.findViewById(R.id.btn_confirm_multiple_confirmation) as Button
-        val cancelButton = dialog.findViewById(R.id.btn_cancel_multiple_confirmation) as Button
-        val dismissButton = dialog.findViewById(R.id.ib_cancel_normal_confirmation) as ImageButton
-        dismissButton.setOnClickListener { dialog.dismiss() }
-        confirmationButton.setOnClickListener {
-            //TODO Fazer a implementação para criar o objeto Scheduling, que será enviado ao banco de dados
+        bindingDialogNormal.tvShiftSelectedMultipleConfirmation.text = mShift
+        bindingDialogNormal.btnCancelMultipleConfirmation.setOnClickListener {
             dialog.dismiss()
         }
-        cancelButton.setOnClickListener {
+        bindingDialogNormal.ibCancelNormalConfirmation.setOnClickListener {
             dialog.dismiss()
+        }
+        bindingDialogNormal.btnConfirmMultipleConfirmation.setOnClickListener {
+            for (i in mSelectedDates.indices) {
+                scheduleToBD(mSelectedDates[i])
+            }
+
         }
 
         dialog.show()
@@ -432,5 +435,56 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         }
 
         hideProgressDialog()
+    }
+
+    fun scheduleToBD(date: DateSelected) {
+
+        if (Constants.isNetworkAvailable(this)) {
+            val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service: ClockworkService = retrofit.create(ClockworkService::class.java)
+            val listCall = service.scheduleDate(
+                mSelecetdUnit,
+                mShift,
+                mSelectedType,
+                date.date,
+                date.dayOfWeek,
+                mUser._id!!,
+                mUser.name!!,
+                mUser.lastname!!,
+                mUser.email!!,
+                mUser.role!!
+            )
+
+            println(listCall)
+            listCall.enqueue(object : Callback<Schedulingdata.DateScheduling> {
+                override fun onResponse(
+                    call: Call<Schedulingdata.DateScheduling>,
+                    response: Response<Schedulingdata.DateScheduling>
+                ) {
+                    if (response.isSuccessful) {
+                        println("Mensagem de retorno : ${response.body().toString()}")
+                        Toast.makeText(this@SchedulingActivity, "Datas agendadas com sucesso!", Toast.LENGTH_LONG).show()
+                        val intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<Schedulingdata.DateScheduling>,
+                    t: Throwable
+                ) {
+                    Log.e("Erro", t.message.toString())
+                }
+            })
+
+
+        }
+
+    }
+    companion object{
+        const val USERFROMSCHEDULE: String = "userFromSchedule"
     }
 }

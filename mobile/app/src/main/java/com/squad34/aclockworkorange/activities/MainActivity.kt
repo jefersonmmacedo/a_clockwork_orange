@@ -1,10 +1,13 @@
 package com.squad34.aclockworkorange.activities
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.activities.LoginActivity.Companion.USER
@@ -18,6 +21,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MainActivity : BaseActivity() {
     private lateinit var mBinding: ActivityMainBinding
@@ -28,6 +33,8 @@ class MainActivity : BaseActivity() {
     private lateinit var mUser: UserFromValidator
     private var allSchedules = ArrayList<Schedulingdata.DateScheduling>()
     private var mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
+    private var mMaxSaoPaulo = Constants.SAO_PAULO_MAX_QUANTITY
+    private var mMaxSantos = Constants.SANTOS_MAX_QUANTITY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +51,7 @@ class MainActivity : BaseActivity() {
         }
 
         getScheduling()
+
 
 
 
@@ -75,11 +83,18 @@ class MainActivity : BaseActivity() {
 
         mBinding.btnSchedule.setOnClickListener {
             val intent = Intent(this, SchedulingActivity::class.java)
-
-            startActivity(intent)
+            intent.putExtra(USERSCHEDULE, mUser)
+            startActivityForResult(intent, SCHEDULE_CODE)
         }
+    }
 
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SCHEDULE_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                getScheduling()
+            }
+        }
     }
 
     private fun populateDatesinRecycler(dates: ArrayList<Schedulingdata.DateScheduling>) {
@@ -87,7 +102,7 @@ class MainActivity : BaseActivity() {
         if (dates.indices.isEmpty()) {
             mBinding.llRv.visibility = View.GONE
             mBinding.tvNoDatesScheduled.visibility = View.VISIBLE
-        }else{
+        } else {
             mBinding.llRv.visibility = View.VISIBLE
             mBinding.tvNoDatesScheduled.visibility = View.GONE
 
@@ -140,7 +155,7 @@ class MainActivity : BaseActivity() {
                 ) {
                     allSchedules = response.body()!!
 
-                    if (allSchedules.size>0){
+                    if (allSchedules.size > 0) {
                         for (i in allSchedules.indices) {
                             if (allSchedules[i]._idUser == mUser._id) {
                                 println("Id nos agendamensos: ${allSchedules[i]._idUser}")
@@ -169,9 +184,25 @@ class MainActivity : BaseActivity() {
 
 
         } else {
-            Toast.makeText(this, "Não foi possível baixar os dados, tente mais tarde!", Toast.LENGTH_LONG)
+            Toast.makeText(
+                this,
+                "Não foi possível baixar os dados, tente mais tarde!",
+                Toast.LENGTH_LONG
+            )
                 .show()
 
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updateCharts(dates: ArrayList<Schedulingdata.DateScheduling>) {
+        val currentDay = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val today = currentDay.format(formatter)
+        for (i in dates.indices) {
+            if (dates[i].date == today) {
+
+            }
         }
     }
 
@@ -185,5 +216,8 @@ class MainActivity : BaseActivity() {
     companion object {
         var EDITSCHEDULE = "EditSchedule"
         var POSITION = "position"
+        var USERSCHEDULE = "user"
+        var SCHEDULE_CODE = 3
 
-}}
+    }
+}
