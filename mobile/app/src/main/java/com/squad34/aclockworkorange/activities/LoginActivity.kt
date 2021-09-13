@@ -130,9 +130,9 @@ class LoginActivity : BaseActivity() {
                     ) {
                         if (response.isSuccessful) {
 
-                            mUser = UserFromValidator(0,"613df39d0248015f4766f9e8", "2021-09-12T12:33:33.067+00:00", "marcos@fcamara.com.br", "Fonseca", "Marcos", "", "Scrum Master", "2021-09-13T03:31:18.797+00:00", "")
-                            intent()
-                            /*mUser = response.body()!!
+                            /*mUser = UserFromValidator(0,"613df39d0248015f4766f9e8", "2021-09-12T12:33:33.067+00:00", "marcos@fcamara.com.br", "Fonseca", "Marcos", "", "Scrum Master", "2021-09-13T03:31:18.797+00:00", "")
+                            intent()*/
+                            mUser = response.body()!!
 
                             println("Mensagem de retorno : ${response.body().toString()}")
                             if (mUser.error == "User not found.") {
@@ -152,7 +152,7 @@ class LoginActivity : BaseActivity() {
 
                                 println(mUser.name)
                                 intent()
-                            }*/
+                            }
 
 
                         }

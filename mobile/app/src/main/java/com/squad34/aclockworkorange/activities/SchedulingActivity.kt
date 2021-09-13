@@ -212,6 +212,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
     }
 
+
     private fun populateDatesList(date: ArrayList<DateSelected>) {
         mBinding.rvDatesSelected.layoutManager = LinearLayoutManager(this)
         mBinding.rvDatesSelected.setHasFixedSize(true)

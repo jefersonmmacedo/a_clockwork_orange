@@ -1,17 +1,14 @@
 package com.squad34.aclockworkorange.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.activities.LoginActivity.Companion.USER
-import com.squad34.aclockworkorange.databinding.ActivityLoginBinding
+import com.squad34.aclockworkorange.adapters.SchedulesMainAdapter
 import com.squad34.aclockworkorange.databinding.ActivityMainBinding
 import com.squad34.aclockworkorange.models.*
 import com.squad34.aclockworkorange.network.ClockworkService
@@ -29,8 +26,8 @@ class MainActivity : BaseActivity() {
     private val saoPauloWidht: Double = 1.2625
     private val santosWidht: Double = 7.575
     private lateinit var mUser: UserFromValidator
-    private lateinit var allSchedules: ArrayList<Schedulingdata.DateScheduling>
-    private lateinit var mUserScheduling: ArrayList<Schedulingdata.DateScheduling>
+    private var allSchedules = ArrayList<Schedulingdata.DateScheduling>()
+    private var mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,13 +45,9 @@ class MainActivity : BaseActivity() {
 
         getScheduling()
 
-        if (allSchedules.size>0){
-            for (i in allSchedules.indices) {
-                if (allSchedules[i]._idUser == mUser._id) {
-                    mUserScheduling.add(allSchedules[i])
-                }
-            }
-        }
+
+
+
 
 
 
@@ -84,6 +77,24 @@ class MainActivity : BaseActivity() {
             val intent = Intent(this, SchedulingActivity::class.java)
 
             startActivity(intent)
+        }
+
+
+    }
+
+    private fun populateDatesinRecycler(dates: ArrayList<Schedulingdata.DateScheduling>) {
+
+        if (dates.indices.isEmpty()) {
+            mBinding.llRv.visibility = View.GONE
+            mBinding.tvNoDatesScheduled.visibility = View.VISIBLE
+        }else{
+            mBinding.llRv.visibility = View.VISIBLE
+            mBinding.tvNoDatesScheduled.visibility = View.GONE
+
+            mBinding.rvDatesInMain.layoutManager = LinearLayoutManager(this)
+            mBinding.rvDatesInMain.setHasFixedSize(true)
+            val adapter = SchedulesMainAdapter(this, dates)
+            mBinding.rvDatesInMain.adapter = adapter
         }
 
 
@@ -129,8 +140,20 @@ class MainActivity : BaseActivity() {
                 ) {
                     allSchedules = response.body()!!
 
+                    if (allSchedules.size>0){
+                        for (i in allSchedules.indices) {
+                            if (allSchedules[i]._idUser == mUser._id) {
+                                println("Id nos agendamensos: ${allSchedules[i]._idUser}")
+                                println("Id usuario: ${mUser._id}")
+                                mUserScheduling.add(allSchedules[i])
 
-                    println(allSchedules)
+
+                            }
+
+                        }
+                        populateDatesinRecycler(mUserScheduling)
+                        println(mUserScheduling)
+                    }
 
                 }
 
@@ -151,4 +174,16 @@ class MainActivity : BaseActivity() {
 
         }
     }
-}
+
+    fun editSchedule(position: Int) {
+        val intent = Intent(this, EditScheduleActivity::class.java)
+        intent.putExtra(EDITSCHEDULE, mUserScheduling)
+        intent.putExtra(POSITION, position)
+        startActivity(intent)
+    }
+
+    companion object {
+        var EDITSCHEDULE = "EditSchedule"
+        var POSITION = "position"
+
+}}
