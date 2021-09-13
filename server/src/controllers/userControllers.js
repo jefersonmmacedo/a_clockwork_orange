@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const secret = 'secretpasswordkey';
+const bcrypt = require('bcrypt')
 
 module.exports = {
     async index(req, res) {
@@ -62,27 +63,29 @@ module.exports = {
 
     },
 
-    async login(req, res){
+    async login(req, res) {
         const {email, password} = req.body;
         console.log(email, password);
-        
 
-        User.find({email, password}, function(err, data) {
-            console.log(data)
-            if(err) {
-                console.log(err);
-                res.status(200).json({error: "Erro ao acessar o sistema. Tenta novamente mais tarde"})
-            } else if(!data) {
-                console.log(data)
-                res.status(200).json({error: "Email ou senha não conferem"})
-            } else {
-                const payload = {email, password};
-                const token = jwt.sign(payload, secret, {
-                    expiresIn: '24h'
-                })
-                res.cookie('token', token, {httpOnly: true})
-                res.status(200).json({auth: true, token: token, name: data.name, lastname: data.lastname, role: data.role, email: data.email, _id: data._id})
-            }
-        })
+        const user = await User.findOne({ email }).select('+password')
+    
+    if(!user) {
+      return res.status(400).json({ error: 'User not found.' })
+    }
+
+    if(!await bcrypt.compare(password, user.password)) {
+      return res.status(400).json({ error: 'Invalid password.' });
+    }
+
+    user.password = undefined;
+
+    console.log(user);
+    const payload = {email};
+    const token = jwt.sign(payload, secret, {
+        expiresIn: '24h'
+    })
+    res.cookie('token', token, {httpOnly: true})
+    res.status(200).json({auth: true, token: token, name: user.name, lastname: user.lastname, role: user.role, email: user.email, _id: user._id})   
+
     }
 }
