@@ -66,14 +66,6 @@ export default function Scheduling() {
                   <option value="Santos">Santos</option>
                 </select>
 
-                <span>Turno</span>
-                <select defaultValue={shift} onChange={handleSelectShift}>
-                  <option value="">Escolha o turno de trabalho</option>
-                  <option value="Manhã">Manhã</option>
-                  <option value="Tarde">Tarde</option>
-                  <option value="Dia Inteiro">Dia Inteiro</option>
-                </select>
-
                 <span>O que deseja Agendar?</span>
                 <select defaultValue={type} onChange={handleSelectType}>
                   <option value="">O que deseja agendar?</option>
@@ -81,14 +73,43 @@ export default function Scheduling() {
                   <option value="Sala de Reuniões">Sala de Reuniões</option>
                 </select>
 
-                <span>Que tipo de agendamento deseja fazer?</span>
-                <select defaultValue={recurrent} onChange={handleSelectRecurrent}>
-                  <option value="">Dia único / Recorrente</option>
-                  <option value="unic">Dia único</option>
-                  <option value="recurrent">Recorrente</option>
+                <span>Turno / Período</span>
+                {type === 'Estação de trabalho' ?
+                <select defaultValue={shift} onChange={handleSelectShift}>
+                  <option value="">Escolha o turno de trabalho</option>
+                  <option value="Manhã">Manhã</option>
+                  <option value="Tarde">Tarde</option>
+                  <option value="Dia Inteiro">Dia Inteiro</option>
                 </select>
+                :
+                <select defaultValue={shift} onChange={handleSelectShift}>
+                <option value="">Escolha o período</option>
+                <option value="08h às 10h">08h às 10h</option>
+                <option value="10h às 12h">10h às 12h</option>
+                <option value="12h às 14h">12h às 14h</option>
+                <option value="14h às 16h">14h às 16h</option>
+                <option value="16h às 18h">16h às 18h</option>
+                </select>
+                }
 
 
+                <span>Que tipo de agendamento deseja fazer?</span>
+                {type === '' ? 
+                 <select defaultValue={recurrent} onChange={handleSelectRecurrent}>
+                 <option value="">Tipo de agendamento</option>
+               </select>
+             
+               :type === 'Estação de trabalho' ?
+               <select defaultValue={recurrent} onChange={handleSelectRecurrent}>
+                <option value="">Escolha: Dia único ou Recorrente</option>
+                <option value="unic">Dia único</option>
+                <option value="recurrent">Recorrente</option>
+                </select>
+              :
+              <select defaultValue={recurrent} onChange={handleSelectRecurrent}>
+                  <option value="unic">Dia único</option>
+                </select>
+                }
                
                 <div className="text">
                   <p>Esse é o seu primeiro acesso ao sistema,
