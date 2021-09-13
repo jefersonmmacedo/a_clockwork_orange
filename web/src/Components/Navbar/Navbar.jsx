@@ -14,7 +14,7 @@ export default function Navbar(){
     return (
         <div className="navbar">
             <img src={logo} alt="Logo FCamara" />
-            <button onClick={handleLogout}>
+            <button className="button-none" onClick={handleLogout}>
             <FiLogOut size={24} color="#36357E"/>
             </button>
 

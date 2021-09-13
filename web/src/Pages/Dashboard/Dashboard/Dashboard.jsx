@@ -1,20 +1,23 @@
 import './dashboard.css';
-import React from 'react';
+import React, { useContext } from 'react';
 import userScheduling from '../../../assets/images/userScheduling.svg';
 import {useHistory} from 'react-router-dom'
 import Footer from '../../../Components/Footer/Footer';
 import {FiUser, FiCalendar, FiEdit, FiTrash2} from 'react-icons/fi';
 import Navbar from '../../../Components/Navbar/Navbar';
 import ImageBody from '../../../Components/ImageBody/ImageBody';
+import { AuthContext } from '../../../Contexts/Auth';
 
  
 
 
 export default function Dashboard() {
+  const {user} = useContext(AuthContext);
+  console.log(user)
   const history = useHistory();
 
   function handleRedirect() {
-   history.push("/scheduling")
+   history.push("/dashboard/scheduling")
   }
 
   return (
@@ -26,7 +29,7 @@ export default function Dashboard() {
          <ImageBody image={userScheduling} alt="User-calendar"/>
             <div className="itens">
                 <div className="saudation">
-                  <p>Olá, Jeferson Macedo</p>
+                  <p>Olá, {user.name}</p>
                   <FiUser />
                 </div>
                   <button className="button-primary" onClick={handleRedirect}>Fazer Agendamento</button>
@@ -77,7 +80,9 @@ export default function Dashboard() {
                   <h3>Disponibilidade</h3>
                   <p>Referente a 07/09/2021. Ver outra data? <FiCalendar /></p>
                   <h5>São Paulo - 83/240</h5>
+                  <progress value="83" max="240"></progress>
                   <h5>Santos - 35/40</h5>
+                  <progress value="35" max="40"></progress>
                 </div>
             </div>
           </div>

@@ -92,7 +92,11 @@ button {
   background-color: var(--White);
   color: var(--Primary);
   border: 1px solid var(--Primary);
-  
+}
+
+.button-none {
+  background-color: #fff;
+  color:none;
 }
 
 input, select, textarea {
@@ -122,4 +126,9 @@ select:focus, input:focus {
 ::placeholder {
   font-size: 16px;
   color: var(--SecondaryLight);
+}
+
+progress {
+  background-color: #36357E;
+  width: 100%;
 }
