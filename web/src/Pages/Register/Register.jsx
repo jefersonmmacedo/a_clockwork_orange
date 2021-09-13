@@ -12,13 +12,14 @@ import { toast } from 'react-toastify';
 export default function Register() {
   const {createUser, newEmail} = useContext(AuthContext)
   const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('')
   const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   function handleCreateUser() {
     if(passwordConfirm === password) {
-      createUser(name, newEmail, role, password)
+      createUser(name, lastname, newEmail, role, password)
     } else {
       toast.error('As senhas não conferem.')
     }
@@ -38,9 +39,11 @@ export default function Register() {
             <div className="itens">
                 <img src={logoAside2} alt="Logo" />
 
-                <span>Nome Completo</span>
-                <input type="text" placeholder="Digite seu nome completo" defaultValue={name} onChange={(e) => setName(e.target.value)}/>
-                <span>Nome Completo</span>
+                <span>Nome</span>
+                <input type="text" placeholder="Digite seu nome" defaultValue={name} onChange={(e) => setName(e.target.value)}/>
+                <span>Sobrenome</span>
+                <input type="text" placeholder="Digite seu sobrenome" defaultValue={lastname} onChange={(e) => setLastname(e.target.value)}/>
+                <span>Email</span>
                 <input type="text" placeholder="Digite seu nome completo" defaultValue={newEmail} />
                  <span>Qual é a sua função?</span>
                 <select defaultValue={role} onChange={handleSelectRole}>

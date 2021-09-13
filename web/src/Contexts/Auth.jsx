@@ -53,8 +53,8 @@ function AuthProvider({children}) {
           }
     }
 
-    async function createUser(name, email, role, password) {
-        const dataUser = {name, email, role, password}
+    async function createUser(name, lastname, email, role, password) {
+        const dataUser = {name, lastname, email, role, password}
         const res = await api.post('/api/user', dataUser);
         console.log(res.data)
         if(res.status === 200) {
