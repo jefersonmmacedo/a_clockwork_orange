@@ -21,8 +21,8 @@ function AuthProvider({children}) {
              toast.warning('Seja bem vindo. Realize seu cadastro');
              history.push('/codesecurity');
         } else {
-            toast.success(`Olá, ${res.data.user}, entre com sua senha por favor!`);
-            setEmail(res.data.email)
+            toast.success(`Seja bem-vindo de volta, entre com sua senha por favor!`);
+            setEmail(res.data)
             console.log(res.data)
             history.push('/password')
           }
@@ -51,12 +51,26 @@ function AuthProvider({children}) {
           }
     }
 
+    async function login(email, password) {
+        const data = {email, password}
+        const res = await api.post('api/user/login', data);
+        
+        if(res.data.error === 'Invalid password.') {
+            toast.error('Senha incorreta.');
+        } else {
+            toast.success(`Seja bem-vindo(a), ${res.data.name}`);
+            console.log(res.data)
+
+        }
+    }
+
     return (
         <AuthContext.Provider
         value={{
             validateEmail,
             validateCode,
             createUser,
+            login,
             email,
             newEmail,
             codeSecurity,
