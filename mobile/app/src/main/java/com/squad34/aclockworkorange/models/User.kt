@@ -1,23 +1,28 @@
 package com.squad34.aclockworkorange.models
 
+
 import com.github.kittinunf.fuel.*
+import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.github.kittinunf.fuel.gson.gsonDeserializer
 import com.github.kittinunf.fuel.gson.jsonBody
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import io.realm.mongodb.User
-import org.bson.types.ObjectId
 import retrofit2.converter.gson.GsonConverterFactory
 
-data class UserComplete(
-    val id: String,
-    val user: String,
+
+data class User(
+    val _id: String,
     val email: String,
     val role: String,
     val password: String,
     val createdAt: String,
     val updatedAt: String,
     val v: Int,
+    val name: String,
+    val lastName: String
 )
+
+
 
 fun main() {
 
@@ -27,7 +32,7 @@ fun main() {
     //getUser()
 
     //Funciona mas a api aceita qualquer parametro
-    //login()
+    login()
 
     //Funcionando
     //getId()
@@ -53,6 +58,7 @@ fun main() {
     //Não funciona
     //updateScheduledDate()
 
+    //validator()
 }
 
 fun getUser() {
@@ -61,10 +67,21 @@ fun getUser() {
     println(result)
 }
 
-fun login() {
-    val email = "edu@fcamara.com.br"
+fun validator() {
+    val email = "eduardowasem@fcamara.com.br"
+    val (_, _, result) = "http://127.0.0.1:3001/api/validator/$email"
+        .httpGet()
+        .responseString()
+    println(result)
 
-    val (_, _, result) = Fuel.post("http://127.0.0.1:3001/api/user/login")
+}
+
+fun login() {
+    val email = "marcos@fcamara.com.br"
+    val password = "123"
+
+    val (_, _, result) = ("http://127.0.0.1:3001/api/user/login/?email=$email&password=$password")
+        .httpPost()
         .responseString()
     println(result)
 }
@@ -74,7 +91,11 @@ fun getId() {
 
     val (_, _, result) = ("http://127.0.0.1:3001/api/user/$id")
         .httpGet()
-        .responseString()
+        .response()
+
+
+
+
     println(result)
 }
 
@@ -88,7 +109,7 @@ fun deleteId() {
 }
 
 fun updateUser() {
-    val user = UserComplete("613cfe6672fd2051842d6e9b", "Eduardo", "edu@fcamara.com.br", "Scrum Master", "","2021-09-11T19:07:18.849Z", "2021-09-11T19:07:18.849Z", 0)
+    //val user = UserComplete("613cfe6672fd2051842d6e9b", "Eduardo", "edu@fcamara.com.br", "Scrum Master", "","2021-09-11T19:07:18.849Z", "2021-09-11T19:07:18.849Z", 0)
 
     val id = "613d339a72fd2051842d6eb0"
     val (_, _, result) = ("http://127.0.0.1:3001/api/user/$id")
@@ -98,10 +119,10 @@ fun updateUser() {
 }
 
 fun createUser() {
-    val user = UserComplete("613cfe6672fd2051842d6e9b", "Eduardo", "edu@fcamara.com.br", "Scrum Master", "12345","2021-09-11T19:07:18.849Z", "2021-09-11T19:07:18.849Z", 0)
+    //val user = UserComplete("613cfe6672fd2051842d6e9b", "Eduardo", "edu@fcamara.com.br", "Scrum Master", "12345","2021-09-11T19:07:18.849Z", "2021-09-11T19:07:18.849Z", 0)
 
     val (_, _, result) = "http://127.0.0.1:3001/api/user"
-        .httpPost(listOf("user" to "Carlos Alberto", "email" to "carlosalberto@fcamara.com.br", "role" to "Scrum Master", "password" to "12345"))
+        .httpPost(listOf("name" to "Marcos", "email" to "marcos@fcamara.com.br", "role" to "Scrum Master", "password" to "12345"))
         .responseString()
     println(result)
 }

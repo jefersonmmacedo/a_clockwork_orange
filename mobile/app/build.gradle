@@ -3,11 +3,14 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
-    id 'realm-android'
+
+
 }
 
 android {
-    compileSdk 30
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
 
     defaultConfig {
         applicationId "com.squad34.aclockworkorange"
@@ -17,6 +20,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    androidExtensions {
+        experimental = true
     }
 
     buildTypes {
@@ -31,10 +38,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-
-    realm {
-        syncEnabled = true
     }
 
     buildFeatures {
@@ -68,7 +71,9 @@ dependencies {
     implementation 'com.github.kittinunf.fuel:fuel:2.3.1'
     implementation 'com.github.kittinunf.fuel:fuel-gson:2.3.1'
     implementation 'com.google.code.gson:gson:2.8.6'
-
+    implementation 'com.auth0.android:jwtdecode:2.0.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
