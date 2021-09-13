@@ -33,6 +33,7 @@ class LoginActivity : BaseActivity() {
 
     private lateinit var mBinding: ActivityLoginBinding
     private lateinit var mUser: UserFromValidator
+    private var email = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,31 +64,43 @@ class LoginActivity : BaseActivity() {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
                     val service: ClockworkService = retrofit.create(ClockworkService::class.java)
-                    val listCall: Call<UserFromValidator> = service.getEmailValidation(
+                    val listCall = service.getEmailValidation(
                         inputEmail
                     )
-                    listCall.enqueue(object : Callback<UserFromValidator> {
+                    listCall.enqueue(object : Callback<String> {
                         override fun onResponse(
-                            call: Call<UserFromValidator>,
-                            response: Response<UserFromValidator>
+                            call: Call<String>,
+                            response: Response<String>
                         ) {
-                            mUser = response.body()!!
 
-                            mBinding.vwLoginEmail.visibility = View.GONE
-                            mBinding.vwLoginPassword.visibility = View.VISIBLE
+                            if (response.body() == null) {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Email não cadastrado no sistema!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
 
+                                email = response.body().toString()
+                                mBinding.vwLoginEmail.visibility = View.GONE
+                                mBinding.vwLoginPassword.visibility = View.VISIBLE
+
+                                println(email)
+
+                            }
 
                         }
 
-                        override fun onFailure(call: Call<UserFromValidator>, t: Throwable) {
+                        override fun onFailure(call: Call<String>, t: Throwable) {
                             Log.e("Erro", t.message.toString())
                         }
 
                     })
 
                 }
-            }else{
-                Toast.makeText(this, "Você deve digitar seu email corporativo!", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Você deve digitar seu email corporativo!", Toast.LENGTH_LONG)
+                    .show()
             }
 
 
@@ -97,28 +110,49 @@ class LoginActivity : BaseActivity() {
 
         mBinding.btnLogin.setOnClickListener {
 
-           val inputPassword = mBinding.etPassword.text.toString()
+            val inputPassword = mBinding.etPassword.text.toString()
 
             if (Constants.isNetworkAvailable(this)) {
                 val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
                 val service: ClockworkService = retrofit.create(ClockworkService::class.java)
-                val listCall= mUser.email?.let { it1 ->
-                    service.login(
-                        it1,
-                        inputPassword
-                    )
-                }
-                listCall?.enqueue(object : Callback<Token.TokenId> {
-                    override fun onResponse(
-                        call: Call<Token.TokenId>,
-                        response: Response<Token.TokenId>
-                    ) {
-                        if (response.isSuccessful){
-                            Log.d("Resposta", "$response")
+                val listCall = service.login(
+                    email,
+                    inputPassword
+                )
 
-                            intent()
+
+                listCall.enqueue(object : Callback<UserFromValidator> {
+                    override fun onResponse(
+                        call: Call<UserFromValidator>,
+                        response: Response<UserFromValidator>
+                    ) {
+                        if (response.isSuccessful) {
+
+                            /*mUser = UserFromValidator(0,"613df39d0248015f4766f9e8", "2021-09-12T12:33:33.067+00:00", "marcos@fcamara.com.br", "Fonseca", "Marcos", "", "Scrum Master", "2021-09-13T03:31:18.797+00:00", "")
+                            intent()*/
+                            mUser = response.body()!!
+
+                            println("Mensagem de retorno : ${response.body().toString()}")
+                            if (mUser.error == "User not found.") {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Email não cadastrado!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else if (mUser.error == "Invalid password.") {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Senha incorreta!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
+                                mUser = response.body()!!
+
+                                println(mUser.name)
+                                intent()
+                            }
 
 
                         }
@@ -126,7 +160,7 @@ class LoginActivity : BaseActivity() {
 
                     }
 
-                    override fun onFailure(call: Call<Token.TokenId>, t: Throwable) {
+                    override fun onFailure(call: Call<UserFromValidator>, t: Throwable) {
                         Log.e("Erro", t.message.toString())
                     }
 
@@ -136,8 +170,10 @@ class LoginActivity : BaseActivity() {
             }
         }
     }
+
     private fun intent() {
         val intent = Intent(this, MainActivity::class.java)
+        println(mUser)
         intent.putExtra(USER, mUser)
         startActivity(intent)
     }

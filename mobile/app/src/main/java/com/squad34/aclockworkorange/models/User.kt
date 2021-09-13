@@ -44,10 +44,10 @@ fun main() {
     //createUser()
 
     //Funciona
-    createScheduledDate()
+    //createScheduledDate()
 
     //Funciona
-    //getScheduling()
+    getScheduling()
 
     //Não funciona
     //updateUser()
@@ -77,13 +77,15 @@ fun validator() {
 }
 
 fun login() {
-    val email = "marcos@fcamara.com.br"
-    val password = "123"
+    val email = "eduardowasem@fcamara.com.br"
+    val password = "12345"
 
-    val (_, _, result) = ("http://127.0.0.1:3001/api/user/login/?email=$email&password=$password")
+    val (_, _, result) = ("http://127.0.0.1:3001/api/user/login/:email=$email&password=$password")
         .httpPost()
         .responseString()
     println(result)
+
+   // "http://127.0.0.1:3001/api/user/login/?email=eduardowasem@fcamara.com.br&password=12345"
 }
 
 fun getId() {
@@ -129,7 +131,7 @@ fun createUser() {
 
 fun createScheduledDate() {
     val (_, _, result) = "http://127.0.0.1:3001/api/scheduling"
-        .httpPost(listOf("location" to "São Paulo", "shift" to "Manhã", "type" to "Estação de Trabalho", "date" to "16/09/2021", "day" to "Quinta", "_idUser" to "613df39d0248015f4766f9e8", "name" to "Marcos", "lastname" to "Fonseca", "email" to "marcos@fcamara.com.br", "role" to "Scrum Master"))
+        .httpPost(listOf("location" to "São Paulo", "shift" to "Manhã", "type" to "Estação de Trabalho", "date" to "16/09/2021", "day" to "Quinta-feira", "_idUser" to "613df39d0248015f4766f9e8", "name" to "Marcos", "lastname" to "Fonseca", "email" to "marcos@fcamara.com.br", "role" to "Scrum Master"))
         .responseString()
     println(result)
 }

@@ -160,7 +160,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 else -> {
                     if (mSelectedType == "Recorrente" || mSelectedDates.size == 1) {
                         showDialogRecurrent()
-                    }else{
+                    } else {
                         showDialogNormal()
                     }
 
@@ -212,6 +212,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
     }
 
+
     private fun populateDatesList(date: ArrayList<DateSelected>) {
         mBinding.rvDatesSelected.layoutManager = LinearLayoutManager(this)
         mBinding.rvDatesSelected.setHasFixedSize(true)
@@ -232,6 +233,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             }
         }
     }
+
     private fun showDialogRecurrent() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -295,7 +297,8 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         val unit = dialog.findViewById(R.id.tv_selected_unit_multiple_confirmation) as TextView
         unit.text = " " + mSelecetdUnit
 
-        val rvDates = dialog.findViewById(R.id.rv_dates_selected_multiple_confirmation) as RecyclerView
+        val rvDates =
+            dialog.findViewById(R.id.rv_dates_selected_multiple_confirmation) as RecyclerView
         rvDates.layoutManager = LinearLayoutManager(this)
         rvDates.setHasFixedSize(true)
         val adapter = SchedulesConfirmationAdapter(this, mSelectedDates)
@@ -314,7 +317,8 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             dialog.dismiss()
         }
         cancelButton.setOnClickListener {
-            dialog.dismiss() }
+            dialog.dismiss()
+        }
 
         dialog.show()
     }
@@ -344,23 +348,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                     contain = true
                 }
             }
-            when (dow) {
-                "segunda-feira" -> {
-                    dow = "Segunda"
-                }
-                "terça-feira" -> {
-                    dow = "Terça"
-                }
-                "quarta-feira" -> {
-                    dow = "Quarta"
-                }
-                "quinta-feira" -> {
-                    dow = "Quinta"
-                }
-                "sexta-feira" -> {
-                    dow = "Sexta"
-                }
-            }
+
             if (!contain) {
                 var mSelectedDateFormater = DateSelected(selectedDate, dow)
 
@@ -379,23 +367,8 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             val theDate = sdf.parse(selectedDate2)
             val format = SimpleDateFormat("EEEE", Locale.getDefault())
             var dow = format.format(theDate)
-            when (dow) {
-                "segunda-feira" -> {
-                    dow = "Segunda"
-                }
-                "terça-feira" -> {
-                    dow = "Terça"
-                }
-                "quarta-feira" -> {
-                    dow = "Quarta"
-                }
-                "quinta-feira" -> {
-                    dow = "Quinta"
-                }
-                "sexta-feira" -> {
-                    dow = "Sexta"
-                }
-            }
+
+
             var mSelectedDateFormater = DateSelected(selectedDate2, dow)
             mSelectedDates.add(mSelectedDateFormater)
             var i = 1
@@ -440,7 +413,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             val dayOfWeek = loopdate[Calendar.DAY_OF_WEEK]
             if (dayOfWeek == Calendar.SUNDAY || dayOfWeek == Calendar.SATURDAY) {
                 val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
-                disabledDays[0]=loopdate
+                disabledDays[0] = loopdate
                 datePickerDialog.disabledDays = disabledDays
 
             }
@@ -448,13 +421,13 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             loopdate = minDate
         }
 
-        for (i in dateFake.indices){
+        for (i in dateFake.indices) {
             val full = Calendar.getInstance()
             val fullDayString = dateFake[i]
             val sdf = SimpleDateFormat("dd/MM/yyyy")
             full.time = sdf.parse(fullDayString)
             val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
-            disabledDays[0]=full
+            disabledDays[0] = full
             datePickerDialog.disabledDays = disabledDays
         }
 
