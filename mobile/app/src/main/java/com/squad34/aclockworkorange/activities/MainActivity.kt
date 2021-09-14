@@ -33,9 +33,14 @@ class MainActivity : BaseActivity() {
     private lateinit var mUser: UserFromValidator
     private var allSchedules = ArrayList<Schedulingdata.DateScheduling>()
     private var mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
-    private var mMaxSaoPaulo = Constants.SAO_PAULO_MAX_QUANTITY
-    private var mMaxSantos = Constants.SANTOS_MAX_QUANTITY
+    private var mListOfDaysScheduled = ArrayList<String>()
+    private var mListSpMor = ArrayList<String>()
+    private var mListSpAft = ArrayList<String>()
+    private var mListSanMor = ArrayList<String>()
+    private var mListSanAft = ArrayList<String>()
+    private var listCount: ArrayList<DatesToExclude> = ArrayList()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,49 +55,27 @@ class MainActivity : BaseActivity() {
             mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
         }
 
+        showProgressDialog()
         getScheduling()
-
-
-
-
-
-
-
-
-
-
-
 
         setupActionBar()
 
-        val santosOccupation = 32
-        val saoPauloOccupation = 120
-
-        mBinding.tvSantosQuantity.text = (" $santosOccupation / ${Constants.SANTOS_MAX_QUANTITY}")
-
-        santosChartView = mBinding.santosChartParam
-        santosChartView.layoutParams.width =
-            convertNumberToDisplayInChart(santosOccupation, santosWidht)
-
-        mBinding.tvSaoPauloQuantity.text =
-            (" $saoPauloOccupation / ${Constants.SAO_PAULO_MAX_QUANTITY}")
-
-        saoPauloChartView = mBinding.saoPauloChartParam
-        saoPauloChartView.layoutParams.width =
-            convertNumberToDisplayInChart(saoPauloOccupation, saoPauloWidht)
 
         mBinding.btnSchedule.setOnClickListener {
             val intent = Intent(this, SchedulingActivity::class.java)
             intent.putExtra(USERSCHEDULE, mUser)
+            intent.putStringArrayListExtra(DATES_TO_EXCLUDE, mListOfDaysScheduled)
             startActivityForResult(intent, SCHEDULE_CODE)
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SCHEDULE_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 getScheduling()
+                updateCharts(allSchedules)
             }
         }
     }
@@ -149,6 +132,7 @@ class MainActivity : BaseActivity() {
             val service: ClockworkService = retrofit.create(ClockworkService::class.java)
             val listCall = service.getScheduling()
             listCall.enqueue(object : Callback<ArrayList<Schedulingdata.DateScheduling>> {
+                @RequiresApi(Build.VERSION_CODES.O)
                 override fun onResponse(
                     call: Call<ArrayList<Schedulingdata.DateScheduling>>,
                     response: Response<ArrayList<Schedulingdata.DateScheduling>>
@@ -158,16 +142,16 @@ class MainActivity : BaseActivity() {
                     if (allSchedules.size > 0) {
                         for (i in allSchedules.indices) {
                             if (allSchedules[i]._idUser == mUser._id) {
-                                println("Id nos agendamensos: ${allSchedules[i]._idUser}")
-                                println("Id usuario: ${mUser._id}")
                                 mUserScheduling.add(allSchedules[i])
+                                mListOfDaysScheduled.add(allSchedules[i].date!!)
 
 
                             }
 
                         }
+
+                        updateCharts(allSchedules)
                         populateDatesinRecycler(mUserScheduling)
-                        println(mUserScheduling)
                     }
 
                 }
@@ -196,14 +180,42 @@ class MainActivity : BaseActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun updateCharts(dates: ArrayList<Schedulingdata.DateScheduling>) {
-        val currentDay = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val today = currentDay.format(formatter)
+        val currentDay = LocalDateTime.now().plusDays(1)
+        val formatterDay = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val formatterHour = DateTimeFormatter.ofPattern("HH")
+        val today = currentDay.format(formatterDay)
+        val hour = currentDay.format(formatterHour)
+        var countSaoPaulo = 0
+        var countSantos = 0
+        var shift = "Manhã"
+        if (hour.toInt() > 13) {
+            shift = "Tarde"
+        }
         for (i in dates.indices) {
-            if (dates[i].date == today) {
-
+            if ((dates[i].date == today && dates[i].shift == shift && dates[i].type == "Estação de trabalho") || (dates[i].date == today && dates[i].shift == "Dia Inteiro" && dates[i].type == "Estação de trabalho")) {
+                if (dates[i].location == "São Paulo") {
+                    countSaoPaulo++
+                } else {
+                    countSantos++
+                }
             }
         }
+        val santosAvaibility = Constants.SANTOS_MAX_QUANTITY - countSantos
+        mBinding.tvSantosQuantity.text = (" $santosAvaibility / ${Constants.SANTOS_MAX_QUANTITY}")
+
+        santosChartView = mBinding.santosChartParam
+        santosChartView.layoutParams.width =
+            convertNumberToDisplayInChart(santosAvaibility, santosWidht)
+
+        val saopauloAvaibility = Constants.SAO_PAULO_MAX_QUANTITY - countSaoPaulo
+        mBinding.tvSaoPauloQuantity.text =
+            (" $saopauloAvaibility / ${Constants.SAO_PAULO_MAX_QUANTITY}")
+
+        saoPauloChartView = mBinding.saoPauloChartParam
+        saoPauloChartView.layoutParams.width =
+            convertNumberToDisplayInChart(saopauloAvaibility, saoPauloWidht)
+
+        //countDates()
     }
 
     fun editSchedule(position: Int) {
@@ -218,6 +230,111 @@ class MainActivity : BaseActivity() {
         var POSITION = "position"
         var USERSCHEDULE = "user"
         var SCHEDULE_CODE = 3
-
+        var DATES_TO_EXCLUDE = "datesToExclude"
     }
+
+    /*private fun countDates() {
+        for (i in allSchedules.indices) {
+            if (listCount.isEmpty()) {
+                if (allSchedules[i].location == "São Paulo") {
+                    when (allSchedules[i].shift) {
+                        "Manhã" -> {
+                            listCount.add(DatesToExclude((allSchedules[i].date), 1, 0, 0, 0))
+                        }
+                        "Tarde" -> {
+                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 1, 0, 0))
+                        }
+                        else -> {
+                            listCount.add(DatesToExclude((allSchedules[i].date), 1, 1, 0, 0))
+                        }
+                    }
+                } else {
+                    when (allSchedules[i].shift) {
+                        "Manhã" -> {
+                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 1, 0))
+                        }
+                        "Tarde" -> {
+                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 0, 1))
+                        }
+                        else -> {
+                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 40, 1))
+                        }
+                    }
+                }
+            } else {
+                for (a in listCount.indices) {
+                    if (listCount[a].date == allSchedules[i].date) {
+                        if (allSchedules[i].location == "São Paulo") {
+                            if (allSchedules[i].shift == "Manhã") {
+                                listCount[a].spCountShiftMornig++
+                                if (listCount[a].spCountShiftMornig >= Constants.SAO_PAULO_MAX_QUANTITY) {
+                                    mListSpMor.add(listCount[a].date!!)
+                                }
+                            } else if (allSchedules[i].shift == "Tarde") {
+                                listCount[a].spCountShiftAfternoon++
+                                if (listCount[a].spCountShiftAfternoon >= Constants.SAO_PAULO_MAX_QUANTITY) {
+                                    mListSpAft.add(listCount[a].date!!)
+                                }
+                            } else {
+                                listCount[a].spCountShiftMornig++
+                                listCount[a].spCountShiftAfternoon++
+                                if (listCount[a].spCountShiftMornig >= Constants.SAO_PAULO_MAX_QUANTITY) {
+                                    mListSpMor.add(listCount[a].date!!)
+                                }
+                                if (listCount[a].spCountShiftAfternoon >= Constants.SAO_PAULO_MAX_QUANTITY) {
+                                    mListSpAft.add(listCount[a].date!!)
+                                }
+                            }
+                        } else {
+                            if (allSchedules[i].shift == "Manhã") {
+                                listCount[a].sanCountShiftMorning++
+                                if (listCount[a].sanCountShiftMorning >= Constants.SANTOS_MAX_QUANTITY) {
+                                    mListSanMor.add(listCount[a].date!!)
+                                }
+                            } else if (allSchedules[i].shift == "Tarde") {
+                                listCount[a].sanCountShiftAfternoon++
+                                if (listCount[a].sanCountShiftAfternoon >= Constants.SANTOS_MAX_QUANTITY) {
+                                    mListSanAft.add(listCount[a].date!!)
+                                }
+                            } else {
+                                listCount[a].sanCountShiftMorning++
+                                listCount[a].sanCountShiftAfternoon++
+                                if (listCount[a].sanCountShiftMorning >= Constants.SANTOS_MAX_QUANTITY) {
+                                    mListSanMor.add(listCount[a].date!!)
+                                }
+                                if (listCount[a].sanCountShiftAfternoon >= Constants.SANTOS_MAX_QUANTITY) {
+                                    mListSanAft.add(listCount[a].date!!)
+                                }
+                            }
+                        }
+                    } else {
+                        if (allSchedules[i].location == "São Paulo") {
+                            if (allSchedules[i].shift == "Manhã") {
+                                listCount.add(DatesToExclude((allSchedules[i].date), 1, 0, 0, 0))
+                            } else if (allSchedules[i].shift == "Tarde") {
+                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 1, 0, 0))
+                            } else {
+                                listCount.add(DatesToExclude((allSchedules[i].date), 1, 1, 0, 0))
+                            }
+                        } else {
+                            if (allSchedules[i].shift == "Manhã") {
+                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 1, 0))
+                            } else if (allSchedules[i].shift == "Tarde") {
+                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 0, 1))
+                            } else {
+                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 40, 1))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        hideProgressDialog()
+        println("Datas cheias sp manha: $mListSpMor")
+        println("Datas cheias sp tarde: $mListSpAft")
+        println("Datas cheias santos manha: $mListSanMor")
+        println("Datas cheias santos tarde: $mListSanAft")
+        println("Datas agendadas para excluir: $mListOfDaysScheduled")
+        println("datas da lista: $listCount")
+    }*/
 }

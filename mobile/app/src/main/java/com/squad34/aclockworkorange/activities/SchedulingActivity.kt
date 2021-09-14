@@ -50,8 +50,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
     private var month = 0
     private var day = 0
     private lateinit var calendar: Calendar
-    private val dateFake = arrayListOf("13/09/2021", "14/09/2021", "15/09/2021")
-    private var datesToDisable = ArrayList<Calendar>()
+    private var datesToDisable = ArrayList<String>()
     private lateinit var mUser: UserFromValidator
 
 
@@ -61,6 +60,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
 
 
         mUser = intent.getParcelableExtra(MainActivity.USERSCHEDULE)!!
+        datesToDisable = intent.getStringArrayListExtra(MainActivity.DATES_TO_EXCLUDE)!!
 
 
 
@@ -416,15 +416,18 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             loopdate = minDate
         }
 
-        for (i in dateFake.indices) {
-            val full = Calendar.getInstance()
-            val fullDayString = dateFake[i]
-            val sdf = SimpleDateFormat("dd/MM/yyyy")
-            full.time = sdf.parse(fullDayString)
-            val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
-            disabledDays[0] = full
-            datePickerDialog.disabledDays = disabledDays
+        if (!datesToDisable.isNullOrEmpty()) {
+            for (i in datesToDisable.indices) {
+                val full = Calendar.getInstance()
+                val fullDayString = datesToDisable[i]
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                full.time = sdf.parse(fullDayString)
+                val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
+                disabledDays[0] = full
+                datePickerDialog.disabledDays = disabledDays
+            }
         }
+
 
         hideProgressDialog()
     }
@@ -439,7 +442,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             val listCall = service.scheduleDate(
                 mSelecetdUnit,
                 mShift,
-                mSelectedType,
+                mWorkOrMeet,
                 date.date,
                 date.dayOfWeek,
                 mUser._id!!,

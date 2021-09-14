@@ -36,4 +36,5 @@
     <string name="tv_day_of_week">Dia da semana: </string>
     <string name="tv_shift_selected">Turno: </string>
     <string name="tv_no_dates_scheduled">Sem datas agendadas no momento!</string>
+    <string name="tv_edit_schedule">Editar Agendamento</string>
 </resources>
