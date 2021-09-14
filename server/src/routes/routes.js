@@ -30,6 +30,7 @@ routes.post('/api/securitycode',securityCodeControllers.create)
 
 //SCHEDULING CREATE
 routes.get('/api/scheduling', schedulingControllers.index)
+routes.get('/api/filter', schedulingControllers.indexFilter)
 routes.delete('/api/scheduling/:_id', schedulingControllers.delete)
 routes.put('/api/scheduling/:_id', schedulingControllers.update)
 routes.post('/api/scheduling',schedulingControllers.create)

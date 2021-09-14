@@ -19,7 +19,7 @@ export default function Scheduling() {
   const [shift, setShift] = useState('');
   const [type, setType] = useState('');
   const [date, setDate] = useState('');
-  const [recurrent, setRecurrent] = useState('');
+  const [recurrent, setRecurrent] = useState('unic');
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   function handleOpenModal() {
@@ -127,7 +127,7 @@ export default function Scheduling() {
                 }
                
                 <div className="text">
-                  <p>Agende o mesmo dia por 4 semanas consecutivas.</p>
+                  <p>Agende o mesmo dia da semana por 4 vezes consecutivas.</p>
                 </div>
 
                 <span>Escolha uma data</span>
@@ -154,7 +154,7 @@ export default function Scheduling() {
           </button>
           <div className="content-modal">
         <h3>Confirmar agendamento?</h3>
-          {dataUser.recurrent === 'unic' ?
+          {dataUser.recurrent === 'unic'?
           <div className="itensModal" key={dataUser._id}>
           <p>Escritório: {dataUser.location}</p>
         <p>Tipo: {dataUser.type}</p>
@@ -162,7 +162,16 @@ export default function Scheduling() {
         <p>Data: {dataUser.date}</p>
         <p>Dia da Semana: {dataUser.day}</p>
        </div>
-        :
+       :
+        dataUser.type === "Sala de Reuniões" ?
+        <div className="itensModal" key={dataUser._id}>
+        <p>Escritório: {dataUser.location}</p>
+      <p>Tipo: {dataUser.type}</p>
+      <p>Turno: {dataUser.shift}</p>
+      <p>Data: {dataUser.date}</p>
+      <p>Dia da Semana: {dataUser.day}</p>
+     </div>
+     :
         dataUser.map((user) => {
           return (
               <div className="itensModal" key={user._id}>

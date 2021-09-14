@@ -83,6 +83,8 @@ function AuthProvider({children}) {
     }
  
     async function scheduling(location, shift, type, date, _idUser, name,lastname, email, role, recurrent) {
+        const list = {location, shift, type, date, _idUser, name,lastname, email, role, recurrent}
+        console.log(list)
         const dateNew = date.split('-').reverse().join('/');
         const day = new Date(date) ;
         const dateDay = day.getDay() + 1;
@@ -134,7 +136,7 @@ function AuthProvider({children}) {
                     location,
                     shift,
                     type,
-                    date: ((periodo.getDate() +1)) + "/" + ((periodo.getMonth() + 1)) + "/" + periodo.getFullYear(),
+                    date: (periodo.getDate() < 10 ?  "0" + ((periodo.getDate() +1)) : ((periodo.getDate() +1))) + "/" + (periodo.getMonth() < 9? "0" + ((periodo.getMonth() + 1)) : ((periodo.getMonth() + 1)) )+ "/" + periodo.getFullYear(),
                     day: bdDay,
                     _idUser,
                     name,
@@ -145,15 +147,17 @@ function AuthProvider({children}) {
                 })
             })
             setDataUser(data);
+            console.log(data)
 
         } else {
             const data = {location, shift, type, date: dateNew, day: bdDay, _idUser, name,lastname, email, role, recurrent};
             setDataUser(data);
+            console.log(data);
         }   
     }
 
     async function schedulingCreate() {
-        if(dataUser.recurrent === 'unic') {
+        if(dataUser.recurrent === 'unic' &&  dataUser.type === "Sala de Reuniões") {
             const res = await api.post('/api/scheduling', dataUser);
             if(res.status === 200) {
                toast.success('Agendamentos efetuados com sucesso!');
