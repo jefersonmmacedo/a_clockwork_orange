@@ -3,9 +3,10 @@ import React, { useContext, useState } from 'react';
 import userScheduling from '../../../assets/images/userScheduling.svg';
 import {useHistory} from 'react-router-dom'
 import Footer from '../../../Components/Footer/Footer';
-import {FiUser, FiPlusCircle} from 'react-icons/fi';
+import {FiUser, FiPlusCircle, FiX, FiCheckCircle} from 'react-icons/fi';
 import Navbar from '../../../Components/Navbar/Navbar';
 import ImageBody from '../../../Components/ImageBody/ImageBody';
+import Modal from 'react-modal'
 import { AuthContext } from '../../../Contexts/Auth';
 
  
@@ -13,15 +14,29 @@ import { AuthContext } from '../../../Contexts/Auth';
 
 export default function Scheduling() {
   const history = useHistory();
-  const {user, scheduling} = useContext(AuthContext);
+  const {user,dataUser, scheduling, schedulingCreate} = useContext(AuthContext);
   const [location, setLocation] = useState('');
   const [shift, setShift] = useState('');
   const [type, setType] = useState('');
   const [date, setDate] = useState('');
   const [recurrent, setRecurrent] = useState('');
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  function handleOpenModal() {
+    setIsOpenModal(true)
+  }
+
+  function handleCloseModal() {
+    setIsOpenModal(false)
+  }
 
   function handleScheduling () {
-    scheduling(location, shift, type, date, user._id, user.name,user.lastname, user.email, user.role, recurrent)
+    scheduling(location, shift, type, date, user._id, user.name,user.lastname, user.email, user.role, recurrent);
+   handleOpenModal()
+  }
+
+  function handleSchedulingCreate() {
+    schedulingCreate()
   }
 
   function handleRedirect() {
@@ -44,7 +59,7 @@ export default function Scheduling() {
     setRecurrent(e.target.value);
   }
 
-
+  Modal.setAppElement('#root');
   return (
     <div className="container">
       <div className="content">
@@ -112,9 +127,7 @@ export default function Scheduling() {
                 }
                
                 <div className="text">
-                  <p>Esse é o seu primeiro acesso ao sistema,
-                    por favor informe seu código de acesso.
-                  </p>
+                  <p>Agende o mesmo dia por 4 semanas consecutivas.</p>
                 </div>
 
                 <span>Escolha uma data</span>
@@ -132,6 +145,42 @@ export default function Scheduling() {
             </div>
           </div>
         </div>
+
+        <Modal isOpen={isOpenModal} onRequestClose={handleCloseModal}
+        overlayClassName="react-modal-overlay"
+        className="react-modal-content">
+          <button type="button" className="react-modal-button" onClick={handleCloseModal}>
+          <FiX />
+          </button>
+          <div className="content-modal">
+        <h3>Confirmar agendamento?</h3>
+          {dataUser.recurrent === 'unic' ?
+          <div className="itensModal" key={dataUser._id}>
+          <p>Escritório: {dataUser.location}</p>
+        <p>Tipo: {dataUser.type}</p>
+        <p>Turno: {dataUser.shift}</p>
+        <p>Data: {dataUser.date}</p>
+        <p>Dia da Semana: {dataUser.day}</p>
+       </div>
+        :
+        dataUser.map((user) => {
+          return (
+              <div className="itensModal" key={user._id}>
+                <p>Escritório: {user.location}</p>
+              <p>Tipo: {user.type}</p>
+              <p>Turno: {user.shift}</p>
+              <p>Data: {user.date}</p>
+              <p>Dia da Semana: {user.day}</p>
+             </div>
+            )
+        })}
+          
+        <div className="buttons-modal">
+        <button className="button-White" onClick={handleCloseModal}>Cancelar</button>
+        <button className="button-primary" onClick={handleSchedulingCreate}><FiCheckCircle /> Agendar</button>
+        </div>
+        </div>
+        </Modal>
         <Footer />
       </div>
     </div>

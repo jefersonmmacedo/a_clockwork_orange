@@ -132,3 +132,39 @@ progress {
   background-color: #ffffff;
   width: 100%;
 }
+
+.react-modal-overlay {
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.react-modal-content {
+  width: 100%;
+  max-width: 576px;
+  background-color: var(--White);
+  padding: 20px;
+  position: relative;
+  border-radius: 8px;
+  border: none;
+}
+
+.react-modal-button {
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:var(--White);
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 15px;
+}

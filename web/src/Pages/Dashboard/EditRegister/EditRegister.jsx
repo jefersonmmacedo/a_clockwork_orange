@@ -1,7 +1,5 @@
 import './editRegister.css';
-import React, { useState } from 'react';
 import editUser from '../../../assets/images/editUser.svg';
-import {useHistory} from 'react-router-dom'
 import Navbar from '../../../Components/Navbar/Navbar';
 import ImageBody from '../../../Components/ImageBody/ImageBody';
 import Footer from '../../../Components/Footer/Footer';
