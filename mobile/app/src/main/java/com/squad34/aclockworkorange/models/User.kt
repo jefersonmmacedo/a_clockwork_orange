@@ -47,7 +47,7 @@ fun main() {
     //createScheduledDate()
 
     //Funciona
-    getScheduling()
+    //getScheduling()
 
     //Não funciona
     //updateUser()
@@ -144,7 +144,7 @@ fun getScheduling() {
 }
 
 fun deleteScheduling() {
-    val id = "613d238172fd2051842d6ea6"
+    val id = "61408a4da592c5bcc363b4b2"
     val (_, _, result) = "http://127.0.0.1:3001/api/scheduling/$id"
         .httpDelete()
         .responseString()

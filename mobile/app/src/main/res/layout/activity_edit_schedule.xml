@@ -87,15 +87,14 @@
                     android:layout_width="296dp"
                     android:layout_height="55dp"
                     android:layout_gravity="center"
-                    android:gravity="center"
                     android:background="@drawable/btn_shape_calendar"
                     android:fontFamily="@font/metropolis_regular"
+                    android:gravity="center"
                     android:lineSpacingExtra=".5px"
                     android:text="São Paulo"
                     android:textColor="@color/secondary"
                     android:textSize="16sp"
-                    android:visibility="visible"
-                    />
+                    android:visibility="visible" />
 
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -107,15 +106,14 @@
                     android:fontFamily="@font/metropolis_regular"
                     android:hint="@string/select_an_option"
                     android:textColorHint="@color/gray"
+                    android:visibility="gone"
                     app:boxCornerRadiusBottomEnd="16dp"
                     app:boxCornerRadiusBottomStart="16dp"
                     app:boxCornerRadiusTopEnd="16dp"
                     app:boxCornerRadiusTopStart="16dp"
                     app:boxStrokeColor="?attr/colorSecondary"
                     app:boxStrokeWidth="2dp"
-                    app:hintTextColor="@color/gray"
-                    android:visibility="gone"
-                    >
+                    app:hintTextColor="@color/gray">
 
                     <AutoCompleteTextView
                         android:id="@+id/actv_unit_edit"
@@ -126,8 +124,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-
-
 
 
             <TextView
@@ -144,33 +140,61 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_unit_edit" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_station_or_meeting_edit"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="303dp"
-                android:layout_height="60dp"
-                android:ems="10"
-                android:fontFamily="@font/metropolis_regular"
-                android:hint="@string/select_an_option"
-                android:textColorHint="@color/gray"
-                app:boxCornerRadiusBottomEnd="16dp"
-                app:boxCornerRadiusBottomStart="16dp"
-                app:boxCornerRadiusTopEnd="16dp"
-                app:boxCornerRadiusTopStart="16dp"
-                app:boxStrokeColor="?attr/colorSecondary"
-                app:boxStrokeWidth="2dp"
-                app:hintTextColor="@color/gray"
+            <LinearLayout
+                android:id="@+id/ll_station_edit"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:gravity="center"
+
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_work_station_or_meeting_room_edit">
 
-                <AutoCompleteTextView
-                    android:id="@+id/actv_work_station_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
+                <TextView
+                    android:id="@+id/tv_selected_station_edit"
+                    android:layout_width="296dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_shape_calendar"
+                    android:fontFamily="@font/metropolis_regular"
+                    android:gravity="center"
+                    android:lineSpacingExtra=".5px"
+                    android:text="Estação de trabalho"
+                    android:textColor="@color/secondary"
+                    android:textSize="16sp"
+                    android:visibility="visible" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_station_or_meeting_edit"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="303dp"
+                    android:layout_height="60dp"
+                    android:ems="10"
+                    android:fontFamily="@font/metropolis_regular"
+                    android:hint="@string/select_an_option"
+                    android:textColorHint="@color/gray"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxStrokeColor="?attr/colorSecondary"
+                    app:boxStrokeWidth="2dp"
+                    app:hintTextColor="@color/gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_work_station_or_meeting_room_edit"
+                    android:visibility="gone">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actv_work_station_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_shift_edit"
@@ -184,7 +208,32 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_station_or_meeting_edit" />
+                app:layout_constraintTop_toBottomOf="@+id/ll_station_edit" />
+
+            <LinearLayout
+                android:id="@+id/ll_shift_edit"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:gravity="center"
+
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_shift_edit">
+
+                <TextView
+                    android:id="@+id/tv_selected_shift_edit"
+                    android:layout_width="296dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_shape_calendar"
+                    android:fontFamily="@font/metropolis_regular"
+                    android:gravity="center"
+                    android:lineSpacingExtra=".5px"
+                    android:text="Tarde"
+                    android:textColor="@color/secondary"
+                    android:textSize="16sp"
+                    android:visibility="visible" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_shift_edit"
@@ -204,7 +253,8 @@
                 app:hintTextColor="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_shift_edit">
+                app:layout_constraintTop_toBottomOf="@+id/tv_shift_edit"
+                android:visibility="gone">
 
                 <AutoCompleteTextView
                     android:id="@+id/actv_shift_edit"
@@ -213,6 +263,8 @@
                     android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_date_edit"
@@ -226,7 +278,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_shift_edit" />
+                app:layout_constraintTop_toBottomOf="@+id/ll_shift_edit" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -236,8 +288,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
-                android:fontFamily="@font/metropolis_regular"
                 android:focusedByDefault="true"
+                android:fontFamily="@font/metropolis_regular"
                 android:textColorHint="@color/gray"
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
@@ -257,8 +309,8 @@
                     android:id="@+id/actv_date_edit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/metropolis_regular"
                     android:editable="false"
+                    android:fontFamily="@font/metropolis_regular"
                     android:inputType="none"
                     android:textColor="@color/text"
                     android:textSize="16sp" />
@@ -325,8 +377,8 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_delete"
                 android:forceHasOverlappingRendering="true"
+                android:src="@drawable/ic_delete"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_delete_edit"
                 app:layout_constraintStart_toStartOf="@+id/btn_delete_edit"
                 app:layout_constraintTop_toTopOf="@+id/btn_delete_edit" />

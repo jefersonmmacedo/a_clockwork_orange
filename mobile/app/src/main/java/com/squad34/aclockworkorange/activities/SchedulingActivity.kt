@@ -327,7 +327,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         mBinding.tilStationOrMeeting.isEnabled = false
 
         if (mSelectedType == "Normal") {
-            val sDayOfMonth = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
+            val sDayOfMonth = "$dayOfMonth"
             val sMonthOfYear =
                 if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
             val selectedDate = "$sDayOfMonth/$sMonthOfYear/$year"

@@ -47,33 +47,32 @@ class MainActivity : BaseActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-
-
         if (intent.hasExtra(USER)) {
             mUser = intent.getParcelableExtra(USER)!!
             println(mUser)
             mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
         }
 
+
         showProgressDialog()
         getScheduling()
-
         setupActionBar()
-
 
         mBinding.btnSchedule.setOnClickListener {
             val intent = Intent(this, SchedulingActivity::class.java)
             intent.putExtra(USERSCHEDULE, mUser)
             intent.putStringArrayListExtra(DATES_TO_EXCLUDE, mListOfDaysScheduled)
-            startActivityForResult(intent, SCHEDULE_CODE)
+            startActivityForResult(intent, EDIT_CODE)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SCHEDULE_CODE) {
+        if (requestCode == SCHEDULE_CODE || requestCode == EDIT_CODE) {
             if (resultCode == Activity.RESULT_OK) {
+                showProgressDialog()
+                mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
                 getScheduling()
                 updateCharts(allSchedules)
             }
@@ -88,14 +87,11 @@ class MainActivity : BaseActivity() {
         } else {
             mBinding.llRv.visibility = View.VISIBLE
             mBinding.tvNoDatesScheduled.visibility = View.GONE
-
             mBinding.rvDatesInMain.layoutManager = LinearLayoutManager(this)
             mBinding.rvDatesInMain.setHasFixedSize(true)
             val adapter = SchedulesMainAdapter(this, dates)
             mBinding.rvDatesInMain.adapter = adapter
         }
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -106,17 +102,12 @@ class MainActivity : BaseActivity() {
 
     private fun setupActionBar() {
         setSupportActionBar(mBinding.toolbarMainActivity)
-
         supportActionBar?.title = ""
-
-
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         mBinding.toolbarMainActivity.setNavigationOnClickListener {
             doubleBackToExit()
         }
-
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
-
     }
 
     private fun convertNumberToDisplayInChart(n: Int, n2: Double): Int {
@@ -144,16 +135,21 @@ class MainActivity : BaseActivity() {
                             if (allSchedules[i]._idUser == mUser._id) {
                                 mUserScheduling.add(allSchedules[i])
                                 mListOfDaysScheduled.add(allSchedules[i].date!!)
-
-
                             }
-
                         }
-
                         updateCharts(allSchedules)
+                        /*mUserScheduling.sort(a,b){
+                            for (i in mUserScheduling.indices) {
+                                if (i>0){
+                                     (mUserScheduling[i].date)
+                                }
+                            }
+                            // Turn your strings into dates, and then subtract them
+                            // to get a value that is either negative, positive, or zero.
+                            return new Date(b.date) - new Date(a.date);
+                        });*/
                         populateDatesinRecycler(mUserScheduling)
                     }
-
                 }
 
                 override fun onFailure(
@@ -215,6 +211,7 @@ class MainActivity : BaseActivity() {
         saoPauloChartView.layoutParams.width =
             convertNumberToDisplayInChart(saopauloAvaibility, saoPauloWidht)
 
+        hideProgressDialog()
         //countDates()
     }
 
@@ -222,7 +219,7 @@ class MainActivity : BaseActivity() {
         val intent = Intent(this, EditScheduleActivity::class.java)
         intent.putExtra(EDITSCHEDULE, mUserScheduling)
         intent.putExtra(POSITION, position)
-        startActivity(intent)
+        startActivityForResult(intent, SCHEDULE_CODE)
     }
 
     companion object {
@@ -230,6 +227,7 @@ class MainActivity : BaseActivity() {
         var POSITION = "position"
         var USERSCHEDULE = "user"
         var SCHEDULE_CODE = 3
+        var EDIT_CODE = 6
         var DATES_TO_EXCLUDE = "datesToExclude"
     }
 
