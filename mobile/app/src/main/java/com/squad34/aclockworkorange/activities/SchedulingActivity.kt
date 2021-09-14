@@ -335,6 +335,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             val theDate = sdf.parse(selectedDate)
             val format = SimpleDateFormat("EEEE", Locale.getDefault())
             var dow = format.format(theDate)
+            dow.capitalize()
             var contain = false
             for (i in mSelectedDates.indices) {
                 if (mSelectedDates[i].date.contains(selectedDate)) {
