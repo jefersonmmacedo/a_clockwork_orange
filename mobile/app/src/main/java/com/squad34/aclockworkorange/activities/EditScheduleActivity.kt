@@ -76,20 +76,11 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
 
         setupDropDownMenus()
 
-        mBinding.tvSelectedUnitEdit.setOnClickListener {
-            mBinding.tvSelectedUnitEdit.visibility = View.GONE
-            mBinding.tilUnitEdit.visibility = View.VISIBLE
+
+        mBinding.tvSelectedShiftEdit.setOnClickListener {
+            mBinding.tvSelectedShiftEdit.visibility = View.GONE
+            mBinding.tilShiftEdit.visibility = View.VISIBLE
         }
-
-        mBinding.actvUnitEdit.onItemClickListener =
-            AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
-                mSelecetdUnit = p0?.getItemAtPosition(p2).toString()
-            }
-
-        mBinding.actvWorkStationEdit.onItemClickListener =
-            AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
-                mSelectedWork = p0?.getItemAtPosition(p2).toString()
-            }
 
         mBinding.actvShiftEdit.onItemClickListener =
             AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
@@ -181,10 +172,9 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
         val theDate = sdf.parse(selectedDate)
         val format = SimpleDateFormat("EEEE", Locale.getDefault())
-        var dow = format.format(theDate)
-        dow.replace("f", "F", false)
+        var dow = (format.format(theDate).replace("f", "F", false)).capitalize()
         mSelectedDate = selectedDate
-        mSelectedDay = dow.capitalize(Locale("BR"))
+        mSelectedDay = dow
         mBinding.actvDateEdit.setText(mSelectedDate)
     }
 
@@ -234,20 +224,17 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
     }
 
     private fun setupDropDownMenus() {
-        val textFieldUnits: AutoCompleteTextView = mBinding.actvUnitEdit
-        val units = arrayListOf("São Paulo", "Santos")
-        val adapterUnit = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, units)
-        textFieldUnits.setAdapter(adapterUnit)
-
-        val textFieldWorkStation = mBinding.actvWorkStationEdit as? AutoCompleteTextView
-        val workStation = arrayListOf("Estação de trabalho", "Sala de reunião")
-        val adapterWork = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, workStation)
-        textFieldWorkStation?.setAdapter(adapterWork)
-
-        val textFieldShift = mBinding.actvShiftEdit as? AutoCompleteTextView
-        val shift = arrayListOf("Manhã", "Tarde", "Dia Inteiro")
-        val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
-        textFieldShift?.setAdapter(adapterShift)
+        if (mSelectedWork == "Sala de Reuniões") {
+            val textFieldShift = mBinding.actvShiftEdit as? AutoCompleteTextView
+            val shift = arrayListOf("08h às 10h", "10h às 12h", "12h às 14h", "14h às 16h", "16h às 18h")
+            val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
+            textFieldShift?.setAdapter(adapterShift)
+        }else{
+            val textFieldShift = mBinding.actvShiftEdit as? AutoCompleteTextView
+            val shift = arrayListOf("Manhã", "Tarde", "Dia Inteiro")
+            val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
+            textFieldShift?.setAdapter(adapterShift)
+        }
     }
 
     private fun scheduleToBD() {

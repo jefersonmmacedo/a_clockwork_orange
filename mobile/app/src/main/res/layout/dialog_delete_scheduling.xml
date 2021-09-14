@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="296dp"
-    android:layout_height="420dp">
+    android:layout_height="420dp"
+    android:paddingBottom="38dp">
 
     <ImageButton
         android:id="@+id/ib_cancel_dialog_delete"
@@ -151,15 +152,14 @@
         android:id="@+id/btn_cancel_delete"
         android:layout_width="220dp"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/btn_shape_secondary"
         android:elevation="5dp"
         android:fontFamily="@font/metropolis_semibold"
-        android:letterSpacing=".04"
         android:gravity="center"
-        android:layout_marginBottom="20dp"
+        android:letterSpacing=".04"
         android:shadowColor="@color/gray"
-        
+
         android:text="@string/cancel"
         android:textAllCaps="false"
         android:textColor="@color/primary"

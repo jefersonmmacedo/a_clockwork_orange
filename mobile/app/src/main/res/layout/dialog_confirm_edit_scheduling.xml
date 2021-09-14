@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="296dp"
-    android:layout_height="420dp">
+    android:layout_height="420dp"
+    android:paddingBottom="38dp">
 
     <ImageButton
         android:id="@+id/ib_cancel_dialog_edit"
@@ -158,7 +159,7 @@
         android:gravity="center"
         android:layout_marginBottom="20dp"
         android:shadowColor="@color/gray"
-        
+
         android:text="@string/cancel"
         android:textAllCaps="false"
         android:textColor="@color/primary"
