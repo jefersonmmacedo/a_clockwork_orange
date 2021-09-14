@@ -21,6 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -33,6 +34,7 @@ class MainActivity : BaseActivity() {
     private lateinit var mUser: UserFromValidator
     private var allSchedules = ArrayList<Schedulingdata.DateScheduling>()
     private var mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
+    private var mUserDateSortedScheduling = ArrayList<Schedulingdata.DateScheduling>()
     private var mListOfDaysScheduled = ArrayList<String>()
     private var mListSpMor = ArrayList<String>()
     private var mListSpAft = ArrayList<String>()
@@ -73,6 +75,7 @@ class MainActivity : BaseActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 showProgressDialog()
                 mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
+                mUserDateSortedScheduling = ArrayList()
                 getScheduling()
                 updateCharts(allSchedules)
             }
@@ -138,17 +141,15 @@ class MainActivity : BaseActivity() {
                             }
                         }
                         updateCharts(allSchedules)
-                        /*mUserScheduling.sort(a,b){
-                            for (i in mUserScheduling.indices) {
-                                if (i>0){
-                                     (mUserScheduling[i].date)
-                                }
-                            }
-                            // Turn your strings into dates, and then subtract them
-                            // to get a value that is either negative, positive, or zero.
-                            return new Date(b.date) - new Date(a.date);
-                        });*/
-                        populateDatesinRecycler(mUserScheduling)
+
+                        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                        val datesSortedList: List<Schedulingdata.DateScheduling> = mUserScheduling.sortedBy{LocalDate.parse(it.date,dateTimeFormatter)}
+
+                        for (i in datesSortedList.indices) {
+                            mUserDateSortedScheduling.add(datesSortedList[i])
+                        }
+
+                        populateDatesinRecycler(mUserDateSortedScheduling)
                     }
                 }
 
@@ -217,8 +218,9 @@ class MainActivity : BaseActivity() {
 
     fun editSchedule(position: Int) {
         val intent = Intent(this, EditScheduleActivity::class.java)
-        intent.putExtra(EDITSCHEDULE, mUserScheduling)
+        intent.putExtra(EDITSCHEDULE, mUserDateSortedScheduling)
         intent.putExtra(POSITION, position)
+        intent.putExtra(DATES_TO_EXCLUDE, mListOfDaysScheduled)
         startActivityForResult(intent, SCHEDULE_CODE)
     }
 
@@ -230,109 +232,4 @@ class MainActivity : BaseActivity() {
         var EDIT_CODE = 6
         var DATES_TO_EXCLUDE = "datesToExclude"
     }
-
-    /*private fun countDates() {
-        for (i in allSchedules.indices) {
-            if (listCount.isEmpty()) {
-                if (allSchedules[i].location == "São Paulo") {
-                    when (allSchedules[i].shift) {
-                        "Manhã" -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 1, 0, 0, 0))
-                        }
-                        "Tarde" -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 1, 0, 0))
-                        }
-                        else -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 1, 1, 0, 0))
-                        }
-                    }
-                } else {
-                    when (allSchedules[i].shift) {
-                        "Manhã" -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 1, 0))
-                        }
-                        "Tarde" -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 0, 1))
-                        }
-                        else -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 40, 1))
-                        }
-                    }
-                }
-            } else {
-                for (a in listCount.indices) {
-                    if (listCount[a].date == allSchedules[i].date) {
-                        if (allSchedules[i].location == "São Paulo") {
-                            if (allSchedules[i].shift == "Manhã") {
-                                listCount[a].spCountShiftMornig++
-                                if (listCount[a].spCountShiftMornig >= Constants.SAO_PAULO_MAX_QUANTITY) {
-                                    mListSpMor.add(listCount[a].date!!)
-                                }
-                            } else if (allSchedules[i].shift == "Tarde") {
-                                listCount[a].spCountShiftAfternoon++
-                                if (listCount[a].spCountShiftAfternoon >= Constants.SAO_PAULO_MAX_QUANTITY) {
-                                    mListSpAft.add(listCount[a].date!!)
-                                }
-                            } else {
-                                listCount[a].spCountShiftMornig++
-                                listCount[a].spCountShiftAfternoon++
-                                if (listCount[a].spCountShiftMornig >= Constants.SAO_PAULO_MAX_QUANTITY) {
-                                    mListSpMor.add(listCount[a].date!!)
-                                }
-                                if (listCount[a].spCountShiftAfternoon >= Constants.SAO_PAULO_MAX_QUANTITY) {
-                                    mListSpAft.add(listCount[a].date!!)
-                                }
-                            }
-                        } else {
-                            if (allSchedules[i].shift == "Manhã") {
-                                listCount[a].sanCountShiftMorning++
-                                if (listCount[a].sanCountShiftMorning >= Constants.SANTOS_MAX_QUANTITY) {
-                                    mListSanMor.add(listCount[a].date!!)
-                                }
-                            } else if (allSchedules[i].shift == "Tarde") {
-                                listCount[a].sanCountShiftAfternoon++
-                                if (listCount[a].sanCountShiftAfternoon >= Constants.SANTOS_MAX_QUANTITY) {
-                                    mListSanAft.add(listCount[a].date!!)
-                                }
-                            } else {
-                                listCount[a].sanCountShiftMorning++
-                                listCount[a].sanCountShiftAfternoon++
-                                if (listCount[a].sanCountShiftMorning >= Constants.SANTOS_MAX_QUANTITY) {
-                                    mListSanMor.add(listCount[a].date!!)
-                                }
-                                if (listCount[a].sanCountShiftAfternoon >= Constants.SANTOS_MAX_QUANTITY) {
-                                    mListSanAft.add(listCount[a].date!!)
-                                }
-                            }
-                        }
-                    } else {
-                        if (allSchedules[i].location == "São Paulo") {
-                            if (allSchedules[i].shift == "Manhã") {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 1, 0, 0, 0))
-                            } else if (allSchedules[i].shift == "Tarde") {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 1, 0, 0))
-                            } else {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 1, 1, 0, 0))
-                            }
-                        } else {
-                            if (allSchedules[i].shift == "Manhã") {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 1, 0))
-                            } else if (allSchedules[i].shift == "Tarde") {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 0, 1))
-                            } else {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 40, 1))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        hideProgressDialog()
-        println("Datas cheias sp manha: $mListSpMor")
-        println("Datas cheias sp tarde: $mListSpAft")
-        println("Datas cheias santos manha: $mListSanMor")
-        println("Datas cheias santos tarde: $mListSanAft")
-        println("Datas agendadas para excluir: $mListOfDaysScheduled")
-        println("datas da lista: $listCount")
-    }*/
 }

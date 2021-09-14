@@ -51,8 +51,6 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_schedule)
 
-        setupDatePicker()
-
         mBinding = ActivityEditScheduleBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
@@ -72,6 +70,12 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
             mBinding.tvSelectedStationEdit.text = mSelectedWork
             mBinding.tvSelectedShiftEdit.text = mSelectedShift
             mBinding.actvDateEdit.setText(userSchedules[position].date)
+
+
+        }
+        if (intent.hasExtra(MainActivity.DATES_TO_EXCLUDE)) {
+            datesToDisable = intent.getStringArrayListExtra(MainActivity.DATES_TO_EXCLUDE)!!
+
         }
 
         setupDropDownMenus()
@@ -88,6 +92,9 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
             }
 
         mBinding.actvDateEdit.setOnClickListener {
+
+
+            setupDatePicker(mSelectedWork)
             datePickerDialog.show(getFragmentManager(), "DatePickerDialog")
         }
 
@@ -167,7 +174,8 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
 
         val sDayOfMonth = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
-        val sMonthOfYear = if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
+        val sMonthOfYear =
+            if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
         val selectedDate = "$sDayOfMonth/$sMonthOfYear/$year"
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
         val theDate = sdf.parse(selectedDate)
@@ -178,7 +186,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         mBinding.actvDateEdit.setText(mSelectedDate)
     }
 
-    fun setupDatePicker() {
+    fun setupDatePicker(work: String) {
 
         calendar = Calendar.getInstance()
         year = calendar.get(Calendar.YEAR)
@@ -204,13 +212,12 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                 val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
                 disabledDays[0] = loopdate
                 datePickerDialog.disabledDays = disabledDays
-
             }
             minDate.add(Calendar.DATE, 1)
             loopdate = minDate
         }
+        if (work == "Estação de trabalho") {
 
-        if (!datesToDisable.isNullOrEmpty()) {
             for (i in datesToDisable.indices) {
                 val full = Calendar.getInstance()
                 val fullDayString = datesToDisable[i]
@@ -219,6 +226,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                 val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
                 disabledDays[0] = full
                 datePickerDialog.disabledDays = disabledDays
+
             }
         }
     }
@@ -226,10 +234,11 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
     private fun setupDropDownMenus() {
         if (mSelectedWork == "Sala de Reuniões") {
             val textFieldShift = mBinding.actvShiftEdit as? AutoCompleteTextView
-            val shift = arrayListOf("08h às 10h", "10h às 12h", "12h às 14h", "14h às 16h", "16h às 18h")
+            val shift =
+                arrayListOf("08h às 10h", "10h às 12h", "12h às 14h", "14h às 16h", "16h às 18h")
             val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
             textFieldShift?.setAdapter(adapterShift)
-        }else{
+        } else {
             val textFieldShift = mBinding.actvShiftEdit as? AutoCompleteTextView
             val shift = arrayListOf("Manhã", "Tarde", "Dia Inteiro")
             val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
@@ -276,6 +285,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                         finish()
                     }
                 }
+
                 override fun onFailure(
                     call: Call<Schedulingdata.DateScheduling>,
                     t: Throwable
@@ -316,6 +326,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                         finish()
                     }
                 }
+
                 override fun onFailure(
                     call: Call<Schedulingdata.DateScheduling>,
                     t: Throwable

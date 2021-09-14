@@ -18,7 +18,6 @@ open class SchedulesMainAdapter(
     private var list: ArrayList<Schedulingdata.DateScheduling>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var onItemClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 

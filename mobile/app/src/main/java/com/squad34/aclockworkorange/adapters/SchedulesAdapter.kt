@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squad34.aclockworkorange.R
 import kotlinx.android.synthetic.main.item_date.view.*
 import android.widget.AdapterView.OnItemClickListener
+import com.squad34.aclockworkorange.activities.MainActivity
 import com.squad34.aclockworkorange.activities.SchedulingActivity
 import com.squad34.aclockworkorange.models.DateSelected
 
@@ -33,6 +34,9 @@ open class SchedulesAdapter(
         val model = list[position]
 
 
+        if (context is SchedulingActivity) {
+            context.seutpOnDatesEmpty()
+        }
         if (holder is MyViewHolder) {
             holder.itemView.tv_date_in_recycler.text = model.date
             holder.itemView.ib_cancel_date_schedule.setOnClickListener {

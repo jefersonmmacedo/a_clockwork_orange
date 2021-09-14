@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable-v24/ic_close_white.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/btn_shape.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/btn_shape2.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/btn_shape_calendar.xml" value="0.1" />
@@ -15,6 +16,7 @@
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_email.xml" value="0.13518518518518519" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_error.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_info.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_log_out.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_password.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/ic_success.xml" value="0.1" />
@@ -29,6 +31,7 @@
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/confirm_recurrent_scheduling_dialog.xml" value="0.25" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/confirm_scheduling_dialog.xml" value="0.18848684210526315" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/custom_progress_dialog.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_alert.xml" value="0.16644736842105262" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_confirm_edit_scheduling.xml" value="0.23157894736842105" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_confirm_multiple_scheduling.xml" value="0.11578947368421053" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_confirm_recurrent_scheduling.xml" value="0.1125" />

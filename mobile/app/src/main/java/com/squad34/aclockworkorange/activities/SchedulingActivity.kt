@@ -22,6 +22,7 @@ import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import android.util.Log
 import com.squad34.aclockworkorange.adapters.SchedulesConfirmationAdapter
+import com.squad34.aclockworkorange.databinding.DialogAlertBinding
 import com.squad34.aclockworkorange.databinding.DialogConfirmMultipleSchedulingBinding
 import com.squad34.aclockworkorange.databinding.DialogConfirmRecurrentSchedulingBinding
 import com.squad34.aclockworkorange.models.Schedulingdata
@@ -68,13 +69,10 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         mBinding = ActivitySchedulingBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        showProgressDialog()
 
         setupActionBar()
 
         setupDropDownMenus()
-
-        setupDatePicker()
 
         mBinding.tilSchedulingType.isEnabled = false
         mBinding.tilShift.isEnabled = false
@@ -95,6 +93,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 mBinding.tilSchedulingType.isEnabled = true
 
                 setupDropdownForMeeting(mWorkOrMeet)
+                setupDatePicker(mWorkOrMeet)
             }
 
         mBinding.actvSchedulingType.onItemClickListener =
@@ -105,6 +104,8 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 }
                 mBinding.tilSchedulingType.isEnabled = false
                 mBinding.tilShift.isEnabled = true
+
+
             }
 
 
@@ -204,22 +205,20 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
 
         if (work == "Sala de Reuniões") {
             val textFieldShift = mBinding.actvShift as? AutoCompleteTextView
-            val shift = arrayListOf("08h às 10h", "10h às 12h", "12h às 14h", "14h às 16h", "16h às 18h")
+            val shift =
+                arrayListOf("08h às 10h", "10h às 12h", "12h às 14h", "14h às 16h", "16h às 18h")
             val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
             textFieldShift?.setAdapter(adapterShift)
             mBinding.tilShift.isEnabled = true
             mBinding.llHideWhenMeeting.visibility = View.GONE
             mBinding.tvShift.text = "Escolha um horário"
             mSelectedType = "Recorrente"
-        }else{
+        } else {
             val textFieldShift = mBinding.actvShift as? AutoCompleteTextView
             val shift = arrayListOf("Manhã", "Tarde", "Dia Inteiro")
             val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
             textFieldShift?.setAdapter(adapterShift)
         }
-
-
-
     }
 
     fun seutpOnDatesEmpty() {
@@ -265,9 +264,21 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         }
     }
 
+    private fun showDialogAlert(text: String) {
+        val dialog = Dialog(this)
+        val bindingDialogAlert: DialogAlertBinding =
+            DialogAlertBinding.inflate(layoutInflater)
+        dialog.setContentView(bindingDialogAlert.root)
+
+        bindingDialogAlert.tvDialogAlertText.text = text
+
+        dialog.show()
+    }
+
     private fun showDialogRecurrent() {
         val dialog = Dialog(this)
-        val bindingRecurrent: DialogConfirmRecurrentSchedulingBinding = DialogConfirmRecurrentSchedulingBinding.inflate(layoutInflater)
+        val bindingRecurrent: DialogConfirmRecurrentSchedulingBinding =
+            DialogConfirmRecurrentSchedulingBinding.inflate(layoutInflater)
         dialog.setCancelable(false)
         dialog.setContentView(bindingRecurrent.root)
 
@@ -275,11 +286,12 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
 
         if (mWorkOrMeet == "Sala de Reuniões") {
             bindingRecurrent.llHideRecurrent.visibility = View.GONE
-        }else{
+        } else {
             bindingRecurrent.tvSelectedTypeRecurrentConfirmation.text = " " + mSelectedType
         }
 
-        bindingRecurrent.tvDayOfWeekRecurrentConfirmation.text = "Dia da semana: " + mSelectedDates[0].dayOfWeek
+        bindingRecurrent.tvDayOfWeekRecurrentConfirmation.text =
+            "Dia da semana: " + mSelectedDates[0].dayOfWeek
 
         val dates = bindingRecurrent.tvDatesSelectedRecurrentConfirmation
         if (mSelectedDates.size > 1) {
@@ -386,6 +398,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 populateDatesList(mSelectedDates)
             }
         } else {
+            mBinding.tvDateToSelect.isEnabled = false
             val sDayOfMonth = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
             val sMonthOfYear =
                 if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
@@ -398,6 +411,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             var dow = (format.format(theDate).replace("f", "F", false)).capitalize()
 
 
+            val listError = ArrayList<String>()
             var mSelectedDateFormater = DateSelected(selectedDate2, dow)
             mSelectedDates.add(mSelectedDateFormater)
             var i = 1
@@ -408,17 +422,39 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 val dateNew = dateWrong.parse(date.toString())
                 val dateNewFormat = SimpleDateFormat("dd/MM/yyyy")
                 val dateFinal = dateNewFormat.format(dateNew)
-                var mSelectedDateFormater = DateSelected(dateFinal, dow)
-                mSelectedDates.add(mSelectedDateFormater)
+                val mSelectedDateFormater = DateSelected(dateFinal, dow)
 
-                populateDatesList(mSelectedDates)
-                i++
+                if (datesToDisable.contains(dateFinal)) {
+                    listError.add(dateFinal)
+                    i++
+                } else {
+                    mSelectedDates.add(mSelectedDateFormater)
+                    populateDatesList(mSelectedDates)
+                    i++
+                }
+            }
+            if (listError.isNotEmpty()) {
+                var dateInfo = ""
+                val max = listError.size -1
+                if (listError.size>1) {
+                     dateInfo += "As datas "
+                    for (i in listError.indices) {
+                        if (i == max) {
+                            dateInfo += "e ${listError[i]} não foram adicionadas pois você já possui agendamentos para estes dias."
+                        }else{
+                            dateInfo += "${listError[i]}, "
+                        }
+                    }
+                }else{
+                    dateInfo += "A data ${listError[0]} não foi adicionada pois você já possui agendamento para este dia."
+                }
+                showDialogAlert(dateInfo)
             }
             mBinding.tvDateToSelect.isEnabled = false
         }
     }
 
-    fun setupDatePicker() {
+    fun setupDatePicker(work: String) {
 
         calendar = getInstance()
         year = calendar.get(Calendar.YEAR)
@@ -450,20 +486,23 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             loopdate = minDate
         }
 
+
         if (!datesToDisable.isNullOrEmpty()) {
-            for (i in datesToDisable.indices) {
-                val full = Calendar.getInstance()
-                val fullDayString = datesToDisable[i]
-                val sdf = SimpleDateFormat("dd/MM/yyyy")
-                full.time = sdf.parse(fullDayString)
-                val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
-                disabledDays[0] = full
-                datePickerDialog.disabledDays = disabledDays
+
+            if (work == "Estação de trabalho") {
+                for (i in datesToDisable.indices) {
+                    val full = Calendar.getInstance()
+                    val fullDayString = datesToDisable[i]
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    full.time = sdf.parse(fullDayString)
+                    val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
+                    disabledDays[0] = full
+                    datePickerDialog.disabledDays = disabledDays
+                }
             }
+
         }
 
-
-        hideProgressDialog()
     }
 
     fun scheduleToBD(date: DateSelected) {
@@ -494,7 +533,11 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 ) {
                     if (response.isSuccessful) {
                         println("Mensagem de retorno : ${response.body().toString()}")
-                        Toast.makeText(this@SchedulingActivity, "Datas agendadas com sucesso!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@SchedulingActivity,
+                            "Datas agendadas com sucesso!",
+                            Toast.LENGTH_LONG
+                        ).show()
                         val intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
                         finish()
@@ -513,7 +556,8 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         }
 
     }
-    companion object{
+
+    companion object {
         const val USERFROMSCHEDULE: String = "userFromSchedule"
     }
 }
