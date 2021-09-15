@@ -121,19 +121,19 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             }
             when {
                 TextUtils.isEmpty(mSelecetdUnit) -> {
-                    showDialogAlert("Você deve selecionar uma unidade!")
+                    showToastAlert("Você deve selecionar uma unidade!")
                 }
                 TextUtils.isEmpty(mWorkOrMeet) -> {
-                    showDialogAlert("Você deve selecionar oque você quer agendar!")
+                    showToastAlert("Você deve selecionar oque você quer agendar!")
                 }
                 TextUtils.isEmpty(mSelectedType) -> {
-                    showDialogAlert("Você deve selecionar o tipo de agendamento!")
+                    showToastAlert("Você deve selecionar o tipo de agendamento!")
                 }
                 TextUtils.isEmpty(mShift) -> {
-                    showDialogAlert("Você deve selecionar um turno!")
+                    showToastAlert("Você deve selecionar um turno!")
                 }
                 mSelectedDates.isEmpty() -> {
-                    showDialogAlert("Você deve selecionar uma data!")
+                    showToastAlert("Você deve selecionar uma data!")
                 }
                 else -> {
                     if (mSelectedType == "Recorrente" || mSelectedDates.size == 1) {
@@ -230,32 +230,6 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 mBinding.tvSelectedDate.text = "Datas selecionadas"
             }
         }
-    }
-
-    private fun showDialogSuccess(text: String) {
-        val dialog = Dialog(this)
-        val bindingDialogSuccess: DialogOkBinding =
-            DialogOkBinding.inflate(layoutInflater)
-        dialog.setContentView(bindingDialogSuccess.root)
-
-        bindingDialogSuccess.tvDialogOkText.text = text
-        bindingDialogSuccess.imageView.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
-    }
-
-    private fun showDialogAlert(text: String) {
-        val dialog = Dialog(this)
-        val bindingDialogAlert: DialogAlertBinding =
-            DialogAlertBinding.inflate(layoutInflater)
-        dialog.setContentView(bindingDialogAlert.root)
-        bindingDialogAlert.imageView.setOnClickListener {
-            dialog.dismiss()
-        }
-        bindingDialogAlert.tvDialogAlertText.text = text
-        dialog.show()
     }
 
     private fun showDialogRecurrent() {
@@ -366,7 +340,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             var contain = false
             for (i in mSelectedDates.indices) {
                 if (mSelectedDates[i].date.contains(selectedDate)) {
-                    showDialogAlert("Esta data já foi selecionada!")
+                    showToastAlert("Esta data já foi selecionada!")
                 }
             }
 
@@ -426,7 +400,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 } else {
                     dateInfo += "A data ${listError[0]} não foi adicionada pois você já possui agendamento para este dia."
                 }
-                showDialogAlert(dateInfo)
+                showToastAlert(dateInfo)
             }
             mBinding.tvDateToSelect.isEnabled = false
         }
@@ -507,7 +481,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                     response: Response<Schedulingdata.DateScheduling>
                 ) {
                     if (response.isSuccessful) {
-                        showToast("Datas agendadas com sucesso!")
+                        showToastSuccess("Datas agendadas com sucesso!")
                             val intent = Intent()
                             setResult(Activity.RESULT_OK, intent)
                             finish()

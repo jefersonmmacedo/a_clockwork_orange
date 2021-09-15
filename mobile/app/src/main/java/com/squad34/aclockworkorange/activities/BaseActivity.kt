@@ -25,10 +25,6 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
-    fun showToast(context: Context = applicationContext, message: String, duration: Int = Toast.LENGTH_LONG) {
-        Toast.makeText(context, message, duration).show()
-    }
-
     fun showProgressDialog() {
 
         mProgressDialog = Dialog(this)
@@ -41,12 +37,36 @@ open class BaseActivity : AppCompatActivity() {
         mProgressDialog.dismiss()
     }
 
-    fun showToast(text: String) {
-        val toast = Toast(this)
+    fun showToastSuccess(text: String) {
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.dialog_ok, findViewById(R.id.ct_success))
+        val textView: TextView = layout.findViewById(R.id.tv_dialog_ok_text)
+        textView.text = text
+        val toast = Toast(applicationContext)
         toast.duration = Toast.LENGTH_LONG
-        toast.setText(text)
-        val view = layoutInflater.inflate(R.layout.dialog_ok, null)
-        toast.view = view
+        toast.view = layout
+        toast.show()
+    }
+
+    fun showToastError(text: String) {
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.dialog_error, findViewById(R.id.ct_error))
+        val textView: TextView = layout.findViewById(R.id.tv_dialog_error_text)
+        textView.text = text
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_LONG
+        toast.view = layout
+        toast.show()
+    }
+
+    fun showToastAlert(text: String) {
+        val inflater = layoutInflater
+        val layout = inflater.inflate(R.layout.dialog_alert, findViewById(R.id.ct_alert))
+        val textView: TextView = layout.findViewById(R.id.tv_dialog_alert_text)
+        textView.text = text
+        val toast = Toast(applicationContext)
+        toast.duration = Toast.LENGTH_LONG
+        toast.view = layout
         toast.show()
     }
 

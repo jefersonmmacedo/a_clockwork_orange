@@ -1,20 +1,15 @@
 package com.squad34.aclockworkorange.activities
 
-import android.app.ActionBar
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squad34.aclockworkorange.R
@@ -32,9 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.system.exitProcess
 
 class MainActivity : BaseActivity() {
     private lateinit var mBinding: ActivityMainBinding
@@ -136,9 +129,7 @@ class MainActivity : BaseActivity() {
         }
 
         return super.onOptionsItemSelected(item)
-
     }
-
 
     private fun setupActionBar() {
         setSupportActionBar(mBinding.toolbarMainActivity)
@@ -149,8 +140,6 @@ class MainActivity : BaseActivity() {
         }
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
     }
-
-
 
     private fun getScheduling(id: String) {
         if (Constants.isNetworkAvailable(this)) {
@@ -183,7 +172,6 @@ class MainActivity : BaseActivity() {
                         mUserDateSortedScheduling.add(datesSortedList[i])
                     }
                     populateDatesinRecycler(mUserDateSortedScheduling)
-
                 }
 
                 override fun onFailure(
@@ -193,12 +181,7 @@ class MainActivity : BaseActivity() {
                 }
             })
         } else {
-            Toast.makeText(
-                this,
-                "Não foi possível baixar os dados, tente mais tarde!",
-                Toast.LENGTH_LONG
-            )
-                .show()
+            showToastError("Não foi possível baixar os dados, tente mais tarde!")
         }
     }
 
@@ -217,8 +200,6 @@ class MainActivity : BaseActivity() {
         santosChartView.updateLayoutParams {
             width = convertNumberToDisplayInChart(santosAvaibility, santosWidht)
         }
-
-
     }
 
     fun updateChartSaoPaulo(totalSaoPaulo: Int) {
@@ -231,8 +212,6 @@ class MainActivity : BaseActivity() {
         saoPauloChartView.updateLayoutParams {
             width = convertNumberToDisplayInChart(saopauloAvaibility, saoPauloWidht)
         }
-
-
     }
 
     fun editSchedule(position: Int) {
@@ -288,12 +267,10 @@ class MainActivity : BaseActivity() {
                     if (location == "São Paulo") {
                         mTotalSaoPaulo = response.body()!!
                         updateChartSaoPaulo(mTotalSaoPaulo.length)
-                        println("Total SP: ${mTotalSaoPaulo.length}, a data: $date, o turno: $shift")
 
                     } else {
                         mTotalSantos = response.body()!!
                         updateChartSantos(mTotalSantos.length)
-                        println("Total san: ${mTotalSantos.length}")
                     }
                 }
 
@@ -304,12 +281,7 @@ class MainActivity : BaseActivity() {
                 }
             })
         } else {
-            Toast.makeText(
-                this,
-                "Não foi possível baixar os dados, tente mais tarde!",
-                Toast.LENGTH_LONG
-            )
-                .show()
+            showToastError("Não foi possível baixar os dados, tente mais tarde!")
         }
     }
 

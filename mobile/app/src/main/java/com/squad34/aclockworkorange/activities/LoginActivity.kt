@@ -38,14 +38,11 @@ class LoginActivity : BaseActivity() {
     private lateinit var mUser: UserFromValidator
     private var email = ""
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
-
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -77,36 +74,24 @@ class LoginActivity : BaseActivity() {
                         ) {
 
                             if (response.body() == null) {
-                                showDialogError("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
+                                showToastError("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
                             } else {
                                 email = response.body().toString()
                                 mBinding.vwLoginEmail.visibility = View.GONE
                                 mBinding.vwLoginPassword.visibility = View.VISIBLE
                             }
-
                         }
 
                         override fun onFailure(call: Call<String>, t: Throwable) {
                             Log.e("Erro", t.message.toString())
                         }
-
                     })
-
                 }
             } else {
-
-                showDialogAlert("Você deve digitar seu email corporativo!")
+                showToastAlert("Você deve digitar seu email corporativo!")
             }
-
-
         }
-
-
-
-
-
         mBinding.btnLogin.setOnClickListener {
-
             val inputPassword = mBinding.etPassword.text.toString()
             if (Constants.isNetworkAvailable(this)) {
                 val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
@@ -123,64 +108,25 @@ class LoginActivity : BaseActivity() {
                         response: Response<UserFromValidator>
                     ) {
                         if (response.isSuccessful) {
-
-                            /*mUser = UserFromValidator(0,"613df39d0248015f4766f9e8", "2021-09-12T12:33:33.067+00:00", "marcos@fcamara.com.br", "Fonseca", "Marcos", "", "Scrum Master", "2021-09-13T03:31:18.797+00:00", "")
-                            intent()*/
                             mUser = response.body()!!
-
                             if (mUser.error == "User not found.") {
-                                showDialogError("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
-
+                                showToastError("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
                             } else if (mUser.error == "Invalid password.") {
-                                showDialogError("Senha incorreta!")
+                                showToastError("Senha incorreta!")
                             } else {
                                 mUser = response.body()!!
                                 println(mUser.name)
                                 intent()
                             }
-
-
                         }
-
-
                     }
 
                     override fun onFailure(call: Call<UserFromValidator>, t: Throwable) {
                         Log.e("Erro", t.message.toString())
                     }
-
                 })
-
-
             }
         }
-    }
-
-    private fun showDialogAlert(text: String) {
-        val dialog = Dialog(this)
-        val bindingDialogAlert: DialogAlertBinding =
-            DialogAlertBinding.inflate(layoutInflater)
-        dialog.setContentView(bindingDialogAlert.root)
-
-        bindingDialogAlert.tvDialogAlertText.text = text
-        bindingDialogAlert.imageView.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
-    }
-
-    private fun showDialogError(text: String) {
-        val dialog = Dialog(this)
-        val bindingDialogError: DialogErrorBinding =
-            DialogErrorBinding.inflate(layoutInflater)
-        dialog.setContentView(bindingDialogError.root)
-        bindingDialogError.tvDialogAlertText.text = text
-        bindingDialogError.imageView.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
     }
 
     private fun intent() {
