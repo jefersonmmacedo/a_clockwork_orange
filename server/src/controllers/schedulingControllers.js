@@ -26,14 +26,22 @@ module.exports = {
         return res.json(data)
      },
 
-    async create(req, res){
-        const {location, shift, type, date, day, _idUser, name,lastname, email, role} = req.body;
-        const data = {location, shift, type, date, day, _idUser, name,lastname, email, role};
-        const  new_scheduling = await Scheduling.create(data);
-           
-        return res.json(new_scheduling);
+     async create(req, res){
+      const {location, shift, type, date, day, _idUser, name,lastname, email, role} = req.body;
+      
+      const schedulingVerification = await Scheduling.findOne({location,type, date, _idUser});
+      if(!schedulingVerification) {
+         const data = {location, shift, type, date, day, _idUser, name,lastname, email, role}
+         const  new_scheduling = await Scheduling.create(data);         
+         return res.json(new_scheduling);
+      } else {
+       res.status(200).json({Error: "Ops. Encontramos um agendamento semelhante no banco de dados"})
+      }
 
-    },
+  }
+            
+ ,
+
     async indexFilter(req, res) {
         const {location, type, shift, date} = req.body;
         const infos = {location, type, shift, date}

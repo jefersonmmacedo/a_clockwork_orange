@@ -64,7 +64,7 @@ function AuthProvider({children}) {
         if(res.status === 200) {
             toast.success('Cadastro efetuado com sucesso. Efetue seu login');
             history.push('/login')
-          } else {
+          } else { 
             toast.error('Ops. Ocorreu um erro.');
           }
     }
@@ -88,7 +88,7 @@ function AuthProvider({children}) {
     async function scheduling(location, shift, type, date, _idUser, name,lastname, email, role, recurrent) {
         const list = {location, shift, type, date, _idUser, name,lastname, email, role, recurrent}
         console.log(list)
-        const dateNew = format(parseISO(date),'dd.MM.yyyy');
+        const dateNew = format(parseISO(date),'dd/MM/yyyy');
         const day = parseISO(date) ;
         let bdDay = day.getDay();
         switch(bdDay) {
@@ -168,16 +168,19 @@ function AuthProvider({children}) {
                    toast.success('Agendamentos efetuados com sucesso!');
                     history.push('/dashboard/dashboard')
                   } else {
+                    console.log(res.data)
                      toast.error('Ops. Ocorreu um erro.');
                   }
             }
         } else{
             const res = await api.post('/api/scheduling', dataUser);
-            if(res.status === 200) {
-               toast.success('Agendamentos efetuados com sucesso!');
-                history.push('/dashboard/dashboard')
+            if(res.data.Error) {
+                console.log(res.data)
+                toast.error('Há um agendamento nesta data. Verifique seus agendamentos');
               } else {
-                 toast.error('Ops. Ocorreu um erro.');
+                toast.success('Agendamentos efetuados com sucesso!');
+                history.push('/dashboard/dashboard')
+               
               }
         }
     }
