@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
-
+import {format, parseISO} from 'date-fns';
 import {toast} from 'react-toastify';
 import api from "../services/api";
 
@@ -88,11 +88,10 @@ function AuthProvider({children}) {
     async function scheduling(location, shift, type, date, _idUser, name,lastname, email, role, recurrent) {
         const list = {location, shift, type, date, _idUser, name,lastname, email, role, recurrent}
         console.log(list)
-        const dateNew = date.split('-').reverse().join('/');
-        const day = new Date(date) ;
-        const dateDay = day.getDay() + 1;
+        const dateNew = format(parseISO(date),'dd.MM.yyyy');
+        const day = parseISO(date) ;
         let bdDay = '';
-        switch(dateDay) {
+        switch(day) {
             case 1:
             bdDay = 'Segunda-Feira';
             break;
@@ -139,7 +138,7 @@ function AuthProvider({children}) {
                     location,
                     shift,
                     type,
-                    date: (periodo.getDate() < 10 ?  "0" + ((periodo.getDate() +1)) : ((periodo.getDate() +1))) + "/" + (periodo.getMonth() < 9? "0" + ((periodo.getMonth() + 1)) : ((periodo.getMonth() + 1)) )+ "/" + periodo.getFullYear(),
+                    date: (periodo.getDate() < 10 ?  "0" + ((periodo.getDate())) : ((periodo.getDate() ))) + "/" + (periodo.getMonth() < 9? "0" + ((periodo.getMonth() + 1)) : ((periodo.getMonth() + 1)) )+ "/" + periodo.getFullYear(),
                     day: bdDay,
                     _idUser,
                     name,
@@ -161,15 +160,9 @@ function AuthProvider({children}) {
     }
 
     async function schedulingCreate() {
-        if(dataUser.recurrent === 'unic' &&  dataUser.type === "Sala de Reuniões") {
-            const res = await api.post('/api/scheduling', dataUser);
-            if(res.status === 200) {
-               toast.success('Agendamentos efetuados com sucesso!');
-                history.push('/dashboard/dashboard')
-              } else {
-                 toast.error('Ops. Ocorreu um erro.');
-              }
-        } else {
+        
+        
+        if(dataUser.length === 4) {
             for(let i = 0; i < 4; i++) {
                 const res = await api.post('/api/scheduling', dataUser[i]);
                  if(res.status === 200) {
@@ -179,6 +172,14 @@ function AuthProvider({children}) {
                      toast.error('Ops. Ocorreu um erro.');
                   }
             }
+        } else{
+            const res = await api.post('/api/scheduling', dataUser);
+            if(res.status === 200) {
+               toast.success('Agendamentos efetuados com sucesso!');
+                history.push('/dashboard/dashboard')
+              } else {
+                 toast.error('Ops. Ocorreu um erro.');
+              }
         }
     }
 

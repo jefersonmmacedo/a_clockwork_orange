@@ -52,6 +52,20 @@ module.exports = {
                             result: data,
                             length: data.length
         })
+     },
+     async indexFilterUser(req, res) {
+        const {_idUser} = req.body;
+        const infos = {_idUser}
+        console.log(infos)
+
+        const data = await Scheduling.find( {
+                    _idUser: new RegExp(`^${_idUser}$`, 'i'),            
+          });
+                        console.log(data.length)
+                        res.json({
+                            result: data,
+                            length: data.length
+        })
      }
 }
 

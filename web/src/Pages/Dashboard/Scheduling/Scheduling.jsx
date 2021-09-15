@@ -8,7 +8,7 @@ import Navbar from '../../../Components/Navbar/Navbar';
 import ImageBody from '../../../Components/ImageBody/ImageBody';
 import Modal from 'react-modal'
 import { AuthContext } from '../../../Contexts/Auth';
-
+import {format, parseISO} from 'date-fns';
  
 
 
@@ -22,6 +22,10 @@ export default function Scheduling() {
   const [recurrent, setRecurrent] = useState('unic');
   const [isOpenModal, setIsOpenModal] = useState(false);
 
+
+
+
+
   function handleOpenModal() {
     setIsOpenModal(true)
   }
@@ -33,6 +37,9 @@ export default function Scheduling() {
   function handleScheduling () {
     scheduling(location, shift, type, date, user._id, user.name,user.lastname, user.email, user.role, recurrent);
    handleOpenModal()
+   const today = parseISO(date);
+  console.log(today);
+  console.log(new Date());
   }
 
   function handleSchedulingCreate() {
