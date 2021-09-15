@@ -35,18 +35,23 @@ module.exports = {
 
     },
     async indexFilter(req, res) {
-        const {location, type, shifit, date} = req.body;
-        //const filter = {location, type}
+        const {location, type, shift, date} = req.body;
+        const infos = {location, type, shift, date}
+        console.log(infos)
+
         const data = await Scheduling.find( {
-          $or: [
-                    {'location': new RegExp(`^${location}$`, 'i')}, 
-                    {'type': new RegExp(`^${type}$`, 'i')},
-                    {'shifit': new RegExp(`^${shifit}$`, 'i')}, 
-                    {'date': new RegExp(`^${date}$`, 'i')}
-          ]
+                    location: new RegExp(`^${location}$`, 'i'), 
+                    type: new RegExp(`^${type}$`, 'i'),
+                    shift: {$in: [new RegExp(`^${shift}$`, 'i'), "Dia Inteiro"]},
+                    date: new RegExp(`^${date}$`, 'i'), 
+                   
           });
-       
-        res.json(data)
+                      //  console.log(data);
+                        console.log(data.length)
+                        res.json({
+                            result: data,
+                            length: data.length
+        })
      }
 }
 

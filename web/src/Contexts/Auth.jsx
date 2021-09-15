@@ -25,7 +25,10 @@ function AuthProvider({children}) {
         }
         setLoading(false);
         }
+
+     
         loadStorage();
+        
     },[])
   
 
@@ -154,6 +157,7 @@ function AuthProvider({children}) {
             setDataUser(data);
             console.log(data);
         }   
+        filterSheduling(location, type, shift, dateNew);
     }
 
     async function schedulingCreate() {
@@ -177,6 +181,14 @@ function AuthProvider({children}) {
             }
         }
     }
+
+    async function filterSheduling(location, type, shift, date){
+        const data = {location, type, shift, date}
+        console.log(data)
+         const res = await api.post('/api/filter', data);
+
+         console.log(res.data)
+     }
 
     function storageUser(data) {
         localStorage.setItem("fcamara", JSON.stringify(data));
