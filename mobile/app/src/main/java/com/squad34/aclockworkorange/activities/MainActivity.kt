@@ -21,6 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -33,6 +34,7 @@ class MainActivity : BaseActivity() {
     private lateinit var mUser: UserFromValidator
     private var allSchedules = ArrayList<Schedulingdata.DateScheduling>()
     private var mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
+    private var mUserDateSortedScheduling = ArrayList<Schedulingdata.DateScheduling>()
     private var mListOfDaysScheduled = ArrayList<String>()
     private var mListSpMor = ArrayList<String>()
     private var mListSpAft = ArrayList<String>()
@@ -47,33 +49,33 @@ class MainActivity : BaseActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-
-
         if (intent.hasExtra(USER)) {
             mUser = intent.getParcelableExtra(USER)!!
             println(mUser)
             mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
         }
 
+
         showProgressDialog()
         getScheduling()
-
         setupActionBar()
-
 
         mBinding.btnSchedule.setOnClickListener {
             val intent = Intent(this, SchedulingActivity::class.java)
             intent.putExtra(USERSCHEDULE, mUser)
             intent.putStringArrayListExtra(DATES_TO_EXCLUDE, mListOfDaysScheduled)
-            startActivityForResult(intent, SCHEDULE_CODE)
+            startActivityForResult(intent, EDIT_CODE)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SCHEDULE_CODE) {
+        if (requestCode == SCHEDULE_CODE || requestCode == EDIT_CODE) {
             if (resultCode == Activity.RESULT_OK) {
+                showProgressDialog()
+                mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
+                mUserDateSortedScheduling = ArrayList()
                 getScheduling()
                 updateCharts(allSchedules)
             }
@@ -88,14 +90,11 @@ class MainActivity : BaseActivity() {
         } else {
             mBinding.llRv.visibility = View.VISIBLE
             mBinding.tvNoDatesScheduled.visibility = View.GONE
-
             mBinding.rvDatesInMain.layoutManager = LinearLayoutManager(this)
             mBinding.rvDatesInMain.setHasFixedSize(true)
             val adapter = SchedulesMainAdapter(this, dates)
             mBinding.rvDatesInMain.adapter = adapter
         }
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -106,17 +105,12 @@ class MainActivity : BaseActivity() {
 
     private fun setupActionBar() {
         setSupportActionBar(mBinding.toolbarMainActivity)
-
         supportActionBar?.title = ""
-
-
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         mBinding.toolbarMainActivity.setNavigationOnClickListener {
             doubleBackToExit()
         }
-
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
-
     }
 
     private fun convertNumberToDisplayInChart(n: Int, n2: Double): Int {
@@ -144,16 +138,19 @@ class MainActivity : BaseActivity() {
                             if (allSchedules[i]._idUser == mUser._id) {
                                 mUserScheduling.add(allSchedules[i])
                                 mListOfDaysScheduled.add(allSchedules[i].date!!)
-
-
                             }
+                        }
+                        updateCharts(allSchedules)
 
+                        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                        val datesSortedList: List<Schedulingdata.DateScheduling> = mUserScheduling.sortedBy{LocalDate.parse(it.date,dateTimeFormatter)}
+
+                        for (i in datesSortedList.indices) {
+                            mUserDateSortedScheduling.add(datesSortedList[i])
                         }
 
-                        updateCharts(allSchedules)
-                        populateDatesinRecycler(mUserScheduling)
+                        populateDatesinRecycler(mUserDateSortedScheduling)
                     }
-
                 }
 
                 override fun onFailure(
@@ -215,14 +212,16 @@ class MainActivity : BaseActivity() {
         saoPauloChartView.layoutParams.width =
             convertNumberToDisplayInChart(saopauloAvaibility, saoPauloWidht)
 
+        hideProgressDialog()
         //countDates()
     }
 
     fun editSchedule(position: Int) {
         val intent = Intent(this, EditScheduleActivity::class.java)
-        intent.putExtra(EDITSCHEDULE, mUserScheduling)
+        intent.putExtra(EDITSCHEDULE, mUserDateSortedScheduling)
         intent.putExtra(POSITION, position)
-        startActivity(intent)
+        intent.putExtra(DATES_TO_EXCLUDE, mListOfDaysScheduled)
+        startActivityForResult(intent, SCHEDULE_CODE)
     }
 
     companion object {
@@ -230,111 +229,7 @@ class MainActivity : BaseActivity() {
         var POSITION = "position"
         var USERSCHEDULE = "user"
         var SCHEDULE_CODE = 3
+        var EDIT_CODE = 6
         var DATES_TO_EXCLUDE = "datesToExclude"
     }
-
-    /*private fun countDates() {
-        for (i in allSchedules.indices) {
-            if (listCount.isEmpty()) {
-                if (allSchedules[i].location == "São Paulo") {
-                    when (allSchedules[i].shift) {
-                        "Manhã" -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 1, 0, 0, 0))
-                        }
-                        "Tarde" -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 1, 0, 0))
-                        }
-                        else -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 1, 1, 0, 0))
-                        }
-                    }
-                } else {
-                    when (allSchedules[i].shift) {
-                        "Manhã" -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 1, 0))
-                        }
-                        "Tarde" -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 0, 1))
-                        }
-                        else -> {
-                            listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 40, 1))
-                        }
-                    }
-                }
-            } else {
-                for (a in listCount.indices) {
-                    if (listCount[a].date == allSchedules[i].date) {
-                        if (allSchedules[i].location == "São Paulo") {
-                            if (allSchedules[i].shift == "Manhã") {
-                                listCount[a].spCountShiftMornig++
-                                if (listCount[a].spCountShiftMornig >= Constants.SAO_PAULO_MAX_QUANTITY) {
-                                    mListSpMor.add(listCount[a].date!!)
-                                }
-                            } else if (allSchedules[i].shift == "Tarde") {
-                                listCount[a].spCountShiftAfternoon++
-                                if (listCount[a].spCountShiftAfternoon >= Constants.SAO_PAULO_MAX_QUANTITY) {
-                                    mListSpAft.add(listCount[a].date!!)
-                                }
-                            } else {
-                                listCount[a].spCountShiftMornig++
-                                listCount[a].spCountShiftAfternoon++
-                                if (listCount[a].spCountShiftMornig >= Constants.SAO_PAULO_MAX_QUANTITY) {
-                                    mListSpMor.add(listCount[a].date!!)
-                                }
-                                if (listCount[a].spCountShiftAfternoon >= Constants.SAO_PAULO_MAX_QUANTITY) {
-                                    mListSpAft.add(listCount[a].date!!)
-                                }
-                            }
-                        } else {
-                            if (allSchedules[i].shift == "Manhã") {
-                                listCount[a].sanCountShiftMorning++
-                                if (listCount[a].sanCountShiftMorning >= Constants.SANTOS_MAX_QUANTITY) {
-                                    mListSanMor.add(listCount[a].date!!)
-                                }
-                            } else if (allSchedules[i].shift == "Tarde") {
-                                listCount[a].sanCountShiftAfternoon++
-                                if (listCount[a].sanCountShiftAfternoon >= Constants.SANTOS_MAX_QUANTITY) {
-                                    mListSanAft.add(listCount[a].date!!)
-                                }
-                            } else {
-                                listCount[a].sanCountShiftMorning++
-                                listCount[a].sanCountShiftAfternoon++
-                                if (listCount[a].sanCountShiftMorning >= Constants.SANTOS_MAX_QUANTITY) {
-                                    mListSanMor.add(listCount[a].date!!)
-                                }
-                                if (listCount[a].sanCountShiftAfternoon >= Constants.SANTOS_MAX_QUANTITY) {
-                                    mListSanAft.add(listCount[a].date!!)
-                                }
-                            }
-                        }
-                    } else {
-                        if (allSchedules[i].location == "São Paulo") {
-                            if (allSchedules[i].shift == "Manhã") {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 1, 0, 0, 0))
-                            } else if (allSchedules[i].shift == "Tarde") {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 1, 0, 0))
-                            } else {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 1, 1, 0, 0))
-                            }
-                        } else {
-                            if (allSchedules[i].shift == "Manhã") {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 1, 0))
-                            } else if (allSchedules[i].shift == "Tarde") {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 0, 1))
-                            } else {
-                                listCount.add(DatesToExclude((allSchedules[i].date), 0, 0, 40, 1))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        hideProgressDialog()
-        println("Datas cheias sp manha: $mListSpMor")
-        println("Datas cheias sp tarde: $mListSpAft")
-        println("Datas cheias santos manha: $mListSanMor")
-        println("Datas cheias santos tarde: $mListSanAft")
-        println("Datas agendadas para excluir: $mListOfDaysScheduled")
-        println("datas da lista: $listCount")
-    }*/
 }

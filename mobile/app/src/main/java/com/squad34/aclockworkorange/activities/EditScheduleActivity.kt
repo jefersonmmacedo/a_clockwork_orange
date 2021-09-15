@@ -1,6 +1,7 @@
 package com.squad34.aclockworkorange.activities
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +13,10 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.squad34.aclockworkorange.R
-import com.squad34.aclockworkorange.databinding.ActivityEditScheduleBinding
-import com.squad34.aclockworkorange.databinding.ActivityMainBinding
+import com.squad34.aclockworkorange.adapters.SchedulesConfirmationAdapter
+import com.squad34.aclockworkorange.databinding.*
 import com.squad34.aclockworkorange.models.DateSelected
 import com.squad34.aclockworkorange.models.Schedulingdata
 import com.squad34.aclockworkorange.network.ClockworkService
@@ -49,8 +51,6 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_schedule)
 
-        setupDatePicker()
-
         mBinding = ActivityEditScheduleBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
@@ -59,34 +59,32 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         }
         if (intent.hasExtra(MainActivity.EDITSCHEDULE)) {
             userSchedules = intent.getParcelableArrayListExtra(MainActivity.EDITSCHEDULE)!!
+
+            mSelecetdUnit = userSchedules[position].location.toString()
+            mSelectedWork = userSchedules[position].type.toString()
+            mSelectedShift = userSchedules[position].shift.toString()
+            mSelectedDate = userSchedules[position].date.toString()
+            mSelectedDay = userSchedules[position].day.toString()
+
+            mBinding.tvSelectedUnitEdit.text = mSelecetdUnit
+            mBinding.tvSelectedStationEdit.text = mSelectedWork
+            mBinding.tvSelectedShiftEdit.text = mSelectedShift
+            mBinding.actvDateEdit.setText(userSchedules[position].date)
+
+
+        }
+        if (intent.hasExtra(MainActivity.DATES_TO_EXCLUDE)) {
+            datesToDisable = intent.getStringArrayListExtra(MainActivity.DATES_TO_EXCLUDE)!!
+
         }
 
         setupDropDownMenus()
 
-        mBinding.tvSelectedUnitEdit.text = userSchedules[position].location
-        mBinding.actvWorkStationEdit.setText(userSchedules[position].type)
-        mBinding.actvShiftEdit.setText(userSchedules[position].shift)
-        mBinding.actvDateEdit.setText(userSchedules[position].date)
 
-        mSelecetdUnit = userSchedules[position].location.toString()
-        mSelectedWork = mBinding.actvWorkStationEdit.text.toString()
-        mSelectedShift = mBinding.actvShiftEdit.text.toString()
-        mSelectedDate = mBinding.actvDateEdit.text.toString()
-
-        mBinding.tvSelectedUnitEdit.setOnClickListener {
-            mBinding.tvSelectedUnitEdit.visibility = View.GONE
-            mBinding.tilUnitEdit.visibility = View.VISIBLE
+        mBinding.tvSelectedShiftEdit.setOnClickListener {
+            mBinding.tvSelectedShiftEdit.visibility = View.GONE
+            mBinding.tilShiftEdit.visibility = View.VISIBLE
         }
-
-        mBinding.actvUnitEdit.onItemClickListener =
-            AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
-                mSelecetdUnit = p0?.getItemAtPosition(p2).toString()
-            }
-
-        mBinding.actvWorkStationEdit.onItemClickListener =
-            AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
-                mSelectedWork = p0?.getItemAtPosition(p2).toString()
-            }
 
         mBinding.actvShiftEdit.onItemClickListener =
             AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
@@ -94,10 +92,82 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
             }
 
         mBinding.actvDateEdit.setOnClickListener {
+
+
+            setupDatePicker(mSelectedWork)
             datePickerDialog.show(getFragmentManager(), "DatePickerDialog")
         }
 
+        mBinding.btnConfirmEdit.setOnClickListener {
+            showDialogEdit()
+        }
 
+        mBinding.btnCancelEdit.setOnClickListener {
+            val intent = Intent()
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+        mBinding.btnDeleteEdit.setOnClickListener {
+            showDialogDelete()
+        }
+    }
+
+    private fun showDialogDelete() {
+        val dialog = Dialog(this)
+        val bindingDialogDelete: DialogDeleteSchedulingBinding =
+            DialogDeleteSchedulingBinding.inflate(layoutInflater)
+        dialog.setContentView(bindingDialogDelete.root)
+
+        bindingDialogDelete.tvSelectedUnitConfirmationDelete.text = " " + mSelecetdUnit
+
+        bindingDialogDelete.tvDayOfWeekConfirmationDelete.text = "Dia da semana: " + mSelectedDay
+
+        bindingDialogDelete.tvDateSelectedConfirmationDelete.text = "Data: " + mSelectedDate
+
+        bindingDialogDelete.tvShiftSelectedConfirmationDelete.text = " " + mSelectedShift
+
+        bindingDialogDelete.btnCancelDelete.setOnClickListener {
+            dialog.dismiss()
+        }
+        bindingDialogDelete.ibCancelDialogDelete.setOnClickListener {
+            dialog.dismiss()
+        }
+        bindingDialogDelete.btnConfirmationDelete.setOnClickListener {
+            dialog.dismiss()
+            deleteSchedule()
+        }
+
+
+        dialog.show()
+    }
+
+    private fun showDialogEdit() {
+        val dialog = Dialog(this)
+        val bindingDialogEdit: DialogConfirmEditSchedulingBinding =
+            DialogConfirmEditSchedulingBinding.inflate(layoutInflater)
+        dialog.setContentView(bindingDialogEdit.root)
+
+        bindingDialogEdit.tvSelectedUnitConfirmationEdit.text = " " + mSelecetdUnit
+
+        bindingDialogEdit.tvDayOfWeekConfirmationEdit.text = "Dia da semana: " + mSelectedDay
+
+        bindingDialogEdit.tvDateSelectedConfirmationEdit.text = "Data: " + mSelectedDate
+
+        bindingDialogEdit.tvShiftSelectedConfirmationEdit.text = " " + mSelectedShift
+
+        bindingDialogEdit.btnCancelConfirmationEdi.setOnClickListener {
+            dialog.dismiss()
+        }
+        bindingDialogEdit.ibCancelDialogEdit.setOnClickListener {
+            dialog.dismiss()
+        }
+        bindingDialogEdit.btnConfirmationEdit.setOnClickListener {
+            dialog.dismiss()
+            scheduleToBD()
+        }
+
+
+        dialog.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -110,21 +180,13 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
         val theDate = sdf.parse(selectedDate)
         val format = SimpleDateFormat("EEEE", Locale.getDefault())
-        var dow = format.format(theDate)
-        var contain = false
+        var dow = (format.format(theDate).replace("f", "F", false)).capitalize()
         mSelectedDate = selectedDate
-        mSelectedDay = dow.capitalize(Locale("BR"))
+        mSelectedDay = dow
         mBinding.actvDateEdit.setText(mSelectedDate)
-        println(mSelectedDate)
-        println(mSelectedDay)
-        println(mSelecetdUnit)
-        println(mSelectedShift)
-        println(mSelectedWork)
-
     }
 
-
-    fun setupDatePicker() {
+    fun setupDatePicker(work: String) {
 
         calendar = Calendar.getInstance()
         year = calendar.get(Calendar.YEAR)
@@ -150,13 +212,12 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                 val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
                 disabledDays[0] = loopdate
                 datePickerDialog.disabledDays = disabledDays
-
             }
             minDate.add(Calendar.DATE, 1)
             loopdate = minDate
         }
+        if (work == "Estação de trabalho") {
 
-        if (!datesToDisable.isNullOrEmpty()) {
             for (i in datesToDisable.indices) {
                 val full = Calendar.getInstance()
                 val fullDayString = datesToDisable[i]
@@ -165,45 +226,45 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                 val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
                 disabledDays[0] = full
                 datePickerDialog.disabledDays = disabledDays
+
             }
         }
     }
 
     private fun setupDropDownMenus() {
-        val textFieldUnits: AutoCompleteTextView = mBinding.actvUnitEdit
-        val units = arrayListOf("São Paulo", "Santos")
-        val adapterUnit = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, units)
-        textFieldUnits.setAdapter(adapterUnit)
-
-        val textFieldWorkStation = mBinding.actvWorkStationEdit as? AutoCompleteTextView
-        val workStation = arrayListOf("Estação de trabalho", "Sala de reunião")
-        val adapterWork = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, workStation)
-        textFieldWorkStation?.setAdapter(adapterWork)
-
-        val textFieldShift = mBinding.actvShiftEdit as? AutoCompleteTextView
-        val shift = arrayListOf("Manhã", "Tarde", "Dia Inteiro")
-        val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
-        textFieldShift?.setAdapter(adapterShift)
+        if (mSelectedWork == "Sala de Reuniões") {
+            val textFieldShift = mBinding.actvShiftEdit as? AutoCompleteTextView
+            val shift =
+                arrayListOf("08h às 10h", "10h às 12h", "12h às 14h", "14h às 16h", "16h às 18h")
+            val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
+            textFieldShift?.setAdapter(adapterShift)
+        } else {
+            val textFieldShift = mBinding.actvShiftEdit as? AutoCompleteTextView
+            val shift = arrayListOf("Manhã", "Tarde", "Dia Inteiro")
+            val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
+            textFieldShift?.setAdapter(adapterShift)
+        }
     }
 
-    /*fun scheduleToBD(date: DateSelected) {
+    private fun scheduleToBD() {
 
         if (Constants.isNetworkAvailable(this)) {
             val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             val service: ClockworkService = retrofit.create(ClockworkService::class.java)
-            val listCall = service.scheduleDate(
+            val listCall = service.updateSchedule(
+                userSchedules[position]._id!!,
                 mSelecetdUnit,
-                mShift,
-                mWorkOrMeet,
-                date.date,
-                date.dayOfWeek,
-                mUser._id!!,
-                mUser.name!!,
-                mUser.lastname!!,
-                mUser.email!!,
-                mUser.role!!
+                mSelectedShift,
+                mSelectedWork,
+                mSelectedDate,
+                mSelectedDay,
+                userSchedules[position]._idUser!!,
+                userSchedules[position].name!!,
+                userSchedules[position].lastname!!,
+                userSchedules[position].email!!,
+                userSchedules[position].role!!
             )
 
             println(listCall)
@@ -215,8 +276,8 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                     if (response.isSuccessful) {
                         println("Mensagem de retorno : ${response.body().toString()}")
                         Toast.makeText(
-                            this@SchedulingActivity,
-                            "Datas agendadas com sucesso!",
+                            this@EditScheduleActivity,
+                            "Datas editada com sucesso!",
                             Toast.LENGTH_LONG
                         ).show()
                         val intent = Intent()
@@ -232,9 +293,47 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                     Log.e("Erro", t.message.toString())
                 }
             })
-
-
         }
+    }
 
-    }*/
+    private fun deleteSchedule() {
+
+        println(userSchedules[position]._id!!)
+
+        if (Constants.isNetworkAvailable(this)) {
+            val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service: ClockworkService = retrofit.create(ClockworkService::class.java)
+            val listCall = service.deleteSchedule(
+                userSchedules[position]._id!!
+            )
+            println(listCall)
+            listCall.enqueue(object : Callback<Schedulingdata.DateScheduling> {
+                override fun onResponse(
+                    call: Call<Schedulingdata.DateScheduling>,
+                    response: Response<Schedulingdata.DateScheduling>
+                ) {
+                    if (response.isSuccessful) {
+                        println("Mensagem de retorno : ${response.body().toString()}")
+                        Toast.makeText(
+                            this@EditScheduleActivity,
+                            "Data apagada com sucesso!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        val intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<Schedulingdata.DateScheduling>,
+                    t: Throwable
+                ) {
+                    Log.e("Erro", t.message.toString())
+                }
+            })
+        }
+    }
 }
