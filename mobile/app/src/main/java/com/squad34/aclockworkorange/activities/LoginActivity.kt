@@ -1,5 +1,6 @@
 package com.squad34.aclockworkorange.activities
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.squad34.aclockworkorange.databinding.ActivityLoginBinding
+import com.squad34.aclockworkorange.databinding.DialogAlertBinding
+import com.squad34.aclockworkorange.databinding.DialogErrorBinding
 import com.squad34.aclockworkorange.models.Token
 import com.squad34.aclockworkorange.models.User
 import com.squad34.aclockworkorange.models.UserFromValidator
@@ -74,19 +77,11 @@ class LoginActivity : BaseActivity() {
                         ) {
 
                             if (response.body() == null) {
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "Email não cadastrado no sistema!",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                showDialogError("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
                             } else {
-
                                 email = response.body().toString()
                                 mBinding.vwLoginEmail.visibility = View.GONE
                                 mBinding.vwLoginPassword.visibility = View.VISIBLE
-
-                                println(email)
-
                             }
 
                         }
@@ -99,8 +94,8 @@ class LoginActivity : BaseActivity() {
 
                 }
             } else {
-                Toast.makeText(this, "Você deve digitar seu email corporativo!", Toast.LENGTH_LONG)
-                    .show()
+
+                showDialogAlert("Você deve digitar seu email corporativo!")
             }
 
 
@@ -108,10 +103,11 @@ class LoginActivity : BaseActivity() {
 
 
 
+
+
         mBinding.btnLogin.setOnClickListener {
 
             val inputPassword = mBinding.etPassword.text.toString()
-
             if (Constants.isNetworkAvailable(this)) {
                 val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -121,8 +117,6 @@ class LoginActivity : BaseActivity() {
                     email,
                     inputPassword
                 )
-
-
                 listCall.enqueue(object : Callback<UserFromValidator> {
                     override fun onResponse(
                         call: Call<UserFromValidator>,
@@ -134,22 +128,13 @@ class LoginActivity : BaseActivity() {
                             intent()*/
                             mUser = response.body()!!
 
-                            println("Mensagem de retorno : ${response.body().toString()}")
                             if (mUser.error == "User not found.") {
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "Email não cadastrado!",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                showDialogError("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
+
                             } else if (mUser.error == "Invalid password.") {
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "Senha incorreta!",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                showDialogError("Senha incorreta!")
                             } else {
                                 mUser = response.body()!!
-
                                 println(mUser.name)
                                 intent()
                             }
@@ -169,6 +154,33 @@ class LoginActivity : BaseActivity() {
 
             }
         }
+    }
+
+    private fun showDialogAlert(text: String) {
+        val dialog = Dialog(this)
+        val bindingDialogAlert: DialogAlertBinding =
+            DialogAlertBinding.inflate(layoutInflater)
+        dialog.setContentView(bindingDialogAlert.root)
+
+        bindingDialogAlert.tvDialogAlertText.text = text
+        bindingDialogAlert.imageView.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun showDialogError(text: String) {
+        val dialog = Dialog(this)
+        val bindingDialogError: DialogErrorBinding =
+            DialogErrorBinding.inflate(layoutInflater)
+        dialog.setContentView(bindingDialogError.root)
+        bindingDialogError.tvDialogAlertText.text = text
+        bindingDialogError.imageView.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun intent() {

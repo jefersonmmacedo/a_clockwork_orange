@@ -59,6 +59,8 @@ fun main() {
     //updateScheduledDate()
 
     //validator()
+
+    getTotalDate()
 }
 
 fun getUser() {
@@ -129,9 +131,9 @@ fun createUser() {
     println(result)
 }
 
-fun createScheduledDate() {
-    val (_, _, result) = "http://127.0.0.1:3001/api/scheduling"
-        .httpPost(listOf("location" to "São Paulo", "shift" to "Manhã", "type" to "Estação de Trabalho", "date" to "16/09/2021", "day" to "Quinta-feira", "_idUser" to "613df39d0248015f4766f9e8", "name" to "Marcos", "lastname" to "Fonseca", "email" to "marcos@fcamara.com.br", "role" to "Scrum Master"))
+fun getTotalDate() {
+    val (_, _, result) = "http://127.0.0.1:3001/api/filter"
+        .httpPost(listOf("location" to "São Paulo", "type" to "Estação de Trabalho", "shift" to "Manhã", "date" to "16/09/2021"))
         .responseString()
     println(result)
 }
