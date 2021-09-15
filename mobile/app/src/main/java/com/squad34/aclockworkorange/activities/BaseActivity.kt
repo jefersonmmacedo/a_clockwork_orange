@@ -48,9 +48,7 @@ open class BaseActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.dialog_ok, null)
         toast.view = view
         toast.show()
-
     }
-
 
     fun doubleBackToExit(){
         if(doubleBackToExitPressedOnce){
