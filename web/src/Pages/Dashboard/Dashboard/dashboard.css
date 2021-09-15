@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 }
 
 .dashboard .infos{
@@ -40,6 +41,23 @@
 .dashboard .infos .itens button {
     margin-bottom: 40px;
 }
+.buttons-table {
+    padding-top: 3px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.button-table {
+    background-color: #fff;
+    color:none;
+    width: 24px;
+    height: 1px;
+  }
+
+  .button-table svg {
+      color: var(--Secondary);
+  }
 
 .dashboard .infos .itens .schedules{
     display: flex;
@@ -49,20 +67,24 @@
 }
 
 .dashboard .infos .itens .schedules table {
+    color: var(--Secondary);
+    font-size: 16px;
+    font-family: "Metropolis", sans-serif;
+    line-height: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 5px;
-}
+    text-align: center;
+  }
 
-.dashboard .infos .itens .schedules thead {
-    padding: 5px;
-}
+
+
 .dashboard .infos .itens h3 {
     font-size: 32px;
     font-weight: 700;
+    margin-bottom: 10px;
 }
 
 .dashboard .infos .itens .disponible {

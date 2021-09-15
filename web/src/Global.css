@@ -111,12 +111,6 @@ input, select, textarea {
 
 }
 
-table {
-  color: var(--Secondary);
-  font-size: 16px;
-  font-family: "Metropolis", sans-serif;
-  line-height: 24px;
-}
 
 select:focus, input:focus {
   box-shadow: 0 0 0 0;

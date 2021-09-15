@@ -13,7 +13,8 @@ function AuthProvider({children}) {
     const [email, setEmail] = useState('');
     const [codeSecurity, setCodeSecurity] = useState('');
     const [loading, setLoading] = useState(true);
-    const [dataUser, setDataUser] = useState([])
+    const [dataUser, setDataUser] = useState([]);
+    const [oneScheduling, setOneScheduling] = useState([]);
 
     useEffect(() => {
         function loadStorage() {
@@ -197,6 +198,22 @@ function AuthProvider({children}) {
          
      }
 
+     async function deleteSheduling(id) {
+         const res = await api.delete(`/api/scheduling/${id}`)
+         if(res.status===200) {
+            toast.success('Agendamentos efetuados com sucesso!');
+             window.location.reload(false);
+         } else {
+            toast.error('Deu algo errado ao deletar!');
+         }
+     }
+
+     async function findOndeScheduling(_id) {
+         const res = await api.get(`/api/scheduling/${_id}`);
+         setOneScheduling(res.data);
+         console.log(res.data)
+     }
+
     function storageUser(data) {
         localStorage.setItem("fcamara", JSON.stringify(data));
     }
@@ -217,6 +234,9 @@ function AuthProvider({children}) {
             logout,
             scheduling,
             schedulingCreate,
+            deleteSheduling,
+            findOndeScheduling,
+            oneScheduling,
             email,
             newEmail,
             codeSecurity,
