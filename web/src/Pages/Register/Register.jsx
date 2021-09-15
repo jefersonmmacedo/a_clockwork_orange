@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 export default function Register() {
   const {createUser, newEmail} = useContext(AuthContext)
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [lastname, setLastname] = useState('')
   const [role, setRole] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +45,7 @@ export default function Register() {
                 <span>Sobrenome</span>
                 <input type="text" placeholder="Digite seu sobrenome" defaultValue={lastname} onChange={(e) => setLastname(e.target.value)}/>
                 <span>Email</span>
-                <input type="text" placeholder="Digite seu nome completo" defaultValue={newEmail} />
+                <input type="text" placeholder="Digite seu nome completo" defaultValue={newEmail}  onChange={(e) => setEmail(e.target.value)}/>
                  <span>Qual é a sua função?</span>
                 <select defaultValue={role} onChange={handleSelectRole}>
                   <option value="">Selecione Sua Função</option>

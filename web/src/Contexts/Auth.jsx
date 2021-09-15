@@ -214,6 +214,18 @@ function AuthProvider({children}) {
          console.log(res.data)
      }
 
+     async function updateUser(_id, name, lastname, email, role, password) {
+         const data = {_id, name, lastname, email, role, password};
+         console.log(data)
+         const res = await api.put(`/api/user/${_id}`, data);
+         if(res.status===200) {
+            toast.success('Atualização efetuada com sucesso!');
+             window.location.reload(false);
+         } else {
+            toast.error('Deu algo errado ao atualizar!');
+         }
+     }
+
     function storageUser(data) {
         localStorage.setItem("fcamara", JSON.stringify(data));
     }
@@ -236,6 +248,7 @@ function AuthProvider({children}) {
             schedulingCreate,
             deleteSheduling,
             findOndeScheduling,
+            updateUser,
             oneScheduling,
             email,
             newEmail,
