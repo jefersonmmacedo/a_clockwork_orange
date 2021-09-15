@@ -165,6 +165,7 @@
             android:ems="10"
             app:boxCornerRadiusTopStart="16dp"
 
+            android:focusedByDefault="true"
             app:boxStrokeColor="?attr/colorSecondary"
             app:endIconMode="custom"
             app:endIconDrawable="@drawable/ic_password"
