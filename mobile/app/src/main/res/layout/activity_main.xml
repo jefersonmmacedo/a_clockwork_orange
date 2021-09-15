@@ -270,7 +270,7 @@
 
         <View
             android:id="@+id/santos_chart_param"
-            android:layout_width="match_parent"
+            android:layout_width="303dp"
             android:layout_height="24dp"
             android:layout_gravity="start"
             android:background="@color/success" />

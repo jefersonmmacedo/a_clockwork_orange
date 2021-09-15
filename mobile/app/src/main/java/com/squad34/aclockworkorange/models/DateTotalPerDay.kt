@@ -4,7 +4,6 @@ data class DateTotalPerDay(
     val length: Int,
     val result: List<Result>
 )
-
 data class Result(
     val __v: Int,
     val _id: String,

@@ -249,7 +249,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                     response: Response<Schedulingdata.DateScheduling>
                 ) {
                     if (response.isSuccessful) {
-                        showToast("Datas editada com sucesso!")
+                        showToastSuccess("Data editada com sucesso!")
                         val intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
                         finish()
@@ -282,7 +282,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                     response: Response<Schedulingdata.DateScheduling>
                 ) {
                     if (response.isSuccessful) {
-                        showToast("Data apagada com sucesso!")
+                        showToastSuccess("Data apagada com sucesso!")
                         val intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
                         finish()

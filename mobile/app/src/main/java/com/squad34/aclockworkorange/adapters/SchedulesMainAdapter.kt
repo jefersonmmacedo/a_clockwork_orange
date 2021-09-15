@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squad34.aclockworkorange.R
-import kotlinx.android.synthetic.main.item_date.view.*
-import android.widget.AdapterView.OnItemClickListener
 import com.squad34.aclockworkorange.activities.MainActivity
-import com.squad34.aclockworkorange.models.DateSelected
 import com.squad34.aclockworkorange.models.Schedulingdata
 import kotlinx.android.synthetic.main.item_date_main_activity.view.*
 

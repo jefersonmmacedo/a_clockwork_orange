@@ -1,10 +1,7 @@
 package com.squad34.aclockworkorange.network
 
 import com.github.kittinunf.fuel.httpDelete
-import com.squad34.aclockworkorange.models.DateTotalPerDay
-import com.squad34.aclockworkorange.models.Schedulingdata
-import com.squad34.aclockworkorange.models.Token
-import com.squad34.aclockworkorange.models.UserFromValidator
+import com.squad34.aclockworkorange.models.*
 import kotlinx.coroutines.Deferred
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -80,5 +77,12 @@ interface ClockworkService {
         @Field("date") date: String
 
     ): Call<DateTotalPerDay>
+
+    @FormUrlEncoded
+    @POST("filter/user")
+    fun userSchedule(
+        @Field("_idUser") _idUser: String
+
+    ): Call<DateSched>
 
 }

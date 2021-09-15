@@ -1,14 +1,16 @@
 package com.squad34.aclockworkorange.activities
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.activities.LoginActivity.Companion.USER
@@ -25,26 +27,25 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.collections.ArrayList
 
 class MainActivity : BaseActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var santosChartView: View
     private lateinit var saoPauloChartView: View
     private val saoPauloWidht: Double = 1.2625
-    private val santosWidht: Double = 7.575
+    private var santosWidht: Double = 7.575
     private lateinit var mUser: UserFromValidator
-    private var allSchedules = ArrayList<Schedulingdata.DateScheduling>()
-    private var mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
-    private var mUserNewScheduling = ArrayList<Schedulingdata.DateScheduling>()
+    private lateinit var mUserScheduling: DateSched
     private var mUserDateSortedScheduling = ArrayList<Schedulingdata.DateScheduling>()
     private var mListOfDaysScheduled = ArrayList<String>()
     private lateinit var mTotalSaoPaulo: DateTotalPerDay
     private lateinit var mTotalSantos: DateTotalPerDay
-    private var listCount: ArrayList<DatesToExclude> = ArrayList()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        openOptionsMenu()
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
@@ -53,9 +54,12 @@ class MainActivity : BaseActivity() {
             mUser = intent.getParcelableExtra(USER)!!
             println(mUser)
             mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
+
+            getScheduling(mUser._id!!)
         }
+
         showProgressDialog()
-        getScheduling()
+
         prepareDataToTotalPerDay()
         setupActionBar()
 
@@ -73,9 +77,8 @@ class MainActivity : BaseActivity() {
         if (requestCode == SCHEDULE_CODE || requestCode == EDIT_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 showProgressDialog()
-                mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
                 mUserDateSortedScheduling = ArrayList()
-                getScheduling()
+                getScheduling(mUser._id!!)
 
             }
         }
@@ -97,11 +100,36 @@ class MainActivity : BaseActivity() {
         hideProgressDialog()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.logout, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.logout) {
+            var alertDialogBuilder = AlertDialog.Builder(this)
+            alertDialogBuilder.setTitle("A Workclock Orange")
+            alertDialogBuilder
+                .setMessage("Você realmente deseja sair?")
+                .setCancelable(false)
+                .setPositiveButton("SIM"
+                ) { dialogInterface, i ->
+                    finishAffinity();
+                    System.exit(0)
+                }
+                .setNegativeButton("NÃO"
+                ) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }
+
+            val alertDialog = alertDialogBuilder.create();
+
+            alertDialog.show();
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun setupActionBar() {
         setSupportActionBar(mBinding.toolbarMainActivity)
@@ -113,63 +141,52 @@ class MainActivity : BaseActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
     }
 
-    private fun convertNumberToDisplayInChart(n: Int, n2: Double): Int {
-        return (n * n2 * this.resources.displayMetrics.density).toInt()
-    }
-
-    fun getScheduling() {
+    private fun getScheduling(id: String) {
         if (Constants.isNetworkAvailable(this)) {
             val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             val service: ClockworkService = retrofit.create(ClockworkService::class.java)
-            val listCall = service.getScheduling()
-            listCall.enqueue(object : Callback<ArrayList<Schedulingdata.DateScheduling>> {
+            val listCall = service.userSchedule(
+                id
+            )
+            listCall.enqueue(object : Callback<DateSched> {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onResponse(
-                    call: Call<ArrayList<Schedulingdata.DateScheduling>>,
-                    response: Response<ArrayList<Schedulingdata.DateScheduling>>
+                    call: Call<DateSched>,
+                    response: Response<DateSched>
                 ) {
-                    allSchedules = response.body()!!
+                    mUserScheduling = response.body()!!
+                    println("Recebeu: $mUserScheduling")
 
-                    if (allSchedules.size > 0) {
-                        for (i in allSchedules.indices) {
-                            if (allSchedules[i]._idUser == mUser._id) {
-                                mUserScheduling.add(allSchedules[i])
-                                mListOfDaysScheduled.add(allSchedules[i].date!!)
-                            }
-                        }
-                        val dateTimeFormatter: DateTimeFormatter =
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy")
-                        val datesSortedList: List<Schedulingdata.DateScheduling> =
-                            mUserScheduling.sortedBy { LocalDate.parse(it.date, dateTimeFormatter) }
-                        for (i in datesSortedList.indices) {
-                            mUserDateSortedScheduling.add(datesSortedList[i])
-                        }
-                        populateDatesinRecycler(mUserDateSortedScheduling)
+
+                    var mUserSched = mUserScheduling.result
+                    for (i in mUserSched.indices) {
+                        mListOfDaysScheduled.add(mUserSched[i].date!!)
                     }
+                    val dateTimeFormatter: DateTimeFormatter =
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                    val datesSortedList: List<Schedulingdata.DateScheduling> =
+                        mUserSched.sortedBy { LocalDate.parse(it.date, dateTimeFormatter) }
+                    for (i in datesSortedList.indices) {
+                        mUserDateSortedScheduling.add(datesSortedList[i])
+                    }
+                    populateDatesinRecycler(mUserDateSortedScheduling)
                 }
 
                 override fun onFailure(
-                    call: Call<ArrayList<Schedulingdata.DateScheduling>>,
+                    call: Call<DateSched>,
                     t: Throwable
                 ) {
-                    TODO("Not yet implemented")
                 }
-
-
             })
-
-
         } else {
-            Toast.makeText(
-                this,
-                "Não foi possível baixar os dados, tente mais tarde!",
-                Toast.LENGTH_LONG
-            )
-                .show()
-
+            showToastError("Não foi possível baixar os dados, tente mais tarde!")
         }
+    }
+
+    private fun convertNumberToDisplayInChart(n: Int, n2: Double): Int {
+        return (n * n2 * this.resources.displayMetrics.density).toInt()
     }
 
     fun updateChartSantos(totalSantos: Int) {
@@ -178,9 +195,11 @@ class MainActivity : BaseActivity() {
         mBinding.tvSantosQuantity.text = (" $santosAvaibility / ${Constants.SANTOS_MAX_QUANTITY}")
 
         santosChartView = mBinding.santosChartParam
-        santosChartView.layoutParams.width =
-            convertNumberToDisplayInChart(santosAvaibility, santosWidht)
 
+
+        santosChartView.updateLayoutParams {
+            width = convertNumberToDisplayInChart(santosAvaibility, santosWidht)
+        }
     }
 
     fun updateChartSaoPaulo(totalSaoPaulo: Int) {
@@ -190,9 +209,9 @@ class MainActivity : BaseActivity() {
             (" $saopauloAvaibility / ${Constants.SAO_PAULO_MAX_QUANTITY}")
 
         saoPauloChartView = mBinding.saoPauloChartParam
-        saoPauloChartView.layoutParams.width =
-            convertNumberToDisplayInChart(saopauloAvaibility, saoPauloWidht)
-
+        saoPauloChartView.updateLayoutParams {
+            width = convertNumberToDisplayInChart(saopauloAvaibility, saoPauloWidht)
+        }
     }
 
     fun editSchedule(position: Int) {
@@ -248,12 +267,10 @@ class MainActivity : BaseActivity() {
                     if (location == "São Paulo") {
                         mTotalSaoPaulo = response.body()!!
                         updateChartSaoPaulo(mTotalSaoPaulo.length)
-                        println("Total SP: ${mTotalSaoPaulo.length}, a data: $date, o turno: $shift")
 
                     } else {
                         mTotalSantos = response.body()!!
                         updateChartSantos(mTotalSantos.length)
-                        println("Total san: ${mTotalSantos.length}")
                     }
                 }
 
@@ -264,12 +281,7 @@ class MainActivity : BaseActivity() {
                 }
             })
         } else {
-            Toast.makeText(
-                this,
-                "Não foi possível baixar os dados, tente mais tarde!",
-                Toast.LENGTH_LONG
-            )
-                .show()
+            showToastError("Não foi possível baixar os dados, tente mais tarde!")
         }
     }
 

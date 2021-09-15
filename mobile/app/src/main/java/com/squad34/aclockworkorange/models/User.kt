@@ -60,6 +60,9 @@ fun main() {
 
     //validator()
 
+    //getTotalDate()
+
+    //filterScheduling()
     getTotalDate()
 }
 
@@ -132,29 +135,30 @@ fun createUser() {
 }
 
 fun getTotalDate() {
-    val (_, _, result) = "http://127.0.0.1:3001/api/filter"
-        .httpPost(listOf("location" to "São Paulo", "type" to "Estação de Trabalho", "shift" to "Manhã", "date" to "16/09/2021"))
+    val id = "613df39d0248015f4766f9e8"
+    val (_, _, result) = "http://127.0.0.1:3001/api/filter_user"
+        .httpPost()
         .responseString()
     println(result)
 }
 
-fun getScheduling() {
+/*fun getScheduling() {
     val (_, _, result) = "http://127.0.0.1:3001/api/scheduling"
         .httpGet()
         .responseString()
     println(result)
-}
+}*/
 
-fun deleteScheduling() {
-    val id = "61408a4da592c5bcc363b4b2"
-    val (_, _, result) = "http://127.0.0.1:3001/api/scheduling/$id"
-        .httpDelete()
+fun filterScheduling() {
+    val id = "61378b8bccae0e506c880f5c"
+    val (_, _, result) = "http://127.0.0.1:3001/api/filter_user/$id"
+        .httpPost()
         .responseString()
     println(result)
 }
 
 fun updateScheduledDate() {
-    val (_, _, result) = "http://127.0.0.1:3001/api/scheduling"
+    val (_, _, result) = "http://127.0.0.1:3001/api/filter_user"
         .httpPut(listOf("location" to "Santos", "shift" to "Manhã", "type" to "Estação de Trabalho", "date" to "17/09/2021", "_idUser" to "613d339a72fd2051842d6eb0", "user" to "Carlos Alberto", "email" to "carlosalberto@fcamara.com.br", "role" to "Scrum Master"))
         .responseString()
     println(result)
