@@ -27,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : BaseActivity() {
@@ -47,6 +48,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         openOptionsMenu()
+        showProgressDialog()
 
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
@@ -59,12 +61,12 @@ class MainActivity : BaseActivity() {
             getScheduling(mUser._id!!)
         }
 
-        showProgressDialog()
         prepareDataToTotalPerDay()
         setupActionBar()
 
         mBinding.btnSchedule.setOnClickListener {
             val intent = Intent(this, SchedulingActivity::class.java)
+            intent.putExtra(MEET_SCHEDULE, mListOfScheduledMeetRoom)
             intent.putExtra(USERSCHEDULE, mUser)
             intent.putStringArrayListExtra(DATES_TO_EXCLUDE, mListOfDaysScheduled)
             startActivityForResult(intent, EDIT_CODE)
@@ -76,7 +78,6 @@ class MainActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SCHEDULE_CODE || requestCode == EDIT_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                showProgressDialog()
                 mUserDateSortedScheduling = ArrayList()
                 getScheduling(mUser._id!!)
 
@@ -113,21 +114,21 @@ class MainActivity : BaseActivity() {
             alertDialogBuilder
                 .setMessage("Você realmente deseja sair?")
                 .setCancelable(false)
-                .setPositiveButton("SIM"
+                .setPositiveButton(
+                    "SIM"
                 ) { dialogInterface, i ->
                     finishAffinity();
                     System.exit(0)
                 }
-                .setNegativeButton("NÃO"
+                .setNegativeButton(
+                    "NÃO"
                 ) { dialogInterface, i ->
                     dialogInterface.dismiss()
                 }
 
-            val alertDialog = alertDialogBuilder.create();
-
-            alertDialog.show();
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
         }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -135,9 +136,7 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(mBinding.toolbarMainActivity)
         supportActionBar?.title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        mBinding.toolbarMainActivity.setNavigationOnClickListener {
-            doubleBackToExit()
-        }
+
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
     }
 
@@ -157,8 +156,6 @@ class MainActivity : BaseActivity() {
                     response: Response<DateSched>
                 ) {
                     mUserScheduling = response.body()!!
-                    println("Recebeu: $mUserScheduling")
-
 
                     var mUserSched = mUserScheduling.result
                     for (i in mUserSched.indices) {
@@ -306,5 +303,6 @@ class MainActivity : BaseActivity() {
         var SCHEDULE_CODE = 3
         var EDIT_CODE = 6
         var DATES_TO_EXCLUDE = "datesToExclude"
+        var MEET_SCHEDULE = "meetSchedule"
     }
 }

@@ -1,11 +1,14 @@
 package com.squad34.aclockworkorange.activities
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -39,6 +42,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
     private var day = 0
     private lateinit var calendar: Calendar
     private var datesToDisable = ArrayList<String>()
+    private var datesToDisableMeet = ArrayList<String>()
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var userSchedules: ArrayList<Schedulingdata.DateScheduling>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +51,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
 
         mBinding = ActivityEditScheduleBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+        setupActionBar()
 
         if (intent.hasExtra(MainActivity.POSITION)) {
             position = intent.getIntExtra(MainActivity.POSITION, 0)
@@ -62,6 +67,9 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
             mBinding.tvSelectedStationEdit.text = mSelectedWork
             mBinding.tvSelectedShiftEdit.text = mSelectedShift
             mBinding.actvDateEdit.setText(userSchedules[position].date)
+        }
+        if (intent.hasExtra(MainActivity.MEET_SCHEDULE)) {
+            datesToDisableMeet = intent.getStringArrayListExtra(MainActivity.MEET_SCHEDULE)!!
         }
         if (intent.hasExtra(MainActivity.DATES_TO_EXCLUDE)) {
             datesToDisable = intent.getStringArrayListExtra(MainActivity.DATES_TO_EXCLUDE)!!
@@ -121,9 +129,58 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         }
         bindingDialogDelete.btnConfirmationDelete.setOnClickListener {
             dialog.dismiss()
+            showProgressDialog()
             deleteSchedule()
         }
         dialog.show()
+    }
+
+    private fun setupActionBar() {
+        setSupportActionBar(mBinding.toolbarEditSchedulingActivity)
+
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_corner_up_left)
+        supportActionBar?.title = ""
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        mBinding.toolbarEditSchedulingActivity.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.logout, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.logout) {
+            var alertDialogBuilder = AlertDialog.Builder(this)
+            alertDialogBuilder.setTitle("A Workclock Orange")
+            alertDialogBuilder
+                .setMessage("Você realmente deseja sair?")
+                .setCancelable(false)
+                .setPositiveButton(
+                    "SIM"
+                ) { dialogInterface, i ->
+                    finishAffinity();
+                    System.exit(0)
+                }
+                .setNegativeButton(
+                    "NÃO"
+                ) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }
+
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun showDialogEdit() {
@@ -148,6 +205,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         }
         bindingDialogEdit.btnConfirmationEdit.setOnClickListener {
             dialog.dismiss()
+            showProgressDialog()
             scheduleToBD()
         }
         dialog.show()
@@ -205,6 +263,16 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                 disabledDays[0] = full
                 datePickerDialog.disabledDays = disabledDays
             }
+        } else {
+            for (i in datesToDisableMeet.indices) {
+                val full = Calendar.getInstance()
+                val fullDayString = datesToDisableMeet[i]
+                val sdf = SimpleDateFormat("dd/MM/yyyy")
+                full.time = sdf.parse(fullDayString)
+                val disabledDays: Array<Calendar?> = arrayOfNulls<Calendar>(1)
+                disabledDays[0] = full
+                datePickerDialog.disabledDays = disabledDays
+            }
         }
     }
 
@@ -212,7 +280,13 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         if (mSelectedWork == "Sala de Reuniões") {
             val textFieldShift = mBinding.actvShiftEdit as? AutoCompleteTextView
             val shift =
-                arrayListOf("08h às 10h", "10h às 12h", "12h às 14h", "14h às 16h", "16h às 18h")
+                arrayListOf(
+                    "08h às 10h",
+                    "10h às 12h",
+                    "12h às 14h",
+                    "14h às 16h",
+                    "16h às 18h"
+                )
             val adapterShift = ArrayAdapter(this, R.layout.list_items, R.id.tv_item, shift)
             textFieldShift?.setAdapter(adapterShift)
         } else {
@@ -250,6 +324,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                 ) {
                     if (response.isSuccessful) {
                         showToastSuccess("Data editada com sucesso!")
+                        hideProgressDialog()
                         val intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
                         finish()
@@ -282,12 +357,14 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
                     response: Response<Schedulingdata.DateScheduling>
                 ) {
                     if (response.isSuccessful) {
-                        showToastSuccess("Data apagada com sucesso!")
+                        showToastSuccess("Data removida com sucesso!")
                         val intent = Intent()
+                        hideProgressDialog()
                         setResult(Activity.RESULT_OK, intent)
                         finish()
                     }
                 }
+
                 override fun onFailure(
                     call: Call<Schedulingdata.DateScheduling>,
                     t: Throwable

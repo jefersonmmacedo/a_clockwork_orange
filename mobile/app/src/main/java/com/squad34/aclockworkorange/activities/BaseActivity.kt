@@ -70,18 +70,6 @@ open class BaseActivity : AppCompatActivity() {
         toast.show()
     }
 
-    fun doubleBackToExit(){
-        if(doubleBackToExitPressedOnce){
-            super.onBackPressed()
-            return
-        }
-        this.doubleBackToExitPressedOnce = true
-        Toast.makeText(this, "Por favor, clique no botão voltar novamente para sair.", Toast.LENGTH_SHORT).show()
-        Handler().postDelayed({
-            doubleBackToExitPressedOnce = false
-        }, 2000
-        )
-    }
 
 
 }

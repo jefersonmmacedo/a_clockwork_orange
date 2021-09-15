@@ -72,7 +72,7 @@
     <LinearLayout
         android:id="@+id/ll_main"
         android:layout_width="330dp"
-        android:layout_height="130dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +142,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_dates_in_main"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="180dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_header" />
@@ -190,6 +190,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_main" />
 
+    <TextView
+        android:id="@+id/tv_explin_chart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/metropolis_regular"
+        android:text="Referente a data de hoje no turno atual"
+        android:textColor="@color/secondary"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_availability"
+        app:layout_constraintTop_toBottomOf="@+id/tv_availability" />
 
     <TextView
         android:id="@+id/tv_sao_paulo"
@@ -201,7 +212,7 @@
         android:textColor="@color/secondary"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/tv_availability"
-        app:layout_constraintTop_toBottomOf="@+id/tv_availability" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_explin_chart" />
 
     <TextView
         android:id="@+id/tv_sao_paulo_quantity"

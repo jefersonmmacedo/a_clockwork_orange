@@ -56,6 +56,7 @@ class LoginActivity : BaseActivity() {
         }
 
         mBinding.btnAccess.setOnClickListener {
+            showProgressDialog()
 
             val inputEmail = mBinding.etEmailAdress.text.toString()
             if (inputEmail.contains("@fcamara.com.br")) {
@@ -74,11 +75,12 @@ class LoginActivity : BaseActivity() {
                         ) {
 
                             if (response.body() == null) {
-                                showToastError("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
+                                showToastAlert("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
                             } else {
                                 email = response.body().toString()
                                 mBinding.vwLoginEmail.visibility = View.GONE
                                 mBinding.vwLoginPassword.visibility = View.VISIBLE
+                                hideProgressDialog()
                             }
                         }
 
@@ -92,6 +94,7 @@ class LoginActivity : BaseActivity() {
             }
         }
         mBinding.btnLogin.setOnClickListener {
+            showProgressDialog()
             val inputPassword = mBinding.etPassword.text.toString()
             if (Constants.isNetworkAvailable(this)) {
                 val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
@@ -115,8 +118,8 @@ class LoginActivity : BaseActivity() {
                                 showToastError("Senha incorreta!")
                             } else {
                                 mUser = response.body()!!
-                                println(mUser.name)
                                 intent()
+
                             }
                         }
                     }
@@ -131,7 +134,7 @@ class LoginActivity : BaseActivity() {
 
     private fun intent() {
         val intent = Intent(this, MainActivity::class.java)
-        println(mUser)
+        hideProgressDialog()
         intent.putExtra(USER, mUser)
         startActivity(intent)
     }

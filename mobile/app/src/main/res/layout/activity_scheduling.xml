@@ -6,15 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".activities.SchedulingActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_scheduling_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow">
+
+        <ImageView
+            android:id="@+id/tv_header_title"
+            android:layout_width="120dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:src="@drawable/app_logo" />
+    </androidx.appcompat.widget.Toolbar>
+
     <ScrollView
+        android:id="@+id/sv_scheduling"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/toolbar_scheduling_activity"
+       >
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,38 +43,22 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@id/sv_scheduling">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_scheduling_activity"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow">
 
-                <ImageView
-                    android:id="@+id/tv_header_title"
-                    android:layout_width="120dp"
-                    android:layout_height="38dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/app_logo" />
-            </androidx.appcompat.widget.Toolbar>
 
             <TextView
                 android:id="@+id/tv_schedule"
                 android:layout_width="296dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="60dp"
                 android:fontFamily="@font/metropolis_bold"
                 android:text="@string/tv_schedule"
                 android:textColor="@color/secondary"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar_scheduling_activity"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_scheduling_activity" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/tv_select_unit"
@@ -185,6 +188,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/actv_scheduling_type"
+                        android:inputType="none"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -308,7 +312,7 @@
                 android:layout_width="296dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_date_to_select">
