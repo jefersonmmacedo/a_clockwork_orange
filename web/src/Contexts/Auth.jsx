@@ -90,8 +90,8 @@ function AuthProvider({children}) {
         console.log(list)
         const dateNew = format(parseISO(date),'dd.MM.yyyy');
         const day = parseISO(date) ;
-        let bdDay = '';
-        switch(day) {
+        let bdDay = day.getDay();
+        switch(bdDay) {
             case 1:
             bdDay = 'Segunda-Feira';
             break;
@@ -110,7 +110,7 @@ function AuthProvider({children}) {
             case 6:
             bdDay = 'Sábado';
             break;
-            case 7:
+            case 0:
             bdDay = 'Domingo';
             break;
             default:
@@ -118,15 +118,14 @@ function AuthProvider({children}) {
         }
 
         if(recurrent === 'recurrent') {
-            let date = day;
+          
             
             let periodos = [];
             
             for (var i = 0; i < 4; i++) {
                 if (i === 0) {
-                    periodos.push(date);
+                    periodos.push(day);
                 } else {
-                    console.log()
                     let dataSomada = new Date(new Date().setDate(periodos[i - 1].getDate() + 7));
                     periodos.push(dataSomada);
                 }
@@ -188,7 +187,11 @@ function AuthProvider({children}) {
         console.log(data)
          const res = await api.post('/api/filter', data);
 
-         console.log(res.data)
+         const dados = res.data.result;
+         dados.forEach(dado => {
+             console.log(dado.date)
+         })
+         
      }
 
     function storageUser(data) {
