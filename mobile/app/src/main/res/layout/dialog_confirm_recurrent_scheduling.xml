@@ -170,12 +170,12 @@
         android:layout_width="220dp"
         android:layout_height="48dp"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/btn_shape_secondary"
         android:elevation="5dp"
         android:fontFamily="@font/metropolis_semibold"
-        android:letterSpacing=".04"
         android:gravity="center"
-        android:layout_marginBottom="20dp"
+        android:letterSpacing=".04"
         android:shadowColor="@color/gray"
 
         android:text="@string/cancel"
@@ -194,8 +194,8 @@
         android:background="@drawable/btn_shape"
         android:elevation="5dp"
         android:fontFamily="@font/metropolis_semibold"
-        android:letterSpacing=".04"
         android:gravity="center"
+        android:letterSpacing=".04"
         android:shadowColor="@color/gray"
         android:text="@string/confirm"
         android:textAllCaps="false"
@@ -203,6 +203,18 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/primary"
+        android:elevation="5.01dp"
+        android:layout_marginStart="25dp"
+        android:src="@drawable/ic_success"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_confirm_recurrent_confirmation"
+        app:layout_constraintStart_toStartOf="@+id/btn_confirm_recurrent_confirmation"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 

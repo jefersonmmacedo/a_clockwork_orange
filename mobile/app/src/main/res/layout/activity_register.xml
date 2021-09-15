@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vw_code"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="221dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="180dp"
+            android:src="@drawable/app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_explanation"
+            android:layout_width="303dp"
+            android:layout_height="84dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/light_gray"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_logo">
+
+            <TextView
+                android:id="@+id/tv_explain_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/metropolis_regular"
+                android:gravity="center"
+                android:text="Este é o seu primeiro acesso ao sistema, por favor informe o seu código de cadastro"
+                android:textColor="@color/secondary"
+                android:textSize="16sp" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Código"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/til_email_adress"
+            app:layout_constraintTop_toBottomOf="@+id/cv_explanation"
+            app:layout_goneMarginTop="8dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_email_adress"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="303dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:fontFamily="@font/metropolis_regular"
+            android:hint="Digite o seu código de acesso"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/gray"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="?attr/colorSecondary"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email_adress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:fontFamily="@font/metropolis_regular"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_access"
+            android:layout_width="303dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/btn_shape"
+            android:elevation="200dp"
+            android:fontFamily="@font/metropolis_semibold"
+            android:letterSpacing=".04"
+            android:text="@string/btn_access"
+            android:textAllCaps="false"
+
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_email_adress" />
+
+
+        <ImageView
+            android:id="@+id/iv_fcamara_logo"
+            android:layout_width="106dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="114dp"
+            android:src="@drawable/fcamara_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_access" />
+
+        <TextView
+            android:id="@+id/tv_squad_34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/metropolis_bold"
+            android:text="@string/tv_squad_34"
+            android:textAlignment="center"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_fcamara_logo" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vw_register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_logo1"
+            android:layout_width="221dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="23dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Nome"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/til_name"
+            app:layout_constraintTop_toBottomOf="@+id/iv_logo1" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="303dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:fontFamily="@font/metropolis_regular"
+            android:hint="Digite o seu nome"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/gray"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="?attr/colorSecondary"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:fontFamily="@font/metropolis_regular"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_surname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Sobrenome"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/til_name"
+            app:layout_constraintTop_toBottomOf="@+id/til_name" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_surname"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="303dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:fontFamily="@font/metropolis_regular"
+            android:hint="Digite o seu sobrenome"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/gray"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="?attr/colorSecondary"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_surname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_surname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/metropolis_regular"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Senha"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/til_name"
+            app:layout_constraintTop_toBottomOf="@+id/til_surname" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="303dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:fontFamily="@font/metropolis_regular"
+            android:hint="Digite sua senha"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/gray"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="?attr/colorSecondary"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/metropolis_regular"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_confim_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Confirmar senha"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/til_name"
+            app:layout_constraintTop_toBottomOf="@+id/til_password" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_confirm_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="303dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:fontFamily="@font/metropolis_regular"
+            android:hint="Confirme sue senha"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/gray"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="?attr/colorSecondary"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_confim_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/metropolis_regular"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Qual é a sua função?"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/til_name"
+            app:layout_constraintTop_toBottomOf="@+id/til_confirm_password" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_role"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="303dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:fontFamily="@font/metropolis_regular"
+            android:hint="@string/select_an_option"
+            android:textColorHint="@color/gray"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="?attr/colorSecondary"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_role">
+
+            <AutoCompleteTextView
+                android:id="@+id/actv_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btn_create_account"
+            android:layout_width="303dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/btn_shape"
+            android:elevation="200dp"
+            android:fontFamily="@font/metropolis_semibold"
+            android:letterSpacing=".04"
+            android:text="Criar Conta"
+            android:textAllCaps="false"
+
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_role" />
+
+
+        <ImageView
+            android:id="@+id/iv_fcamara_logo2"
+            android:layout_width="106dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="114dp"
+            android:src="@drawable/fcamara_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_create_account" />
+
+        <TextView
+            android:id="@+id/tv_squad_34_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/metropolis_bold"
+            android:text="@string/tv_squad_34"
+            android:textAlignment="center"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_fcamara_logo2" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vw_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_logo2"
+            android:layout_width="221dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_profile"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:fontFamily="@font/metropolis_bold"
+            android:text="Perfil"
+            android:textColor="@color/secondary"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo2" />
+
+        <TextView
+            android:id="@+id/tv_name_profile"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/metropolis_bold"
+            android:text="Carlos Eduardo Barbosa"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile" />
+
+        <TextView
+            android:id="@+id/tv_role_profile"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Função: Desenvolvedor Fullstack"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_profile" />
+
+
+        <TextView
+            android:id="@+id/btn_profile_edit"
+            android:layout_width="296dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="72dp"
+            android:background="@drawable/btn_shape"
+            android:elevation="5dp"
+            android:fontFamily="@font/metropolis_semibold"
+            android:gravity="center"
+            android:letterSpacing=".04"
+            android:shadowColor="@color/gray"
+            android:text="Editar Cadastro"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_role_profile" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@color/white"
+            android:backgroundTint="@color/primary"
+            android:elevation="5.01dp"
+            android:src="@drawable/ic_edit_white"
+            android:layout_marginStart="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_profile_edit"
+            app:layout_constraintStart_toStartOf="@+id/btn_profile_edit"
+            app:layout_constraintTop_toTopOf="@+id/btn_profile_edit" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

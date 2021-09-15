@@ -92,7 +92,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_dates_selected_multiple_confirmation"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>
@@ -129,17 +129,29 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/primary"
+        android:elevation="5.01dp"
+        android:src="@drawable/ic_success"
+        android:layout_marginStart="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_confirm_multiple_confirmation"
+        app:layout_constraintStart_toStartOf="@+id/btn_confirm_multiple_confirmation"
+        app:layout_constraintTop_toTopOf="@+id/btn_confirm_multiple_confirmation" />
+
     <TextView
         android:id="@+id/btn_cancel_multiple_confirmation"
         android:layout_width="220dp"
         android:layout_height="48dp"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/btn_shape_secondary"
         android:elevation="5dp"
         android:fontFamily="@font/metropolis_semibold"
         android:gravity="center"
         android:letterSpacing=".04"
-        android:layout_marginBottom="20dp"
         android:shadowColor="@color/gray"
         android:text="@string/cancel"
         android:textAllCaps="false"
@@ -158,8 +170,8 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/btn_shape"
         android:elevation="5dp"
-        android:gravity="center"
         android:fontFamily="@font/metropolis_semibold"
+        android:gravity="center"
         android:letterSpacing=".04"
         android:shadowColor="@color/gray"
         android:text="@string/confirm"
