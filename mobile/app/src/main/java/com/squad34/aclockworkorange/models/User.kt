@@ -136,8 +136,8 @@ fun createUser() {
 
 fun getTotalDate() {
     val id = "613df39d0248015f4766f9e8"
-    val (_, _, result) = "http://127.0.0.1:3001/api/filter_user"
-        .httpPost()
+    val (_, _, result) = "http://127.0.0.1:3001/api/filter"
+        .httpPost(listOf("location" to "São Paulo", "type" to "Estação de Trabalho", "shift" to "Tarde", "date" to "15/09/2021"))
         .responseString()
     println(result)
 }

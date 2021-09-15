@@ -10,6 +10,9 @@ object Constants {
     const val SAO_PAULO_MAX_QUANTITY: Int = 240
     const val SANTOS_MAX_QUANTITY:Int = 40
     const val BASE_URL:String = "http://192.168.1.120:3001/api/"
+    const val MEET_SANTOS: Int = 7
+    const val MEET_SP: Int = 4
+
 
     fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =

@@ -1,5 +1,6 @@
 package com.squad34.aclockworkorange.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -13,7 +14,6 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.adapters.SchedulesAdapter
-import com.squad34.aclockworkorange.models.DateSelected
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -23,8 +23,7 @@ import java.time.LocalDate
 import android.util.Log
 import com.squad34.aclockworkorange.adapters.SchedulesConfirmationAdapter
 import com.squad34.aclockworkorange.databinding.*
-import com.squad34.aclockworkorange.models.Schedulingdata
-import com.squad34.aclockworkorange.models.UserFromValidator
+import com.squad34.aclockworkorange.models.*
 import com.squad34.aclockworkorange.network.ClockworkService
 import com.squad34.aclockworkorange.utils.Constants
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -48,6 +47,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
     private var year = 0
     private var month = 0
     private var day = 0
+    private lateinit var mTotal: DateTotalPerDay
     private lateinit var calendar: Calendar
     private var datesToDisable = ArrayList<String>()
     private lateinit var mUser: UserFromValidator
@@ -66,23 +66,16 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
 
         setupDropDownMenus()
 
-        mBinding.tilSchedulingType.isEnabled = false
-        mBinding.tilShift.isEnabled = false
-        mBinding.tilStationOrMeeting.isEnabled = false
-        mBinding.tvDateToSelect.isEnabled = false
+
 
         mBinding.actvUnit.onItemClickListener =
             AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
                 mSelecetdUnit = p0?.getItemAtPosition(p2).toString()
-                mBinding.tilUnit.isEnabled = false
-                mBinding.tilStationOrMeeting.isEnabled = true
             }
 
         mBinding.actvWorkStation.onItemClickListener =
             AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
                 mWorkOrMeet = p0?.getItemAtPosition(p2).toString()
-                mBinding.tilStationOrMeeting.isEnabled = false
-                mBinding.tilSchedulingType.isEnabled = true
 
                 setupDropdownForMeeting(mWorkOrMeet)
                 setupDatePicker(mWorkOrMeet)
@@ -94,31 +87,15 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 if (mSelectedType == "Normal") {
                     mBinding.tvDate.text = "Escolha uma ou mais datas"
                 }
-                mBinding.tilSchedulingType.isEnabled = false
-                mBinding.tilShift.isEnabled = true
             }
 
 
         mBinding.actvShift.onItemClickListener =
             AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
                 mShift = p0?.getItemAtPosition(p2).toString()
-                mBinding.tilShift.isEnabled = false
-                mBinding.tvDateToSelect.isEnabled = true
             }
 
         mBinding.tvDateToSelect.setOnClickListener {
-            datePickerDialog.show(getFragmentManager(), "DatePickerDialog")
-        }
-
-        mBinding.btnConfirm.setOnClickListener {
-
-            if (mSelectedDates.size == 0) {
-                mBinding.tilSchedulingType.isEnabled = true
-                mBinding.tilShift.isEnabled = true
-                mBinding.tilUnit.isEnabled = true
-                mBinding.tilStationOrMeeting.isEnabled = true
-                mBinding.tvDateToSelect.isEnabled = true
-            }
             when {
                 TextUtils.isEmpty(mSelecetdUnit) -> {
                     showToastAlert("Você deve selecionar uma unidade!")
@@ -132,6 +109,19 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 TextUtils.isEmpty(mShift) -> {
                     showToastAlert("Você deve selecionar um turno!")
                 }
+                else -> {
+                    mBinding.tilUnit.isEnabled = false
+                    mBinding.tilStationOrMeeting.isEnabled = false
+                    mBinding.tilShift.isEnabled = false
+                    mBinding.tilSchedulingType.isEnabled = false
+                    datePickerDialog.show(getFragmentManager(), "DatePickerDialog")
+                }
+            }
+        }
+
+        mBinding.btnConfirm.setOnClickListener {
+
+            when {
                 mSelectedDates.isEmpty() -> {
                     showToastAlert("Você deve selecionar uma data!")
                 }
@@ -167,6 +157,83 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         val adapterSchedulingType =
             ArrayAdapter(this, R.layout.list_items, R.id.tv_item, schedulingType)
         textFieldSchedulingType?.setAdapter(adapterSchedulingType)
+    }
+
+    private fun getTotalPerDay(
+        location: String,
+        type: String,
+        shift: String,
+        date: String,
+        day: String,
+        normal: Boolean
+    ) {
+        if (Constants.isNetworkAvailable(this)) {
+            val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service: ClockworkService = retrofit.create(ClockworkService::class.java)
+            val listCall = service.totalPerDay(
+                location,
+                type,
+                shift,
+                date
+            )
+            listCall.enqueue(object : Callback<DateTotalPerDay> {
+                override fun onResponse(
+                    call: Call<DateTotalPerDay>,
+                    response: Response<DateTotalPerDay>
+                ) {
+                    mTotal = response.body()!!
+
+                    if (type == "Estação de trabalho") {
+                        if (normal) {
+                            if (location == "Santos") {
+                                checkStatusOfDateNormal(
+                                    Constants.SANTOS_MAX_QUANTITY,
+                                    mTotal.length,
+                                    date,
+                                    day
+                                )
+                            } else {
+                                checkStatusOfDateNormal(
+                                    Constants.SAO_PAULO_MAX_QUANTITY,
+                                    mTotal.length,
+                                    date,
+                                    day
+                                )
+                            }
+
+                            println("$location, $type, $shift, $date = ${mTotal.length}")
+                        } else {
+                            if (location == "Santos") {
+                                checkStatusOfDateRecurrent(
+                                    Constants.SANTOS_MAX_QUANTITY,
+                                    mTotal.length,
+                                    date,
+                                    day
+                                )
+                            } else {
+                                checkStatusOfDateRecurrent(
+                                    Constants.SAO_PAULO_MAX_QUANTITY,
+                                    mTotal.length,
+                                    date,
+                                    day
+                                )
+                            }
+                        }
+                    }
+
+                }
+
+                override fun onFailure(
+                    call: Call<DateTotalPerDay>,
+                    t: Throwable
+                ) {
+                }
+            })
+        } else {
+            showToastError("Não foi possível baixar os dados, tente mais tarde!")
+        }
     }
 
     private fun setupDropdownForMeeting(work: String) {
@@ -314,6 +381,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         dialog.show()
     }
 
+    @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
 
@@ -323,48 +391,34 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         mBinding.tilStationOrMeeting.isEnabled = false
 
         if (mSelectedType == "Normal" || mWorkOrMeet == "Sala de Reuniões") {
-            val sDayOfMonth = "$dayOfMonth"
+            val sDayOfMonth = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
             val sMonthOfYear =
                 if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
             val selectedDate = "$sDayOfMonth/$sMonthOfYear/$year"
             val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
             val theDate = sdf.parse(selectedDate)
             val format = SimpleDateFormat("EEEE", Locale.getDefault())
-            var dow = (format.format(theDate).replace("f", "F", false)).capitalize()
-
+            val dow = (format.format(theDate).replace("f", "F", false)).capitalize()
 
             if (mWorkOrMeet == "Sala de Reuniões") {
                 mBinding.tvDateToSelect.isEnabled = false
-
-            }
-            var contain = false
-            for (i in mSelectedDates.indices) {
-                if (mSelectedDates[i].date.contains(selectedDate)) {
-                    showToastAlert("Esta data já foi selecionada!")
-                }
             }
 
-            if (!contain) {
-                var mSelectedDateFormater = DateSelected(selectedDate, dow)
+            getTotalPerDay(mSelecetdUnit, mWorkOrMeet, mShift, selectedDate, dow, true)
 
-                mSelectedDates.add(mSelectedDateFormater)
-
-                populateDatesList(mSelectedDates)
-            }
         } else {
-            mBinding.tvDateToSelect.isEnabled = false
             val sDayOfMonth = if (dayOfMonth < 10) "0$dayOfMonth" else "$dayOfMonth"
             val sMonthOfYear =
                 if ((monthOfYear + 1) < 10) "0${monthOfYear + 1}" else "${monthOfYear + 1}"
-            val selectedDate2 = "$sDayOfMonth/$sMonthOfYear/$year"
+            val selectedDate = "$sDayOfMonth/$sMonthOfYear/$year"
             val dom = sDayOfMonth.toInt()
             val moy = sMonthOfYear.toInt()
             val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
-            val theDate = sdf.parse(selectedDate2)
+            val theDate = sdf.parse(selectedDate)
             val format = SimpleDateFormat("EEEE", Locale.getDefault())
-            var dow = (format.format(theDate).replace("f", "F", false)).capitalize()
+            val dow = (format.format(theDate).replace("f", "F", false)).capitalize()
             val listError = ArrayList<String>()
-            var mSelectedDateFormater = DateSelected(selectedDate2, dow)
+            val mSelectedDateFormater = DateSelected(selectedDate, dow)
             mSelectedDates.add(mSelectedDateFormater)
             var i = 1
             while (i <= 3) {
@@ -376,14 +430,11 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 val dateFinal = dateNewFormat.format(dateNew)
                 val mSelectedDateFormater = DateSelected(dateFinal, dow)
 
-                if (datesToDisable.contains(dateFinal)) {
-                    listError.add(dateFinal)
-                    i++
-                } else {
-                    mSelectedDates.add(mSelectedDateFormater)
-                    populateDatesList(mSelectedDates)
-                    i++
-                }
+                getTotalPerDay(mSelecetdUnit, mWorkOrMeet, mShift, dateFinal, dow, false)
+
+                i++
+
+
             }
             if (listError.isNotEmpty()) {
                 var dateInfo = ""
@@ -392,17 +443,55 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                     dateInfo += "As datas "
                     for (i in listError.indices) {
                         if (i == max) {
-                            dateInfo += "e ${listError[i]} não foram adicionadas pois você já possui agendamentos para estes dias."
+                            dateInfo += "e ${listError[i]} não foram adicionadas pois você já possui agendamentos para estes dias ou o escritório já está com a lotação máxima."
                         } else {
                             dateInfo += "${listError[i]}, "
                         }
                     }
                 } else {
-                    dateInfo += "A data ${listError[0]} não foi adicionada pois você já possui agendamento para este dia."
+                    dateInfo += "A data ${listError[0]} não foi adicionada pois você já possui agendamento para este dia ou o escritório já está com a lotação máxima."
                 }
                 showToastAlert(dateInfo)
             }
-            mBinding.tvDateToSelect.isEnabled = false
+        }
+
+
+        mBinding.tvDateToSelect.isEnabled = false
+    }
+
+    fun checkStatusOfDateNormal(max: Int, total: Int, date: String, day: String) {
+        var contain = false
+        if (total <= max) {
+            for (i in mSelectedDates.indices) {
+                if (mSelectedDates[i].date.contains(date)) {
+                    showToastAlert("Esta data já foi selecionada!")
+                    contain = true
+                }
+            }
+            if (!contain) {
+                var mSelectedDateFormater = DateSelected(date, day)
+
+                mSelectedDates.add(mSelectedDateFormater)
+
+                populateDatesList(mSelectedDates)
+            }
+        } else {
+            showToastAlert("Nesta data o escritório ja está com a capacidade máxima agendada")
+        }
+    }
+
+    fun checkStatusOfDateRecurrent(max: Int, total: Int, date: String, day: String) {
+        val listError = ArrayList<String>()
+        val mSelectedDateFormater = DateSelected(date, day)
+        if (mTotal.length <= Constants.SANTOS_MAX_QUANTITY) {
+            if (datesToDisable.contains(date)) {
+                listError.add(date)
+            } else {
+                mSelectedDates.add(mSelectedDateFormater)
+                populateDatesList(mSelectedDates)
+            }
+        } else {
+            listError.add(date)
         }
     }
 
@@ -460,7 +549,8 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
             val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-            val service: ClockworkService = retrofit.create(ClockworkService::class.java)
+            val service: ClockworkService =
+                retrofit.create(ClockworkService::class.java)
             val listCall = service.scheduleDate(
                 mSelecetdUnit,
                 mShift,
@@ -482,9 +572,9 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
                 ) {
                     if (response.isSuccessful) {
                         showToastSuccess("Datas agendadas com sucesso!")
-                            val intent = Intent()
-                            setResult(Activity.RESULT_OK, intent)
-                            finish()
+                        val intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
                     }
                 }
 

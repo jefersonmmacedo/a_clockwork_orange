@@ -39,6 +39,7 @@ class MainActivity : BaseActivity() {
     private lateinit var mUserScheduling: DateSched
     private var mUserDateSortedScheduling = ArrayList<Schedulingdata.DateScheduling>()
     private var mListOfDaysScheduled = ArrayList<String>()
+    private var mListOfScheduledMeetRoom = ArrayList<String>()
     private lateinit var mTotalSaoPaulo: DateTotalPerDay
     private lateinit var mTotalSantos: DateTotalPerDay
 
@@ -59,7 +60,6 @@ class MainActivity : BaseActivity() {
         }
 
         showProgressDialog()
-
         prepareDataToTotalPerDay()
         setupActionBar()
 
@@ -162,12 +162,25 @@ class MainActivity : BaseActivity() {
 
                     var mUserSched = mUserScheduling.result
                     for (i in mUserSched.indices) {
-                        mListOfDaysScheduled.add(mUserSched[i].date!!)
+                        if (mUserSched[i].type == "Estação de trabalho") {
+                            mListOfDaysScheduled.add(mUserSched[i].date!!)
+                        } else {
+                            mListOfScheduledMeetRoom.add(mUserSched[i].date!!)
+                        }
                     }
+
                     val dateTimeFormatter: DateTimeFormatter =
                         DateTimeFormatter.ofPattern("dd/MM/yyyy")
+
+                    var mUserSched2: MutableList<Schedulingdata.DateScheduling> = mutableListOf()
+                    for (i in mUserSched.indices) {
+                        if (LocalDate.parse(mUserSched[i].date, dateTimeFormatter) >= LocalDate.now()) {
+                            mUserSched2.add(mUserSched[i])
+                        }
+                    }
+
                     val datesSortedList: List<Schedulingdata.DateScheduling> =
-                        mUserSched.sortedBy { LocalDate.parse(it.date, dateTimeFormatter) }
+                        mUserSched2.sortedBy { LocalDate.parse(it.date, dateTimeFormatter) }
                     for (i in datesSortedList.indices) {
                         mUserDateSortedScheduling.add(datesSortedList[i])
                     }
@@ -264,6 +277,7 @@ class MainActivity : BaseActivity() {
                     call: Call<DateTotalPerDay>,
                     response: Response<DateTotalPerDay>
                 ) {
+                    var mTotal = response.body()!!
                     if (location == "São Paulo") {
                         mTotalSaoPaulo = response.body()!!
                         updateChartSaoPaulo(mTotalSaoPaulo.length)
