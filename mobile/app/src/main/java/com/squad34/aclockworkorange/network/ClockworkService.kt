@@ -1,6 +1,7 @@
 package com.squad34.aclockworkorange.network
 
 import com.github.kittinunf.fuel.httpDelete
+import com.squad34.aclockworkorange.models.DateTotalPerDay
 import com.squad34.aclockworkorange.models.Schedulingdata
 import com.squad34.aclockworkorange.models.Token
 import com.squad34.aclockworkorange.models.UserFromValidator
@@ -69,5 +70,15 @@ interface ClockworkService {
     fun deleteSchedule(
         @Path("id") id: String
     ): Call<Schedulingdata.DateScheduling>
+
+    @FormUrlEncoded
+    @POST("filter")
+    fun totalPerDay(
+        @Field("location") location: String,
+        @Field("type") type: String,
+        @Field("shift") shift: String,
+        @Field("date") date: String
+
+    ): Call<DateTotalPerDay>
 
 }

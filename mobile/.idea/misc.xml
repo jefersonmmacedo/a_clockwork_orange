@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable-v24/ic_close_white.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable-v24/ic_error_white.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/btn_shape.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/btn_shape2.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/drawable/btn_shape_calendar.xml" value="0.1" />
@@ -38,6 +39,8 @@
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_custom_email_not_registered.xml" value="0.1" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_custom_unregistered_email.xml" value="0.22" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_delete_scheduling.xml" value="0.23157894736842105" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_error.xml" value="0.1" />
+        <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/dialog_ok.xml" value="0.10427631578947369" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/fragment_login_passwrod.xml" value="0.13425925925925927" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/item_date.xml" value="0.23157894736842105" />
         <entry key="..\:/Android2/AClockworkOrange/app/src/main/res/layout/item_date_in_confirmation.xml" value="0.22899022801302932" />

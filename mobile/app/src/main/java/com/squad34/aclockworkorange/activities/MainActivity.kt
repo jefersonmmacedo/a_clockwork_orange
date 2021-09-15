@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -34,12 +35,11 @@ class MainActivity : BaseActivity() {
     private lateinit var mUser: UserFromValidator
     private var allSchedules = ArrayList<Schedulingdata.DateScheduling>()
     private var mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
+    private var mUserNewScheduling = ArrayList<Schedulingdata.DateScheduling>()
     private var mUserDateSortedScheduling = ArrayList<Schedulingdata.DateScheduling>()
     private var mListOfDaysScheduled = ArrayList<String>()
-    private var mListSpMor = ArrayList<String>()
-    private var mListSpAft = ArrayList<String>()
-    private var mListSanMor = ArrayList<String>()
-    private var mListSanAft = ArrayList<String>()
+    private lateinit var mTotalSaoPaulo: DateTotalPerDay
+    private lateinit var mTotalSantos: DateTotalPerDay
     private var listCount: ArrayList<DatesToExclude> = ArrayList()
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -54,10 +54,9 @@ class MainActivity : BaseActivity() {
             println(mUser)
             mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
         }
-
-
         showProgressDialog()
         getScheduling()
+        prepareDataToTotalPerDay()
         setupActionBar()
 
         mBinding.btnSchedule.setOnClickListener {
@@ -77,7 +76,7 @@ class MainActivity : BaseActivity() {
                 mUserScheduling = ArrayList<Schedulingdata.DateScheduling>()
                 mUserDateSortedScheduling = ArrayList()
                 getScheduling()
-                updateCharts(allSchedules)
+
             }
         }
     }
@@ -95,6 +94,7 @@ class MainActivity : BaseActivity() {
             val adapter = SchedulesMainAdapter(this, dates)
             mBinding.rvDatesInMain.adapter = adapter
         }
+        hideProgressDialog()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -118,7 +118,6 @@ class MainActivity : BaseActivity() {
     }
 
     fun getScheduling() {
-
         if (Constants.isNetworkAvailable(this)) {
             val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -140,15 +139,13 @@ class MainActivity : BaseActivity() {
                                 mListOfDaysScheduled.add(allSchedules[i].date!!)
                             }
                         }
-                        updateCharts(allSchedules)
-
-                        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-                        val datesSortedList: List<Schedulingdata.DateScheduling> = mUserScheduling.sortedBy{LocalDate.parse(it.date,dateTimeFormatter)}
-
+                        val dateTimeFormatter: DateTimeFormatter =
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                        val datesSortedList: List<Schedulingdata.DateScheduling> =
+                            mUserScheduling.sortedBy { LocalDate.parse(it.date, dateTimeFormatter) }
                         for (i in datesSortedList.indices) {
                             mUserDateSortedScheduling.add(datesSortedList[i])
                         }
-
                         populateDatesinRecycler(mUserDateSortedScheduling)
                     }
                 }
@@ -175,36 +172,20 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun updateCharts(dates: ArrayList<Schedulingdata.DateScheduling>) {
-        val currentDay = LocalDateTime.now().plusDays(1)
-        val formatterDay = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val formatterHour = DateTimeFormatter.ofPattern("HH")
-        val today = currentDay.format(formatterDay)
-        val hour = currentDay.format(formatterHour)
-        var countSaoPaulo = 0
-        var countSantos = 0
-        var shift = "Manhã"
-        if (hour.toInt() > 13) {
-            shift = "Tarde"
-        }
-        for (i in dates.indices) {
-            if ((dates[i].date == today && dates[i].shift == shift && dates[i].type == "Estação de trabalho") || (dates[i].date == today && dates[i].shift == "Dia Inteiro" && dates[i].type == "Estação de trabalho")) {
-                if (dates[i].location == "São Paulo") {
-                    countSaoPaulo++
-                } else {
-                    countSantos++
-                }
-            }
-        }
-        val santosAvaibility = Constants.SANTOS_MAX_QUANTITY - countSantos
+    fun updateChartSantos(totalSantos: Int) {
+
+        val santosAvaibility = Constants.SANTOS_MAX_QUANTITY - totalSantos
         mBinding.tvSantosQuantity.text = (" $santosAvaibility / ${Constants.SANTOS_MAX_QUANTITY}")
 
         santosChartView = mBinding.santosChartParam
         santosChartView.layoutParams.width =
             convertNumberToDisplayInChart(santosAvaibility, santosWidht)
 
-        val saopauloAvaibility = Constants.SAO_PAULO_MAX_QUANTITY - countSaoPaulo
+    }
+
+    fun updateChartSaoPaulo(totalSaoPaulo: Int) {
+
+        val saopauloAvaibility = Constants.SAO_PAULO_MAX_QUANTITY - totalSaoPaulo
         mBinding.tvSaoPauloQuantity.text =
             (" $saopauloAvaibility / ${Constants.SAO_PAULO_MAX_QUANTITY}")
 
@@ -212,8 +193,6 @@ class MainActivity : BaseActivity() {
         saoPauloChartView.layoutParams.width =
             convertNumberToDisplayInChart(saopauloAvaibility, saoPauloWidht)
 
-        hideProgressDialog()
-        //countDates()
     }
 
     fun editSchedule(position: Int) {
@@ -222,6 +201,76 @@ class MainActivity : BaseActivity() {
         intent.putExtra(POSITION, position)
         intent.putExtra(DATES_TO_EXCLUDE, mListOfDaysScheduled)
         startActivityForResult(intent, SCHEDULE_CODE)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun prepareDataToTotalPerDay() {
+        var currentDay = LocalDateTime.now()
+        val formatterDay = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val formatterHour = DateTimeFormatter.ofPattern("HH")
+        var today = currentDay.format(formatterDay)
+        val hour = currentDay.format(formatterHour)
+        var shift = ""
+        if (hour.toInt() in 13..18) {
+            shift = "Tarde"
+        } else if (hour.toInt() < 13) {
+            shift = "Manhã"
+        } else {
+            shift = "Manhã"
+            currentDay = LocalDateTime.now().plusDays(1)
+            today = currentDay.format(formatterDay)
+        }
+        //Pega os dados para o gráfico de São Paulo para o turno atual
+        getTotalPerDay("São Paulo", "Estação de trabalho", shift, today)
+
+        //Pega os dados para o gráfico de Santos para o turno atual
+        getTotalPerDay("Santos", "Estação de trabalho", shift, today)
+    }
+
+
+    private fun getTotalPerDay(location: String, type: String, shift: String, date: String) {
+        if (Constants.isNetworkAvailable(this)) {
+            val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service: ClockworkService = retrofit.create(ClockworkService::class.java)
+            val listCall = service.totalPerDay(
+                location,
+                type,
+                shift,
+                date
+            )
+            listCall.enqueue(object : Callback<DateTotalPerDay> {
+                override fun onResponse(
+                    call: Call<DateTotalPerDay>,
+                    response: Response<DateTotalPerDay>
+                ) {
+                    if (location == "São Paulo") {
+                        mTotalSaoPaulo = response.body()!!
+                        updateChartSaoPaulo(mTotalSaoPaulo.length)
+                        println("Total SP: ${mTotalSaoPaulo.length}, a data: $date, o turno: $shift")
+
+                    } else {
+                        mTotalSantos = response.body()!!
+                        updateChartSantos(mTotalSantos.length)
+                        println("Total san: ${mTotalSantos.length}")
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<DateTotalPerDay>,
+                    t: Throwable
+                ) {
+                }
+            })
+        } else {
+            Toast.makeText(
+                this,
+                "Não foi possível baixar os dados, tente mais tarde!",
+                Toast.LENGTH_LONG
+            )
+                .show()
+        }
     }
 
     companion object {

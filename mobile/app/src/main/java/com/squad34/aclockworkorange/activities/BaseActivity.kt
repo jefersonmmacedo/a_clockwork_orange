@@ -5,8 +5,13 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.getSystemService
 import com.squad34.aclockworkorange.R
+import com.squad34.aclockworkorange.databinding.ActivityBaseBinding.inflate
+import kotlinx.android.synthetic.main.dialog_ok.*
 
 open class BaseActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
@@ -34,6 +39,16 @@ open class BaseActivity : AppCompatActivity() {
 
     fun hideProgressDialog() {
         mProgressDialog.dismiss()
+    }
+
+    fun showToast(text: String) {
+        val toast = Toast(this)
+        toast.duration = Toast.LENGTH_LONG
+        toast.setText(text)
+        val view = layoutInflater.inflate(R.layout.dialog_ok, null)
+        toast.view = view
+        toast.show()
+
     }
 
 
