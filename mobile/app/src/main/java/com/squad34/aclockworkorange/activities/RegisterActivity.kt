@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -43,6 +45,17 @@ class RegisterActivity : BaseActivity() {
             mBinding.vwRegister.visibility = View.GONE
             mBinding.toolbarEditRegister.visibility = View.GONE
             mBinding.vwProfile.visibility = View.GONE
+            mBinding.vwForgotPassword.visibility = View.GONE
+        }
+
+        if (intent.hasExtra(LoginActivity.FORGOT_PASSWORD)) {
+            email = intent.getStringExtra(LoginActivity.FORGOT_PASSWORD)!!
+            getUser(email)
+            mBinding.vwCode.visibility = View.VISIBLE
+            mBinding.vwRegister.visibility = View.GONE
+            mBinding.toolbarEditRegister.visibility = View.GONE
+            mBinding.vwProfile.visibility = View.GONE
+            mBinding.vwForgotPassword.visibility = View.GONE
         }
 
         if (intent.hasExtra(MainActivity.USERSCHEDULE)) {
@@ -51,10 +64,51 @@ class RegisterActivity : BaseActivity() {
             mBinding.vwRegister.visibility = View.GONE
             mBinding.vwProfile.visibility = View.VISIBLE
             mBinding.toolbarEditRegister.visibility = View.GONE
+            mBinding.vwForgotPassword.visibility = View.GONE
 
             mBinding.tvNameProfile.text = "${mUser.name} ${mUser.lastname}"
             mBinding.tvRoleProfile.text = "Função: ${mUser.role}"
         }
+
+        mBinding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+        mBinding.etConfirmPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+
+        mBinding.btnHidePasswordReg.setOnClickListener {
+            if (mBinding.etPassword.transformationMethod == PasswordTransformationMethod.getInstance()){
+                mBinding.etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else{
+                mBinding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+
+        mBinding.btnHidePasswordConReg.setOnClickListener {
+            if (mBinding.etConfirmPassword.transformationMethod == PasswordTransformationMethod.getInstance()){
+                mBinding.etConfirmPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else{
+                mBinding.etConfirmPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+
+        mBinding.etPasswordForgot.transformationMethod = PasswordTransformationMethod.getInstance()
+        mBinding.etConfirmPasswordForgot.transformationMethod = PasswordTransformationMethod.getInstance()
+
+        mBinding.btnHidePasswordFor.setOnClickListener {
+            if (mBinding.etPasswordForgot.transformationMethod == PasswordTransformationMethod.getInstance()){
+                mBinding.etPasswordForgot.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else{
+                mBinding.etPasswordForgot.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+
+        mBinding.btnHidePasswordForCon.setOnClickListener {
+            if (mBinding.etConfirmPasswordForgot.transformationMethod == PasswordTransformationMethod.getInstance()){
+                mBinding.etConfirmPasswordForgot.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }else{
+                mBinding.etConfirmPasswordForgot.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        }
+
+
 
         mBinding.ivReturn.setOnClickListener {
             onBackPressed()
@@ -66,7 +120,39 @@ class RegisterActivity : BaseActivity() {
             finish()
         }
 
-        mBinding.btnProfileEdit.setOnClickListener {
+        mBinding.btnPasswordForgot.setOnClickListener {
+
+
+            when {
+                TextUtils.isEmpty(mBinding.etPasswordForgot.text.toString()) -> {
+                    showToastAlert("Você deve preencher sua senha!")
+                }
+                TextUtils.isEmpty(mBinding.etConfirmPasswordForgot.text.toString()) -> {
+                    showToastAlert("Você deve preencher a confirmação da senha!")
+                }
+                else -> {
+                    if (mBinding.etPasswordForgot.text.toString() == mBinding.etConfirmPasswordForgot.text.toString()) {
+                        showProgressDialog()
+                        updateUserProfile(
+                            mUser._id!!,
+                            mUser.name!!,
+                            mUser.lastname!!,
+                            mUser.email!!,
+                            mUser.role!!,
+                            mBinding.etPasswordForgot.text.toString()
+                        )
+                    } else {
+                        showToastError("A confirmação da senha não confere, favor digitar novamente os dois campos!")
+                        mBinding.etPasswordForgot.setText("")
+                        mBinding.etConfirmPasswordForgot.setText("")
+                    }
+                }
+            }
+        }
+
+
+
+        mBinding.btnProfileEdit.setOnClickListener{
 
             mBinding.vwCode.visibility = View.GONE
             mBinding.vwRegister.visibility = View.VISIBLE
@@ -81,7 +167,7 @@ class RegisterActivity : BaseActivity() {
 
         }
 
-        mBinding.ivLogout.setOnClickListener {
+        mBinding.ivLogout.setOnClickListener{
             var alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setTitle("A Workclock Orange")
             alertDialogBuilder
@@ -103,7 +189,7 @@ class RegisterActivity : BaseActivity() {
             alertDialog.show()
         }
 
-        mBinding.ivEditLogout.setOnClickListener {
+        mBinding.ivEditLogout.setOnClickListener{
             var alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setTitle("A Workclock Orange")
             alertDialogBuilder
@@ -125,17 +211,18 @@ class RegisterActivity : BaseActivity() {
             alertDialog.show()
         }
 
-        mBinding.btnSend.setOnClickListener {
+        mBinding.btnSend.setOnClickListener{
             getSecutityCode(mBinding.etCode.text.toString())
         }
+
         var role = ""
 
         mBinding.actvRole.onItemClickListener =
-            AdapterView.OnItemClickListener { p0, p1, p2, p3 ->
-                role = p0?.getItemAtPosition(p2).toString()
-            }
+            AdapterView.OnItemClickListener{ p0, p1, p2, p3 ->
+            role = p0?.getItemAtPosition(p2).toString()
+        }
 
-        mBinding.btnCreateAccount.setOnClickListener {
+        mBinding.btnCreateAccount.setOnClickListener{
             when {
                 TextUtils.isEmpty(mBinding.etName.text.toString()) -> {
                     showToastAlert("Você deve preencher seu nome!")
@@ -298,12 +385,21 @@ class RegisterActivity : BaseActivity() {
                     call: Call<UserFromValidator>,
                     response: Response<UserFromValidator>
                 ) {
-                    showToastSuccess("Cadastro alterado!")
-                    val intent = Intent()
-                    intent.putExtra(USER_REG, mUser)
-                    setResult(Activity.RESULT_OK, intent)
-                    hideProgressDialog()
-                    finish()
+                    if (intent.hasExtra(LoginActivity.FORGOT_PASSWORD)) {
+                        hideProgressDialog()
+                        showToastSuccess("Nova senha criada com sucesso!")
+                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        showToastSuccess("Cadastro alterado!")
+                        val intent = Intent()
+                        intent.putExtra(USER_REG, mUser)
+                        setResult(Activity.RESULT_OK, intent)
+                        hideProgressDialog()
+                        finish()
+                    }
+
                 }
 
                 override fun onFailure(
@@ -340,16 +436,54 @@ class RegisterActivity : BaseActivity() {
                         showToastError("Código inválido!")
                         mBinding.etCode.setText("")
                     } else {
-                        mBinding.etCode.setText("")
-                        showToastSuccess("Código correto!")
-                        mBinding.vwRegister.visibility = View.VISIBLE
-                        mBinding.vwCode.visibility = View.GONE
+                        if (intent.hasExtra(LoginActivity.FORGOT_PASSWORD)) {
+                            mBinding.etCode.setText("")
+                            showToastSuccess("Código correto!")
+                            mBinding.vwForgotPassword.visibility = View.VISIBLE
+                            mBinding.vwCode.visibility = View.GONE
+                        } else {
+                            mBinding.etCode.setText("")
+                            showToastSuccess("Código correto!")
+                            mBinding.vwRegister.visibility = View.VISIBLE
+                            mBinding.vwCode.visibility = View.GONE
+                        }
+
                     }
 
                 }
 
                 override fun onFailure(
                     call: Call<SecurityResponse>,
+                    t: Throwable
+                ) {
+                }
+            })
+        } else {
+            showToastError("Não foi possível baixar os dados, tente mais tarde!")
+        }
+    }
+
+    private fun getUser(
+        email: String
+    ) {
+        if (Constants.isNetworkAvailable(this)) {
+            val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service: ClockworkService = retrofit.create(ClockworkService::class.java)
+            val listCall = service.getEmailValidation(
+                email
+            )
+            listCall.enqueue(object : Callback<UserFromValidator> {
+                override fun onResponse(
+                    call: Call<UserFromValidator>,
+                    response: Response<UserFromValidator>
+                ) {
+                    mUser = response.body()!!
+                }
+
+                override fun onFailure(
+                    call: Call<UserFromValidator>,
                     t: Throwable
                 ) {
                 }

@@ -35,13 +35,13 @@ fun main() {
     //login()
 
     //Funcionando
-    //getId()
+    getId()
 
     //Funcionando
     //deleteId()
 
     //Funciona
-    createUser()
+    //createUser()
 
     //Funciona
     //createScheduledDate()
@@ -65,7 +65,7 @@ fun main() {
     //filterScheduling()
     //getTotalDate()
 
-    getSecurity2()
+    //getSecurity2()
 }
 
 fun getUser() {

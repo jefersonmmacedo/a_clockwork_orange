@@ -11,7 +11,8 @@
         android:id="@+id/vw_login_email"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -42,22 +43,22 @@
             android:layout_width="303dp"
             android:layout_height="60dp"
             android:layout_marginTop="8dp"
+            android:ems="10"
             android:fontFamily="@font/metropolis_regular"
+            android:hint="Digite o seu email fcamara"
             android:inputType="textEmailAddress"
+            android:textColorHint="@color/gray"
             app:boxCornerRadiusBottomEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
-            android:hint="Digite o seu email fcamara"
-            android:ems="10"
-            app:boxCornerRadiusTopStart="16dp"
 
+            app:boxCornerRadiusTopStart="16dp"
             app:boxStrokeColor="?attr/colorSecondary"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/ic_email"
-            app:endIconTint="@color/secondary"
-            android:textColorHint="@color/gray"
-            app:hintTextColor="@color/gray"
             app:boxStrokeWidth="2dp"
+            app:endIconDrawable="@drawable/ic_email"
+            app:endIconMode="custom"
+            app:endIconTint="@color/secondary"
+            app:hintTextColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_email">
@@ -68,8 +69,8 @@
                 android:layout_height="match_parent"
 
                 android:fontFamily="@font/metropolis_regular"
-                android:textSize="13sp"
-                android:textColor="@color/text" />
+                android:textColor="@color/text"
+                android:textSize="13sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -82,9 +83,9 @@
             android:fontFamily="@font/metropolis_semibold"
             android:letterSpacing=".04"
             android:text="@string/btn_access"
-            android:textColor="@color/white"
-
             android:textAllCaps="false"
+
+            android:textColor="@color/white"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -156,23 +157,20 @@
             android:layout_width="303dp"
             android:layout_height="60dp"
             android:layout_marginTop="8dp"
+            android:ems="10"
+            android:focusedByDefault="true"
             android:fontFamily="@font/metropolis_regular"
+            android:hint="Digite sua senha"
             android:inputType="textEmailAddress"
+            android:textColorHint="@color/gray"
             app:boxCornerRadiusBottomEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            android:hint="Digite sua senha"
-            android:ems="10"
-            app:boxCornerRadiusTopStart="16dp"
 
-            android:focusedByDefault="true"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
             app:boxStrokeColor="?attr/colorSecondary"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/ic_password"
-            app:endIconTint="@color/secondary"
-            android:textColorHint="@color/gray"
-            app:hintTextColor="@color/gray"
             app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_password">
@@ -183,9 +181,20 @@
                 android:layout_height="match_parent"
 
                 android:fontFamily="@font/metropolis_regular"
-                android:textSize="13sp"
-                android:textColor="@color/text" />
+                android:textColor="@color/text"
+                android:textSize="13sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/btn_hide_password"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_password"
+            android:layout_marginEnd="10dp"
+            tools:text = "Hide"
+            app:layout_constraintBottom_toBottomOf="@+id/til_password"
+            app:layout_constraintEnd_toEndOf="@+id/til_password"
+            app:layout_constraintTop_toTopOf="@+id/til_password" />
 
         <Button
             android:id="@+id/btn_login"
@@ -197,13 +206,25 @@
             android:fontFamily="@font/metropolis_semibold"
             android:letterSpacing=".04"
             android:text="@string/btn_access"
-            android:textColor="@color/white"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
+
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Esqueci a senha"
+            android:textColor="@color/secondary"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_password"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
         <ImageView
             android:id="@+id/iv_fcamara_logo_2"

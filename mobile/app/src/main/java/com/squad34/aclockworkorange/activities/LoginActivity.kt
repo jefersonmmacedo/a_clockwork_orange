@@ -3,6 +3,8 @@ package com.squad34.aclockworkorange.activities
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
@@ -39,6 +41,16 @@ class LoginActivity : BaseActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
+        }
+
+        mBinding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+
+        mBinding.btnHidePassword.setOnClickListener {
+            if (mBinding.etPassword.transformationMethod == HideReturnsTransformationMethod.getInstance()) {
+                mBinding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            } else {
+                mBinding.etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }
         }
 
         mBinding.btnAccess.setOnClickListener {
@@ -85,6 +97,17 @@ class LoginActivity : BaseActivity() {
                 showToastAlert("Você deve digitar seu email corporativo!")
             }
         }
+
+        mBinding.tvForgotPassword.setOnClickListener {
+            val inputEmail = mBinding.etEmailAdress.text.toString()
+            val intent =
+                Intent(this@LoginActivity, RegisterActivity::class.java)
+
+            intent.putExtra(FORGOT_PASSWORD, inputEmail)
+            startActivity(intent)
+            finish()
+        }
+
         mBinding.btnLogin.setOnClickListener {
 
             val inputPassword = mBinding.etPassword.text.toString()
@@ -133,5 +156,6 @@ class LoginActivity : BaseActivity() {
     companion object {
         var USER = "User"
         var EMAIL = "email"
+        var FORGOT_PASSWORD = "forgot_password"
     }
 }

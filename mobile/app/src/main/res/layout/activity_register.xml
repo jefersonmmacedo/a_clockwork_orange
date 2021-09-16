@@ -10,7 +10,7 @@
         android:id="@+id/vw_code"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -142,16 +142,16 @@
         android:id="@+id/vw_register"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar_edit_register"
             android:layout_width="match_parent"
             android:layout_height="52dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_edit_return"
@@ -319,6 +319,16 @@
                 android:textSize="13sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <ImageView
+            android:id="@+id/btn_hide_password_reg"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_password"
+            app:layout_constraintBottom_toBottomOf="@+id/til_password"
+            app:layout_constraintEnd_toEndOf="@+id/til_password"
+            app:layout_constraintTop_toTopOf="@+id/til_password" />
+
         <TextView
             android:id="@+id/tv_confim_password"
             android:layout_width="wrap_content"
@@ -361,6 +371,16 @@
                 android:textColor="@color/text"
                 android:textSize="13sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/btn_hide_password_con_reg"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_password"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/til_confirm_password"
+            app:layout_constraintEnd_toEndOf="@+id/til_confirm_password"
+            app:layout_constraintTop_toTopOf="@+id/til_confirm_password" />
 
         <TextView
             android:id="@+id/tv_role"
@@ -572,6 +592,189 @@
             app:layout_constraintBottom_toBottomOf="@+id/btn_profile_edit"
             app:layout_constraintStart_toStartOf="@+id/btn_profile_edit"
             app:layout_constraintTop_toTopOf="@+id/btn_profile_edit" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vw_forgot_password"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+
+
+        <ImageView
+            android:id="@+id/iv_logo3"
+            android:layout_width="221dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="70dp"
+            android:src="@drawable/app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_forgot_password_title"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:fontFamily="@font/metropolis_bold"
+            android:text="Crie sua nova senha"
+            android:textColor="@color/secondary"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo3" />
+
+        <TextView
+            android:id="@+id/tv_password_forgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Senha"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/til_password_forgot"
+            app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password_title" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_password_forgot"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="303dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:fontFamily="@font/metropolis_regular"
+            android:hint="Digite sua senha"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/gray"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="?attr/colorSecondary"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_password_forgot">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password_forgot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/metropolis_regular"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/btn_hide_password_for"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_password"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/til_password_forgot"
+            app:layout_constraintEnd_toEndOf="@+id/til_password_forgot"
+            app:layout_constraintTop_toTopOf="@+id/til_password_forgot" />
+
+        <TextView
+            android:id="@+id/tv_confim_password_forgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/metropolis_regular"
+            android:text="Confirmar senha"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/tv_forgot_password_title"
+            app:layout_constraintTop_toBottomOf="@+id/til_password_forgot" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_confirm_password_forgot"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="303dp"
+            android:layout_height="60dp"
+            android:ems="10"
+            android:fontFamily="@font/metropolis_regular"
+            android:hint="Confirme sue senha"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/gray"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="?attr/colorSecondary"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_confim_password_forgot">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_confirm_password_forgot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/metropolis_regular"
+                android:textColor="@color/text"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/btn_hide_password_for_con"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_password"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/til_confirm_password_forgot"
+            app:layout_constraintEnd_toEndOf="@+id/til_confirm_password_forgot"
+            app:layout_constraintTop_toTopOf="@+id/til_confirm_password_forgot" />
+
+
+        <Button
+            android:id="@+id/btn_password_forgot"
+            android:layout_width="303dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/btn_shape"
+            android:elevation="200dp"
+            android:fontFamily="@font/metropolis_semibold"
+            android:letterSpacing=".04"
+            android:text="Criar nova senha"
+            android:textAllCaps="false"
+
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_confirm_password_forgot" />
+
+
+        <ImageView
+            android:id="@+id/iv_fcamara_logo3"
+            android:layout_width="106dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="114dp"
+            android:src="@drawable/fcamara_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_password_forgot" />
+
+        <TextView
+            android:id="@+id/tv_squad_34_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/metropolis_bold"
+            android:text="@string/tv_squad_34"
+            android:textAlignment="center"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_fcamara_logo3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
