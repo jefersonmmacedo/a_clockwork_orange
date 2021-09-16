@@ -54,3 +54,127 @@
 .code-security .infos .itens button {
     width: 358px;
 }
+
+
+@media (max-width: 1024px) {
+    .code-security {
+        width: 100%;
+    }
+    .code-security .infos{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+  .code-security .infos .itens{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+    .code-security .infos .itens button {
+        width: 100%;
+    }
+
+    .code-security .infos .itens h4 {
+        font-size: 20px;
+        margin: 30px 0 20px 0;
+    }
+
+    .code-security .infos .itens img{
+        width: 100%;
+    }
+
+    .code-security .infos .image  {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .code-security .infos .image img {
+        display: none;
+    }
+
+    .code-security .infos .itens input {
+    margin-bottom: 20px;
+}
+
+
+
+    @media (max-width: 900px) {
+        .code-security .infos{
+    
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .code-security .infos .itens{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 70px;
+            width: 100%;
+        }
+    
+
+    
+        .code-security .infos .itens h4 {
+            font-size: 20px;
+            margin: 20px 0 20px 0;
+        }
+    
+        .code-security .infos .itens img {
+            width: 60%;
+          
+        }
+
+    
+        @media (max-width: 800px)
+    {
+        .code-security .infos{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+    
+      .code-security .infos .itens{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 70px;
+        width: 100%;
+    }
+    
+    .code-security .infos .itens img{
+        width: 100%;
+    }
+
+    .code-security .infos .image  {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .code-security .infos .image img {
+        width: 70%;
+    }
+    
+    .code-security .infos .itens h4 {
+        font-size: 20px;
+        margin: 30px 0 20px 0;
+    }
+
+
+    }
+    
+      }
+  }

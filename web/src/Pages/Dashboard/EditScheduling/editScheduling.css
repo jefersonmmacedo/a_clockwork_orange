@@ -47,8 +47,11 @@
 }
 
 .editScheduling .infos .itens .saudation p {
-    margin-left: -25px;
-    padding: 0 40px;
+    margin-right: 120px;
+}
+
+.editScheduling .infos .itens .saudation svg {
+    color: var(--Secondary);
 }
 
 

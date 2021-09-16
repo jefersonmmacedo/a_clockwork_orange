@@ -1,4 +1,5 @@
 .home{
+    margin: 40px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,8 +14,8 @@
     margin-bottom: 50px;
 }
 
-.home .infos .image {
-  padding: 20px;
+.home .infos img {
+    width: 100%;
 }
 
 
@@ -27,6 +28,10 @@
     padding: 20px;
 }
 
+.home .infos .itens img {
+    width: 90%;
+}
+
 .home .infos .itens h4 {
     margin: 5px 0 60px 0;
     font-weight: 700;
@@ -37,3 +42,105 @@
 .home .infos .itens button {
     width: 100%;
 }
+
+
+
+
+
+
+  @media (max-width: 1024px) {
+    .home {
+        width: 100%;
+    }
+    .home .infos{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 50px;
+        width: 100%;
+    }
+
+  .home .infos .itens{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    width: 100%;
+}
+   
+
+    .home .infos .itens h4 {
+        font-size: 20px;
+        margin: 30px 0 20px 0;
+    }
+
+    .home .infos .itens img {
+        width: 60%;
+      
+    }
+    .home .infos .image {
+        display: none;
+       
+    }
+
+
+    @media (max-width: 900px) {
+        .home .infos{
+    
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            width: 100%;
+        }
+    
+      
+    
+        .home .infos .itens h4 {
+            font-size: 20px;
+            margin: 20px 0 20px 0;
+        }
+    
+        .home .infos .itens img {
+            width: 60%;
+          
+        }
+        .home .infos .image {
+            width: 60%;
+           
+        }
+    
+        @media (max-width: 800px)
+    {
+        .home .infos{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 50px;
+        }
+    
+      .home .infos .itens{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        width: 100%;
+    }
+    
+    .home .infos .itens img{
+        width: 100%;
+    }
+    
+    .home .infos .itens h4 {
+        font-size: 20px;
+        margin: 30px 0 20px 0;
+    }
+    }
+    
+      }
+  }

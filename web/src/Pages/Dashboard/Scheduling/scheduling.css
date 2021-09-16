@@ -46,10 +46,10 @@
     margin-bottom: 20px;
 }
 
-.Scheduling .infos .itens .saudation p {
-    margin-left: -25px;
-    padding: 0 40px;
+.dashboard .infos .itens .saudation p {
+    margin-right: 200px;
 }
+
 
 
 .Scheduling .infos .itens button {

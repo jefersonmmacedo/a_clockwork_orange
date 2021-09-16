@@ -1,7 +1,7 @@
 import './scheduling.css';
 import React, { useContext, useEffect, useState } from 'react';
 import userScheduling from '../../../assets/images/userScheduling.svg';
-import {useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import Footer from '../../../Components/Footer/Footer';
 import {FiUser, FiPlusCircle, FiX, FiCheckCircle} from 'react-icons/fi';
 import Navbar from '../../../Components/Navbar/Navbar';
@@ -10,6 +10,7 @@ import Modal from 'react-modal'
 import { AuthContext } from '../../../Contexts/Auth';
 import api from '../../../services/api';
 import {format, parseISO} from 'date-fns';
+import { toast } from 'react-toastify';
 
 
 
@@ -53,10 +54,10 @@ useEffect(() => {
         setButtonCss("button-primary-disabled")
         setMessage('indisponible')
       }else if (daySem === 0 || daySem === 6){
-        setButtonCss()
+        setButtonCss('button-primary-disabled')
         setMessage("Weekend")
       } else{
-        setButtonCss('button-primary-disabled')
+        setButtonCss('button-primary')
         setMessage("disponible")
       }
   }
@@ -74,12 +75,22 @@ useEffect(() => {
   }
 
   function handleScheduling () {
-    scheduling(location, shift, type, date, user._id, user.name,user.lastname, user.email, user.role, recurrent);
-   handleOpenModal()
+    if(date !== "") {
+
+      scheduling(location, shift, type, date, user._id, user.name,user.lastname, user.email, user.role, recurrent);
+     handleOpenModal()
+    } else {
+      toast.error("Favor preencher a data")
+    }
   }
 
   function handleSchedulingCreate() {
-    schedulingCreate()
+    if(date !== "") {
+
+      schedulingCreate()
+    } else {
+      toast.error("Favor preencher a data")
+    }
   }
 
   function handleRedirect() {
@@ -102,6 +113,7 @@ useEffect(() => {
     setRecurrent(e.target.value);
   }
 
+
   Modal.setAppElement('#root');
   return (
     <div className="container">
@@ -111,9 +123,9 @@ useEffect(() => {
          <div className="infos">
            <ImageBody image={userScheduling} alt='user-scheduling' />
             <div className="itens">
-                <div className="saudation">
+            <div className="saudation">
                   <p>Olá, {user.name}</p>
-                  <FiUser />
+                  <Link to="/dashboard/scheduling" ><FiUser /></Link> 
                 </div>
                   <h3>Fazer Agendamento</h3>
                 <div className="schedules">
@@ -192,8 +204,7 @@ useEffect(() => {
                   <span>Escolha uma data</span>
                 <input id="date" type="date" defaultValue={date} onChange={(e) => setDate(e.target.value)}/>
 
-                <p>Deseja adicionar mais um período de dias? <FiPlusCircle />
-                  </p>
+                
                  <div className="buttons">
 
                 <button className="button-White" onClick={handleRedirect}>Voltar</button>

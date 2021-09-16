@@ -37,6 +37,10 @@
     margin-bottom: 20px;
 }
 
+.dashboard .infos .itens .saudation p {
+    margin-right: 100px;
+}
+
 
 .dashboard .infos .itens button {
     margin-bottom: 40px;
@@ -66,21 +70,17 @@
     justify-content: space-around;
 }
 
-.dashboard .infos .itens .schedules table {
+  .dashboard .infos .itens .schedules table {
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
     color: var(--Secondary);
     font-size: 16px;
     font-family: "Metropolis", sans-serif;
     line-height: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    text-align: center;
-  }
-
-
-
+    
+    }
+  
 .dashboard .infos .itens h3 {
     font-size: 32px;
     font-weight: 700;
@@ -101,7 +101,12 @@
 }
 
 .inputs-class {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
     margin: 5px 0 15px 0;
+    width: 80%;
 }
 
 .inputs-class span {
@@ -118,4 +123,20 @@
 
 .inputs-desable {
     display: none;
+}
+
+@media (max-width: 800px)
+{
+    .dashboard .infos .image {
+    display: none;
+  }
+
+  .dashboard .infos .itens{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 30px;
+    width: 100%;
+}
 }

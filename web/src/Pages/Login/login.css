@@ -1,4 +1,5 @@
 .login{
+    margin: 20px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,17 +15,13 @@
 }
 
 
-.login .infos .image {
-    padding: 20px;
-
-}
 
 .login .infos .itens{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    padding: 70px;
+    padding: 50px;
 }
 
 .login .infos .itens img {
@@ -46,4 +43,131 @@
 .login .infos .itens button {
     width: 358px;
 }
+
+
+
+@media (max-width: 1024px) {
+    .login {
+        width: 100%;
+    }
+    .login .infos{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+  .login .infos .itens{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+    .login .infos .itens button {
+        width: 100%;
+    }
+
+    .login .infos .itens h4 {
+        font-size: 20px;
+        margin: 30px 0 20px 0;
+    }
+
+    .login .infos .itens img{
+        width: 100%;
+    }
+
+    .login .infos .image  {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login .infos .image img {
+        display: none;
+    }
+
+    .login .infos .itens input {
+    margin-bottom: 20px;
+}
+
+
+
+    @media (max-width: 900px) {
+        .login .infos{
+    
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .login .infos .itens{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 70px;
+            width: 100%;
+        }
+    
+
+    
+        .login .infos .itens h4 {
+            font-size: 20px;
+            margin: 20px 0 20px 0;
+        }
+    
+        .login .infos .itens img {
+            width: 100%;
+          
+        }
+
+    
+        @media (max-width: 800px)
+    {
+        .login .infos{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+    
+      .login .infos .itens{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 70px;
+        width: 100%;
+    }
+    
+    .login .infos .itens img{
+        width: 100%;
+    }
+
+    .login .infos .image  {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login .infos .image img {
+        width: 70%;
+    }
+    
+    .login .infos .itens h4 {
+        font-size: 20px;
+        margin: 30px 0 20px 0;
+    }
+
+
+    }
+    
+      }
+  }
+
 

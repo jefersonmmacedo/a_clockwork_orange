@@ -1,7 +1,7 @@
 import './dashboard.css';
 import React, { useContext, useEffect, useState } from 'react';
 import userScheduling from '../../../assets/images/userScheduling.svg';
-import {useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import Footer from '../../../Components/Footer/Footer';
 import {FiUser, FiCalendar, FiEdit, FiTrash2,FiCheckCircle, FiX} from 'react-icons/fi';
 import Navbar from '../../../Components/Navbar/Navbar';
@@ -111,6 +111,11 @@ export default function Dashboard() {
     setClassCss('inputs-class')
   }
 
+  function handleDisableInputs(e){
+    e.preventDefault() 
+    setClassCss('inputs-desable')
+  }
+
 
    Modal.setAppElement('#root');
   return (
@@ -123,7 +128,7 @@ export default function Dashboard() {
             <div className="itens">
                 <div className="saudation">
                   <p>Olá, {user.name}</p>
-                  <button className="button-table" onClick={handleRedirectAccount}><FiUser /></button> 
+                  <Link to="/dashboard/scheduling" ><FiUser /></Link> 
                 </div>
                   <button className="button-primary" onClick={handleRedirect}>Fazer Agendamento</button>
                 <div className="schedules">
@@ -132,10 +137,10 @@ export default function Dashboard() {
                   <table>
                     <thead>
                       <tr>
-                        <th>Sede</th>
-                        <th>Turno</th>
-                        <th>Data</th>
-                        <th>Ações</th>
+                        <th scope="col">Sede</th>
+                        <th scope="col">Turno</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Ações</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -160,7 +165,7 @@ export default function Dashboard() {
                 </div>
                 <div className="disponible">
                   <h3>Disponibilidade</h3>
-                  <p>Referente a 07/09/2021. Ver outra data? <button className="button-table" onClick={handleEnableInputs}><FiCalendar /></button> </p>
+                  <p>Referente a {actualDate}. Ver outra data? <button className="button-table" onClick={handleEnableInputs}><FiCalendar /></button> </p>
                   <div className={classCss}>
                   <span>O que deseja Agendar?</span>
                 <select defaultValue={type} onChange={handleSelectType}>
@@ -190,6 +195,8 @@ export default function Dashboard() {
 
                 <span>Escolha uma data</span>
                 <input id="date" type="date" defaultValue={date} onChange={(e) => setDate(e.target.value)}/>
+
+                <button className="button-table" onClick={handleDisableInputs}><FiX/></button> 
                   </div>
                   <h5>São Paulo - {length}/240</h5>
                   <progress value={length} max="240"></progress>
@@ -204,7 +211,7 @@ export default function Dashboard() {
         overlayClassName="react-modal-overlay"
         className="react-modal-content">
           <button type="button" className="react-modal-button" onClick={handleCloseModal}>
-          <FiX />
+          <FiX /> 
           </button>
           <div className="content-modal">
         <h3>Apagar agendamento?</h3>

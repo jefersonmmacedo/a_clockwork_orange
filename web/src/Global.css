@@ -166,3 +166,49 @@ progress {
   top: 0;
   margin: 15px;
 }
+
+.button-account {
+  background-color: #fff;
+  max-width: 14px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--Secondary);
+  padding-bottom: 30px;
+}
+
+
+
+
+
+@media (max-width: 1024px) {
+  body{
+    background-color: #97c90d;
+  }
+
+  input, select, textarea {
+    color: var(--Secondary);
+    border: 1px solid var(--Secondary);
+    border-radius: 18px;
+    height: 48px;
+    width: 100%;
+    font-size: 16px;
+    padding: 0 15px;
+    font-family: "Metropolis", sans-serif;
+  
+  }
+
+  button {
+    height: 48px;
+    width: 100%;
+    border-radius: 18px;
+    border: none;
+    font-family: "Metropolis", sans-serif;
+    font-weight: 600;
+    line-height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+}

@@ -8,14 +8,14 @@ import ImageBody from '../../../Components/ImageBody/ImageBody';
 import { useParams } from 'react-router';
 import api from '../../../services/api';
 import Modal from 'react-modal';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {format, parseISO} from 'date-fns';
 import { AuthContext } from '../../../Contexts/Auth';
  
 
 
 export default function EditScheduling() {
-  const {schedulingUpdate} = useContext(AuthContext)
+  const {schedulingUpdate, user} = useContext(AuthContext)
   const history = useHistory();
   const {_id} = useParams()
   const [scheduling, setScheduling] = useState([]);
@@ -117,9 +117,9 @@ switch(bdDay) {
          <div className="infos">
          <ImageBody image={userScheduling} alt='user-scheduling' />
             <div className="itens">
-                <div className="saudation">
-                  <p>Olá, Jeferson Macedo</p>
-                  <FiUser />
+            <div className="saudation">
+                  <p>Olá, {user.name}</p>
+                  <Link to="/dashboard/scheduling" ><FiUser /></Link> 
                 </div>
                   <h3>Editar Agendamento</h3>
                
