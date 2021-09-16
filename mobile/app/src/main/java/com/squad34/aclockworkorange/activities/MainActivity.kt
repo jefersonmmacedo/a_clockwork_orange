@@ -87,8 +87,11 @@ class MainActivity : BaseActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 mUserDateSortedScheduling = ArrayList()
                 getScheduling(mUser._id!!)
-                mUser = data!!.getParcelableExtra(RegisterActivity.USER_REG)!!
-                mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
+                if (data!!.hasExtra(RegisterActivity.USER_REG)) {
+                    mUser = data!!.getParcelableExtra(RegisterActivity.USER_REG)!!
+                    mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
+                }
+
 
             }
         }
