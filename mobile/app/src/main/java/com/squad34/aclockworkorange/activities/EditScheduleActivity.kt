@@ -16,10 +16,12 @@ import android.widget.AutoCompleteTextView
 import androidx.annotation.RequiresApi
 import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.databinding.*
+import com.squad34.aclockworkorange.models.DateTotalPerDay
 import com.squad34.aclockworkorange.models.Schedulingdata
 import com.squad34.aclockworkorange.network.ClockworkService
 import com.squad34.aclockworkorange.utils.Constants
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import kotlinx.android.synthetic.main.activity_edit_schedule.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,9 +39,12 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
     private var mSelectedShift = ""
     private var mSelectedDate = ""
     private var mSelectedDay = ""
+    private var mReservedDate = ""
+    private var mReservedDay = ""
     private var year = 0
     private var month = 0
     private var day = 0
+    private lateinit var mTotal: DateTotalPerDay
     private lateinit var calendar: Calendar
     private var datesToDisable = ArrayList<String>()
     private var datesToDisableMeet = ArrayList<String>()
@@ -67,6 +72,8 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
             mBinding.tvSelectedStationEdit.text = mSelectedWork
             mBinding.tvSelectedShiftEdit.text = mSelectedShift
             mBinding.actvDateEdit.setText(userSchedules[position].date)
+            mReservedDate = mSelectedDate
+            mReservedDay = mSelectedDay
         }
         if (intent.hasExtra(MainActivity.MEET_SCHEDULE)) {
             datesToDisableMeet = intent.getStringArrayListExtra(MainActivity.MEET_SCHEDULE)!!
@@ -94,6 +101,7 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         }
 
         mBinding.btnConfirmEdit.setOnClickListener {
+
             showDialogEdit()
         }
 
@@ -133,6 +141,82 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
             deleteSchedule()
         }
         dialog.show()
+
+    }
+
+    private fun getTotalPerDay(
+        location: String,
+        type: String,
+        shift: String,
+        date: String,
+        day: String
+    ) {
+        if (Constants.isNetworkAvailable(this)) {
+            val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service: ClockworkService = retrofit.create(ClockworkService::class.java)
+            val listCall = service.totalPerDay(
+                location,
+                type,
+                shift,
+                date
+            )
+            listCall.enqueue(object : Callback<DateTotalPerDay> {
+                override fun onResponse(
+                    call: Call<DateTotalPerDay>,
+                    response: Response<DateTotalPerDay>
+                ) {
+                    mTotal = response.body()!!
+                    println("Total do dia: ${mTotal.length}")
+
+                    if (type == "Estação de trabalho") {
+                        if (location == "Santos") {
+                            checkStatusOfDate(
+                                Constants.SANTOS_MAX_QUANTITY,
+                                mTotal.length,
+                                date,
+                                day
+                            )
+                        } else {
+                            checkStatusOfDate(
+                                Constants.SAO_PAULO_MAX_QUANTITY,
+                                mTotal.length,
+                                date,
+                                day
+                            )
+                        }
+
+                    } else {
+                        mSelectedDate = date
+                        mSelectedDay = day
+                        mBinding.actvDateEdit.setText(mSelectedDate)
+                    }
+
+                }
+
+                override fun onFailure(
+                    call: Call<DateTotalPerDay>,
+                    t: Throwable
+                ) {
+                }
+            })
+        } else {
+            showToastError("Não foi possível baixar os dados, tente mais tarde!")
+        }
+    }
+
+    fun checkStatusOfDate(max: Int, total: Int, date: String, day: String) {
+        if (total < max) {
+            mSelectedDate = date
+            mSelectedDay = day
+            mBinding.actvDateEdit.setText(mSelectedDate)
+        } else {
+            showToastAlert("Nesta data o escritório ja está com a capacidade máxima agendada")
+            mSelectedDate = mReservedDate
+            mSelectedDay = mReservedDay
+            mBinding.actvDateEdit.setText(mSelectedDate)
+        }
     }
 
     private fun setupActionBar() {
@@ -224,7 +308,8 @@ class EditScheduleActivity : BaseActivity(), DatePickerDialog.OnDateSetListener 
         var dow = (format.format(theDate).replace("f", "F", false)).capitalize()
         mSelectedDate = selectedDate
         mSelectedDay = dow
-        mBinding.actvDateEdit.setText(mSelectedDate)
+        getTotalPerDay(mSelecetdUnit, mSelectedWork, mSelectedShift, mSelectedDate, mSelectedDay)
+
     }
 
     fun setupDatePicker(work: String) {

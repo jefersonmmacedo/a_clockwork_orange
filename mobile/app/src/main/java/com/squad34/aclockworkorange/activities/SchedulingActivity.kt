@@ -488,7 +488,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
 
     fun checkStatusOfDateNormal(max: Int, total: Int, date: String, day: String) {
         var contain = false
-        if (total <= max) {
+        if (total < max) {
             for (i in mSelectedDates.indices) {
                 if (mSelectedDates[i].date.contains(date)) {
                     showToastAlert("Esta data já foi selecionada!")
@@ -510,7 +510,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
     fun checkStatusOfDateRecurrent(max: Int, total: Int, date: String, day: String) {
         val listError = ArrayList<String>()
         val mSelectedDateFormater = DateSelected(date, day)
-        if (total <= max) {
+        if (total < max) {
             if (datesToDisable.contains(date)) {
                 listError.add(date)
             } else {

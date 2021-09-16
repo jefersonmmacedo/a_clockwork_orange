@@ -65,7 +65,6 @@ class RegisterActivity : BaseActivity() {
             mBinding.vwProfile.visibility = View.VISIBLE
             mBinding.toolbarEditRegister.visibility = View.GONE
             mBinding.vwForgotPassword.visibility = View.GONE
-
             mBinding.tvNameProfile.text = "${mUser.name} ${mUser.lastname}"
             mBinding.tvRoleProfile.text = "Função: ${mUser.role}"
         }
@@ -122,7 +121,6 @@ class RegisterActivity : BaseActivity() {
 
         mBinding.btnPasswordForgot.setOnClickListener {
 
-
             when {
                 TextUtils.isEmpty(mBinding.etPasswordForgot.text.toString()) -> {
                     showToastAlert("Você deve preencher sua senha!")
@@ -131,7 +129,7 @@ class RegisterActivity : BaseActivity() {
                     showToastAlert("Você deve preencher a confirmação da senha!")
                 }
                 else -> {
-                    if (mBinding.etPasswordForgot.text.toString() == mBinding.etConfirmPasswordForgot.text.toString()) {
+                    if (mBinding.etPasswordForgot.text.toString().trim() == mBinding.etConfirmPasswordForgot.text.toString().trim()) {
                         showProgressDialog()
                         updateUserProfile(
                             mUser._id!!,
@@ -240,40 +238,28 @@ class RegisterActivity : BaseActivity() {
                     showToastAlert("Você deve selecionar uma função!")
                 }
                 else -> {
-                    if (mBinding.etPassword.text.toString() == mBinding.etConfirmPassword.text.toString()) {
-                        mUser = UserFromValidator(
-                            mUser.__v,
-                            mUser._id,
-                            mUser.createdAt,
-                            mUser.email,
-                            mBinding.etSurname.text.toString(),
-                            mBinding.etName.text.toString(),
-                            mBinding.etPassword.text.toString(),
-                            role,
-                            mUser.updatedAt,
-                            mUser.error
-                        )
+                    if (mBinding.etPassword.text.toString().trim() == mBinding.etConfirmPassword.text.toString().trim()) {
 
                         if (intent.hasExtra(MainActivity.USERSCHEDULE)) {
                             showProgressDialog()
                             mUser._id?.let { it1 ->
                                 updateUserProfile(
                                     it1,
-                                    mBinding.etName.text.toString(),
-                                    mBinding.etSurname.text.toString(),
+                                    mBinding.etName.text.toString().trim(),
+                                    mBinding.etSurname.text.toString().trim(),
                                     mUser.email!!,
                                     role,
-                                    mBinding.etPassword.text.toString()
+                                    mBinding.etPassword.text.toString().trim()
                                 )
                             }
                         } else {
                             showProgressDialog()
                             createUser(
-                                mBinding.etName.text.toString(),
-                                mBinding.etSurname.text.toString(),
+                                mBinding.etName.text.toString().trim(),
+                                mBinding.etSurname.text.toString().trim(),
                                 email,
                                 role,
-                                mBinding.etPassword.text.toString()
+                                mBinding.etPassword.text.toString().trim()
                             )
                         }
 
@@ -394,7 +380,6 @@ class RegisterActivity : BaseActivity() {
                     } else {
                         showToastSuccess("Cadastro alterado!")
                         val intent = Intent()
-                        intent.putExtra(USER_REG, mUser)
                         setResult(Activity.RESULT_OK, intent)
                         hideProgressDialog()
                         finish()

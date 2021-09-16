@@ -55,7 +55,7 @@ class LoginActivity : BaseActivity() {
 
         mBinding.btnAccess.setOnClickListener {
 
-            val inputEmail = mBinding.etEmailAdress.text.toString()
+            val inputEmail = mBinding.etEmailAdress.text.toString().trim()
             if (inputEmail.contains("@fcamara.com.br")) {
                 if (Constants.isNetworkAvailable(this)) {
                     val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
@@ -80,7 +80,7 @@ class LoginActivity : BaseActivity() {
                                 val user = response.body()
 
                                 if (user != null) {
-                                    email = user.email.toString()!!
+                                    email = user.email.toString().trim()!!
                                 }
 
                                 mBinding.vwLoginEmail.visibility = View.GONE
@@ -99,7 +99,7 @@ class LoginActivity : BaseActivity() {
         }
 
         mBinding.tvForgotPassword.setOnClickListener {
-            val inputEmail = mBinding.etEmailAdress.text.toString()
+            val inputEmail = mBinding.etEmailAdress.text.toString().trim()
             val intent =
                 Intent(this@LoginActivity, RegisterActivity::class.java)
 
@@ -110,7 +110,7 @@ class LoginActivity : BaseActivity() {
 
         mBinding.btnLogin.setOnClickListener {
 
-            val inputPassword = mBinding.etPassword.text.toString()
+            val inputPassword = mBinding.etPassword.text.toString().trim()
             if (Constants.isNetworkAvailable(this)) {
                 val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -151,6 +151,7 @@ class LoginActivity : BaseActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(USER, mUser)
         startActivity(intent)
+        finish()
     }
 
     companion object {

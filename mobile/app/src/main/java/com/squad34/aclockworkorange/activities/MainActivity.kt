@@ -60,7 +60,6 @@ class MainActivity : BaseActivity() {
             getScheduling(mUser._id!!)
         }
 
-
         prepareDataToTotalPerDay()
         setupActionBar()
 
@@ -85,14 +84,12 @@ class MainActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SCHEDULE_CODE || requestCode == EDIT_CODE || requestCode == EDIT_USER) {
             if (resultCode == Activity.RESULT_OK) {
+                mListOfDaysScheduled = ArrayList<String>()
                 mUserDateSortedScheduling = ArrayList()
+                mListOfScheduledMeetRoom = ArrayList<String>()
                 getScheduling(mUser._id!!)
-                if (data!!.hasExtra(RegisterActivity.USER_REG)) {
-                    mUser = data!!.getParcelableExtra(RegisterActivity.USER_REG)!!
-                    mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
-                }
-
-
+                getUser(mUser.email!!)
+                prepareDataToTotalPerDay()
             }
         }
     }
@@ -303,6 +300,37 @@ class MainActivity : BaseActivity() {
 
                 override fun onFailure(
                     call: Call<DateTotalPerDay>,
+                    t: Throwable
+                ) {
+                }
+            })
+        } else {
+            showToastError("Não foi possível baixar os dados, tente mais tarde!")
+        }
+    }
+
+    private fun getUser(
+        email: String
+    ) {
+        if (Constants.isNetworkAvailable(this)) {
+            val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service: ClockworkService = retrofit.create(ClockworkService::class.java)
+            val listCall = service.getEmailValidation(
+                email
+            )
+            listCall.enqueue(object : Callback<UserFromValidator> {
+                override fun onResponse(
+                    call: Call<UserFromValidator>,
+                    response: Response<UserFromValidator>
+                ) {
+                    mUser = response.body()!!
+                    mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
+                }
+
+                override fun onFailure(
+                    call: Call<UserFromValidator>,
                     t: Throwable
                 ) {
                 }
