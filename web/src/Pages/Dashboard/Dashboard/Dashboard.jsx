@@ -10,6 +10,7 @@ import Modal from 'react-modal'
 import { AuthContext } from '../../../Contexts/Auth';
 import api from '../../../services/api';
 
+
  
 
 
@@ -19,6 +20,7 @@ export default function Dashboard() {
   const [data, setData] = useState([])
   const history = useHistory();
   const [isOpenModal, setIsOpenModal] = useState(false);
+
 
   useEffect(() => {
     async function filterShedulingUser(_idUser, limit){
@@ -30,7 +32,7 @@ export default function Dashboard() {
         
    }
    filterShedulingUser()
-  }, [])
+  }, [user._id])
 
   function handleOpenModal() {
     setIsOpenModal(true)
@@ -52,6 +54,14 @@ export default function Dashboard() {
    history.push("/dashboard/scheduling")
   }
 
+  function handleRedirectAccount() {
+    history.push("/dashboard/account")
+   }
+
+  function handleRedirectEdit(_id) {
+    history.push(`/dashboard/editscheduling/${_id}`)
+   }
+   Modal.setAppElement('#root');
   return (
     <div className="container">
       <div className="content">
@@ -62,7 +72,7 @@ export default function Dashboard() {
             <div className="itens">
                 <div className="saudation">
                   <p>Olá, {user.name}</p>
-                  <FiUser />
+                  <button className="button-table" onClick={handleRedirectAccount}><FiUser /></button> 
                 </div>
                   <button className="button-primary" onClick={handleRedirect}>Fazer Agendamento</button>
                 <div className="schedules">
@@ -86,7 +96,7 @@ export default function Dashboard() {
                         <td>{userData.date}</td>
                         <td>
                           <div className="buttons-table">
-                          <button type="button" className="button-table"> <FiEdit /></button>  
+                          <button type="button" className="button-table" onClick={() => {handleRedirectEdit(userData._id)}}> <FiEdit /></button>  
                         <button type="button" className="button-table" onClick={() => {handleDelete(userData._id)}}> <FiTrash2 /></button>  
                           </div>
                           </td>
@@ -122,7 +132,7 @@ export default function Dashboard() {
           <p>Escritório: {oneScheduling.location}</p>
         <p>Tipo: {oneScheduling.type}</p>
         <p>Turno: {oneScheduling.shift}</p>
-        <p>Data: {oneScheduling.date}</p>
+        <p>Data: {oneScheduling.dateNew}</p>
         <p>Dia da Semana: {oneScheduling.day}</p>
          </div>
         

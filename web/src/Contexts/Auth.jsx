@@ -267,6 +267,16 @@ function AuthProvider({children}) {
         }
     }
 
+    async function schedulingUpdate(data) {
+        const res = await api.put(`/api/scheduling/${data._id}`, data);
+        if(res.status===200) {
+            toast.success('Agendamento efetuado com sucesso!');
+            history.push('/dashboard/dashboard')
+         } else {
+            toast.error('Deu algo errado ao atualizar agendamento!');
+         }
+    }
+
     function storageUser(data) {
         localStorage.setItem("fcamara", JSON.stringify(data));
     }
@@ -293,6 +303,7 @@ function AuthProvider({children}) {
             EmailRecuperation,
             CodeRecuperation,
             updatePassword,
+            schedulingUpdate,
             oneScheduling,
             name,
             lastname,

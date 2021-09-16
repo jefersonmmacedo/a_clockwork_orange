@@ -28,7 +28,7 @@ function Routes() {
         <RouteWrapper exact path="/password-recuperation" component={PasswordRecuperation}/>
         <RouteWrapper exact path="/dashboard/dashboard" component={Dashboard} isPrivate/>
         <RouteWrapper exact path="/dashboard/scheduling" component={Scheduling} isPrivate/>
-        <RouteWrapper exact path="/dashboard/editscheduling" component={EditScheduling} isPrivate/>
+        <RouteWrapper exact path="/dashboard/editscheduling/:_id" component={EditScheduling} isPrivate/>
         <RouteWrapper exact path="/dashboard/editregister" component={EditRegister} isPrivate/>
         <RouteWrapper exact path="/dashboard/account" component={Account} isPrivate/>
     </Switch>

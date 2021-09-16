@@ -59,7 +59,7 @@ export default function EditRegister() {
   }
 
 
- 
+  Modal.setAppElement('#root');
   return (
     <div className="container">
       <div className="content">
@@ -78,7 +78,7 @@ export default function EditRegister() {
                  <span>Qual é a sua função?</span>
                 <select defaultValue={user.role} onChange={handleSelectRole}>
                 <option value={user.role}>{user.role}</option>
-                <option value="">Selecione Sua Função</option>
+                <option value="">Selecione outra Função</option>
                   <option value="Fullstack Developer Jr">Fullstack Developer Jr</option>
                   <option value="Fullstack Developer Pleno">Fullstack Developer Pleno</option>
                   <option value="Fullstack Developer Senior">Fullstack Developer Senior</option>
