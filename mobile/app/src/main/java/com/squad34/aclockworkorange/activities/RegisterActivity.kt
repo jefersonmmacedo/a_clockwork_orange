@@ -26,6 +26,7 @@ class RegisterActivity : BaseActivity() {
 
     private lateinit var mBinding: ActivityRegisterBinding
     private lateinit var mUser: UserFromValidator
+
     private var email = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,6 +154,18 @@ class RegisterActivity : BaseActivity() {
                 }
                 else -> {
                     if (mBinding.etPassword.text.toString() == mBinding.etConfirmPassword.text.toString()) {
+                        mUser = UserFromValidator(
+                            mUser.__v,
+                            mUser._id,
+                            mUser.createdAt,
+                            mUser.email,
+                            mBinding.etSurname.text.toString(),
+                            mBinding.etName.text.toString(),
+                            mBinding.etPassword.text.toString(),
+                            role,
+                            mUser.updatedAt,
+                            mUser.error
+                        )
 
                         if (intent.hasExtra(MainActivity.USERSCHEDULE)) {
                             showProgressDialog()
@@ -285,11 +298,10 @@ class RegisterActivity : BaseActivity() {
                     call: Call<UserFromValidator>,
                     response: Response<UserFromValidator>
                 ) {
-                    val user = response.body()!!
                     showToastSuccess("Cadastro alterado!")
                     val intent = Intent()
+                    intent.putExtra(USER_REG, mUser)
                     setResult(Activity.RESULT_OK, intent)
-                    intent.putExtra(USER_REG, user)
                     hideProgressDialog()
                     finish()
                 }

@@ -87,10 +87,8 @@ class MainActivity : BaseActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 mUserDateSortedScheduling = ArrayList()
                 getScheduling(mUser._id!!)
-                if (intent.hasExtra(RegisterActivity.USER_REG)){
-                    mUser = intent.getParcelableExtra(RegisterActivity.USER_REG)!!
-                    mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
-                }
+                mUser = data!!.getParcelableExtra(RegisterActivity.USER_REG)!!
+                mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
 
             }
         }
@@ -182,7 +180,11 @@ class MainActivity : BaseActivity() {
 
                     var mUserSched2: MutableList<Schedulingdata.DateScheduling> = mutableListOf()
                     for (i in mUserSched.indices) {
-                        if (LocalDate.parse(mUserSched[i].date, dateTimeFormatter) >= LocalDate.now()) {
+                        if (LocalDate.parse(
+                                mUserSched[i].date,
+                                dateTimeFormatter
+                            ) >= LocalDate.now()
+                        ) {
                             mUserSched2.add(mUserSched[i])
                         }
                     }
