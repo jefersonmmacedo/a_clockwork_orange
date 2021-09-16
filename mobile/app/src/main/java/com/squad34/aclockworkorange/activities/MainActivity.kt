@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,6 +60,7 @@ class MainActivity : BaseActivity() {
             getScheduling(mUser._id!!)
         }
 
+
         prepareDataToTotalPerDay()
         setupActionBar()
 
@@ -71,15 +71,26 @@ class MainActivity : BaseActivity() {
             intent.putStringArrayListExtra(DATES_TO_EXCLUDE, mListOfDaysScheduled)
             startActivityForResult(intent, EDIT_CODE)
         }
+
+        mBinding.btnUser.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            intent.putExtra(USERSCHEDULE, mUser)
+            hideProgressDialog()
+            startActivityForResult(intent, EDIT_USER)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SCHEDULE_CODE || requestCode == EDIT_CODE) {
+        if (requestCode == SCHEDULE_CODE || requestCode == EDIT_CODE || requestCode == EDIT_USER) {
             if (resultCode == Activity.RESULT_OK) {
                 mUserDateSortedScheduling = ArrayList()
                 getScheduling(mUser._id!!)
+                if (intent.hasExtra(RegisterActivity.USER_REG)){
+                    mUser = intent.getParcelableExtra(RegisterActivity.USER_REG)!!
+                    mBinding.tvHello.text = "Olá, ${mUser.name} ${mUser.lastname}"
+                }
 
             }
         }
@@ -304,5 +315,6 @@ class MainActivity : BaseActivity() {
         var EDIT_CODE = 6
         var DATES_TO_EXCLUDE = "datesToExclude"
         var MEET_SCHEDULE = "meetSchedule"
+        var EDIT_USER = 9
     }
 }

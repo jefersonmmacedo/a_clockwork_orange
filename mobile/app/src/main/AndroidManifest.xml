@@ -14,7 +14,7 @@
         android:theme="@style/Theme.AClockworkOrange"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AClockworkOrange.NoActionBar"/>

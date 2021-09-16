@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import com.squad34.aclockworkorange.RegisterActivity
 import com.squad34.aclockworkorange.databinding.ActivityLoginBinding
 import com.squad34.aclockworkorange.models.UserFromValidator
 import com.squad34.aclockworkorange.network.ClockworkService
@@ -43,7 +42,6 @@ class LoginActivity : BaseActivity() {
         }
 
         mBinding.btnAccess.setOnClickListener {
-            showProgressDialog()
 
             val inputEmail = mBinding.etEmailAdress.text.toString()
             if (inputEmail.contains("@fcamara.com.br")) {
@@ -61,15 +59,15 @@ class LoginActivity : BaseActivity() {
                             response: Response<String>
                         ) {
                             if (response.body() == null) {
-                                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-                                hideProgressDialog()
+                                val intent =
+                                    Intent(this@LoginActivity, RegisterActivity::class.java)
+
                                 intent.putExtra(EMAIL, inputEmail)
                                 startActivity(intent)
                             } else {
                                 email = response.body().toString()
                                 mBinding.vwLoginEmail.visibility = View.GONE
                                 mBinding.vwLoginPassword.visibility = View.VISIBLE
-                                hideProgressDialog()
                             }
                         }
 
@@ -83,7 +81,7 @@ class LoginActivity : BaseActivity() {
             }
         }
         mBinding.btnLogin.setOnClickListener {
-            showProgressDialog()
+
             val inputPassword = mBinding.etPassword.text.toString()
             if (Constants.isNetworkAvailable(this)) {
                 val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
@@ -108,7 +106,6 @@ class LoginActivity : BaseActivity() {
                             } else {
                                 mUser = response.body()!!
                                 intent()
-
                             }
                         }
                     }
@@ -123,7 +120,6 @@ class LoginActivity : BaseActivity() {
 
     private fun intent() {
         val intent = Intent(this, MainActivity::class.java)
-        hideProgressDialog()
         intent.putExtra(USER, mUser)
         startActivity(intent)
     }

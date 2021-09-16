@@ -94,6 +94,18 @@ interface ClockworkService {
         @Field("role") role: String,
         @Field("password") password: String
 
-    ): Call<UserFinal>
+    ): Call<UserFromValidator>
+
+    @FormUrlEncoded
+    @PUT("user/{id}")
+    fun updateUser(
+        @Path("id") id: String,
+        @Field("name") name: String,
+        @Field("lastname") lastname: String,
+        @Field("email") email: String,
+        @Field("role") role: String,
+        @Field("password") password: String
+
+    ): Call<UserFromValidator>
 
 }
