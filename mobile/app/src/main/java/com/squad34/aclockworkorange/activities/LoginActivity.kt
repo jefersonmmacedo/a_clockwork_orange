@@ -1,6 +1,5 @@
 package com.squad34.aclockworkorange.activities
 
-import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -8,29 +7,17 @@ import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
+import com.squad34.aclockworkorange.RegisterActivity
 import com.squad34.aclockworkorange.databinding.ActivityLoginBinding
-import com.squad34.aclockworkorange.databinding.DialogAlertBinding
-import com.squad34.aclockworkorange.databinding.DialogErrorBinding
-import com.squad34.aclockworkorange.models.Token
-import com.squad34.aclockworkorange.models.User
 import com.squad34.aclockworkorange.models.UserFromValidator
 import com.squad34.aclockworkorange.network.ClockworkService
 import com.squad34.aclockworkorange.utils.Constants
 import kotlinx.android.synthetic.main.activity_login.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.ResponseBody
 
 class LoginActivity : BaseActivity() {
 
@@ -73,9 +60,11 @@ class LoginActivity : BaseActivity() {
                             call: Call<String>,
                             response: Response<String>
                         ) {
-
                             if (response.body() == null) {
-                                showToastAlert("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
+                                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+                                hideProgressDialog()
+                                intent.putExtra(EMAIL, inputEmail)
+                                startActivity(intent)
                             } else {
                                 email = response.body().toString()
                                 mBinding.vwLoginEmail.visibility = View.GONE
@@ -141,5 +130,6 @@ class LoginActivity : BaseActivity() {
 
     companion object {
         var USER = "User"
+        var EMAIL = "email"
     }
 }

@@ -48,7 +48,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/tv_email"
+            android:id="@+id/tv_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
@@ -56,36 +56,36 @@
             android:text="Código"
             android:textColor="@color/secondary"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/til_email_adress"
+            app:layout_constraintStart_toStartOf="@+id/til_code"
             app:layout_constraintTop_toBottomOf="@+id/cv_explanation"
             app:layout_goneMarginTop="8dp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_email_adress"
+            android:id="@+id/til_code"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="303dp"
             android:layout_height="60dp"
             android:ems="10"
             android:fontFamily="@font/metropolis_regular"
-            android:hint="Digite o seu código de acesso"
+            android:hint="Digite o seu código"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/gray"
             app:boxCornerRadiusBottomEnd="16dp"
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
-
             app:boxCornerRadiusTopStart="16dp"
             app:boxStrokeColor="?attr/colorSecondary"
             app:boxStrokeWidth="2dp"
             app:hintTextColor="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_email">
+            app:layout_constraintTop_toBottomOf="@+id/tv_code">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_email_adress"
+                android:id="@+id/et_code"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="text"
 
                 android:fontFamily="@font/metropolis_regular"
                 android:textColor="@color/text"
@@ -93,7 +93,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_access"
+            android:id="@+id/btn_send"
             android:layout_width="303dp"
             android:layout_height="55dp"
             android:layout_marginTop="24dp"
@@ -101,14 +101,14 @@
             android:elevation="200dp"
             android:fontFamily="@font/metropolis_semibold"
             android:letterSpacing=".04"
-            android:text="@string/btn_access"
+            android:text="Enviar"
             android:textAllCaps="false"
 
             android:textColor="@color/white"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_email_adress" />
+            app:layout_constraintTop_toBottomOf="@+id/til_code" />
 
 
         <ImageView
@@ -119,7 +119,7 @@
             android:src="@drawable/fcamara_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_access" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_send" />
 
         <TextView
             android:id="@+id/tv_squad_34"

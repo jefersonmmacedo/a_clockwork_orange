@@ -85,4 +85,15 @@ interface ClockworkService {
 
     ): Call<DateSched>
 
+    @FormUrlEncoded
+    @POST("user")
+    fun createUser(
+        @Field("name") name: String,
+        @Field("lastname") lastname: String,
+        @Field("email") email: String,
+        @Field("role") role: String,
+        @Field("password") password: String
+
+    ): Call<UserFinal>
+
 }

@@ -15,7 +15,9 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".RegisterActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AClockworkOrange.NoActionBar"/>
         <activity
             android:name=".activities.EditScheduleActivity"
             android:exported="true"

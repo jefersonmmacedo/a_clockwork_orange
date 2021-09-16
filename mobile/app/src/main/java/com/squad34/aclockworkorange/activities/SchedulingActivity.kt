@@ -378,6 +378,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         bindingRecurrent.tvShiftSelectedRecurrentConfirmation.text = mShift
         bindingRecurrent.btnConfirmRecurrentConfirmation.setOnClickListener {
             showProgressDialog()
+            dialog.dismiss()
             for (i in mSelectedDates.indices) {
                 if (i == mSelectedDates.size - 1) {
                     scheduleToBD(mSelectedDates[i], true)
@@ -420,6 +421,7 @@ open class SchedulingActivity : BaseActivity(), DatePickerDialog.OnDateSetListen
         }
         bindingDialogNormal.btnConfirmMultipleConfirmation.setOnClickListener {
             showProgressDialog()
+            dialog.dismiss()
             for (i in mSelectedDates.indices) {
                 if (i == mSelectedDates.size - 1) {
                     scheduleToBD(mSelectedDates[i], true)

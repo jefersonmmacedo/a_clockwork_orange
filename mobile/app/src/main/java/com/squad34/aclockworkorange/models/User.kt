@@ -41,7 +41,7 @@ fun main() {
     //deleteId()
 
     //Funciona
-    //createUser()
+    createUser()
 
     //Funciona
     //createScheduledDate()
@@ -63,7 +63,9 @@ fun main() {
     //getTotalDate()
 
     //filterScheduling()
-    getTotalDate()
+    //getTotalDate()
+
+    //getSecurity2()
 }
 
 fun getUser() {
@@ -129,7 +131,7 @@ fun createUser() {
     //val user = UserComplete("613cfe6672fd2051842d6e9b", "Eduardo", "edu@fcamara.com.br", "Scrum Master", "12345","2021-09-11T19:07:18.849Z", "2021-09-11T19:07:18.849Z", 0)
 
     val (_, _, result) = "http://127.0.0.1:3001/api/user"
-        .httpPost(listOf("name" to "Marcos", "email" to "marcos@fcamara.com.br", "role" to "Scrum Master", "password" to "12345"))
+        .httpPost(listOf("name" to "Jackson", "lastname" to "Silva", "email" to "jacksonsilva@fcamara.com.br", "role" to "Mobile Developer Jr", "password" to "123456789"))
         .responseString()
     println(result)
 }
@@ -164,8 +166,24 @@ fun updateScheduledDate() {
     println(result)
 }
 
+fun getSecurity() {
+    val id = "613cfe6672fd2051842d6e9b"
 
+    val (_, _, result) = ("http://127.0.0.1:3001/api/securitycode")
+        .httpGet()
+        .response()
 
+    println(result)
+}
 
+fun getSecurity2() {
+    val id = "613cfe6672fd2051842d6e9b"
+
+    val (_, _, result) = ("http://127.0.0.1:3001/api/securitycode/")
+        .httpGet()
+        .response()
+
+    println(result)
+}
 
 
