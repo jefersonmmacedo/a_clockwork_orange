@@ -38,7 +38,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function filterShedulingUser(_idUser){
-      const data = {_idUser: user._id, limit: 8}
+      const data = {_idUser: user._id, limit: 4}
        const res = await api.post('/api/filter/user', data);
 
 
@@ -128,7 +128,7 @@ export default function Dashboard() {
             <div className="itens">
                 <div className="saudation">
                   <p>Olá, {user.name}</p>
-                  <Link to="/dashboard/scheduling" ><FiUser /></Link> 
+                  <Link to="/dashboard/account" ><FiUser /></Link> 
                 </div>
                   <button className="button-primary" onClick={handleRedirect}>Fazer Agendamento</button>
                 <div className="schedules">

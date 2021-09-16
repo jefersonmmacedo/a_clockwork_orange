@@ -92,3 +92,20 @@
     font-weight: 700;
     margin-bottom: 20px;
 }
+
+
+@media (max-width: 900px)
+{
+    .editScheduling .infos .image {
+    display: none;
+  }
+
+  .editScheduling .infos .itens{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 30px;
+    width: 100%;
+}
+}

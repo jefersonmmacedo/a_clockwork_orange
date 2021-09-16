@@ -53,7 +53,6 @@ function AuthProvider({children}) {
 
     async function validateCode(code) {
         const res = await api.get(`/api/securitycode/${code}`);
-        console.log(res.data.securityCode)
         if(res.data === null) {
             toast.warning('Códifo Inválido ou Expirado');
           } else {

@@ -125,7 +125,7 @@ useEffect(() => {
             <div className="itens">
             <div className="saudation">
                   <p>Olá, {user.name}</p>
-                  <Link to="/dashboard/scheduling" ><FiUser /></Link> 
+                  <Link to="/dashboard/account" ><FiUser /></Link> 
                 </div>
                   <h3>Fazer Agendamento</h3>
                 <div className="schedules">

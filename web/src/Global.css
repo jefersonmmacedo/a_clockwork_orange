@@ -183,9 +183,7 @@ progress {
 
 
 @media (max-width: 1024px) {
-  body{
-    background-color: #97c90d;
-  }
+
 
   input, select, textarea {
     color: var(--Secondary);

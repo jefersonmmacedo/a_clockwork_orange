@@ -129,7 +129,7 @@ export default function EditRegister() {
           
         <div className="buttons-modal">
         <button className="button-White" onClick={handleCloseModal}>Cancelar</button>
-        <button className="button-primary" onClick={handleUpdateUser}><FiCheckCircle /> Agendar</button>
+        <button className="button-primary" onClick={handleUpdateUser}><FiCheckCircle /> Atualizar</button>
         </div>
         </div>
         </Modal>

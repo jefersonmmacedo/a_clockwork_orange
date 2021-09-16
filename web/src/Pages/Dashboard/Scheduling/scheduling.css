@@ -84,11 +84,7 @@
 }
 
 
-.Scheduling .infos .itens h3 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
+
 
 .content-modal {
   display: flex;
@@ -163,4 +159,26 @@
 
 .text-Weekend p {
     color: #fff;
+}
+
+.Scheduling .infos .itens h3 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 900px)
+{
+    .Scheduling .infos .image {
+    display: none;
+  }
+
+  .Scheduling .infos .itens{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 30px;
+    width: 100%;
+}
 }
