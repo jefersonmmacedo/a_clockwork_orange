@@ -20,17 +20,17 @@
             android:id="@+id/btn_user"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_gravity="start"
             android:backgroundTint="@color/primary"
-            app:cardCornerRadius="20dp"
-            android:layout_gravity="start">
+            app:cardCornerRadius="20dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@color/primary"
                 android:layout_gravity="center"
+                android:background="@color/primary"
 
-                android:src="@drawable/ic_user"/>
+                android:src="@drawable/ic_user" />
         </androidx.cardview.widget.CardView>
 
         <ImageView
@@ -97,9 +97,9 @@
 
         <LinearLayout
             android:id="@+id/ll_rv"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:visibility="visible">
 
 
@@ -165,7 +165,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/ll_header" />
 
 
-
         </LinearLayout>
 
         <LinearLayout
@@ -193,6 +192,19 @@
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_explin_scheduling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/metropolis_regular"
+        android:text="Datas agendadas em laranja, são para sala de reuniões."
+        android:textColor="@color/secondary"
+        android:layout_marginTop="5dp"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_main" />
 
     <TextView
         android:id="@+id/tv_availability"

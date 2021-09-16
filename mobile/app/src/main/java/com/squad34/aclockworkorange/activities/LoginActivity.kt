@@ -53,10 +53,10 @@ class LoginActivity : BaseActivity() {
                     val listCall = service.getEmailValidation(
                         inputEmail
                     )
-                    listCall.enqueue(object : Callback<String> {
+                    listCall.enqueue(object : Callback<UserFromValidator> {
                         override fun onResponse(
-                            call: Call<String>,
-                            response: Response<String>
+                            call: Call<UserFromValidator>,
+                            response: Response<UserFromValidator>
                         ) {
                             if (response.body() == null) {
                                 val intent =
@@ -65,13 +65,18 @@ class LoginActivity : BaseActivity() {
                                 intent.putExtra(EMAIL, inputEmail)
                                 startActivity(intent)
                             } else {
-                                email = response.body().toString()
+                                val user = response.body()
+
+                                if (user != null) {
+                                    email = user.email.toString()!!
+                                }
+
                                 mBinding.vwLoginEmail.visibility = View.GONE
                                 mBinding.vwLoginPassword.visibility = View.VISIBLE
                             }
                         }
 
-                        override fun onFailure(call: Call<String>, t: Throwable) {
+                        override fun onFailure(call: Call<UserFromValidator>, t: Throwable) {
                             Log.e("Erro", t.message.toString())
                         }
                     })
@@ -99,6 +104,7 @@ class LoginActivity : BaseActivity() {
                     ) {
                         if (response.isSuccessful) {
                             mUser = response.body()!!
+                            println(mUser)
                             if (mUser.error == "User not found.") {
                                 showToastError("Email não cadastrado! Favor, faça seu cadastro no nosso site.")
                             } else if (mUser.error == "Invalid password.") {

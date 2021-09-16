@@ -65,7 +65,7 @@ fun main() {
     //filterScheduling()
     //getTotalDate()
 
-    //getSecurity2()
+    getSecurity2()
 }
 
 fun getUser() {
@@ -177,11 +177,11 @@ fun getSecurity() {
 }
 
 fun getSecurity2() {
-    val id = "613cfe6672fd2051842d6e9b"
+    val code = "FCAMARA2102SQUAD3"
 
-    val (_, _, result) = ("http://127.0.0.1:3001/api/securitycode/")
+    val (_, _, result) = ("http://192.168.1.120:3001/api/securitycode/$code")
         .httpGet()
-        .response()
+        .responseString()
 
     println(result)
 }

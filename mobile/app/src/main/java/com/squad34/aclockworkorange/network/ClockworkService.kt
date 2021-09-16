@@ -16,7 +16,7 @@ interface ClockworkService {
     @GET("validator/{email}")
     fun getEmailValidation(
         @Path("email") email: String
-    ): Call<String>
+    ): Call<UserFromValidator>
 
     @GET("scheduling")
     fun getScheduling(
@@ -107,5 +107,10 @@ interface ClockworkService {
         @Field("password") password: String
 
     ): Call<UserFromValidator>
+
+    @GET("securitycode/{securityCode}")
+    fun getSecurity(
+        @Path("securityCode") securityCode: String
+    ): Call<SecurityResponse>
 
 }

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.squad34.aclockworkorange.R
 import com.squad34.aclockworkorange.databinding.ActivityRegisterBinding
+import com.squad34.aclockworkorange.models.SecurityResponse
 import com.squad34.aclockworkorange.models.UserFinal
 import com.squad34.aclockworkorange.models.UserFromValidator
 import com.squad34.aclockworkorange.network.ClockworkService
@@ -124,15 +125,7 @@ class RegisterActivity : BaseActivity() {
         }
 
         mBinding.btnSend.setOnClickListener {
-            if (mBinding.etCode.text.toString() == "1020304050") {
-                mBinding.etCode.setText("")
-                showToastSuccess("Código válido!")
-                mBinding.vwRegister.visibility = View.VISIBLE
-                mBinding.vwCode.visibility = View.GONE
-            } else {
-                showToastError("Código inválido!")
-                mBinding.etCode.setText("")
-            }
+            getSecutityCode(mBinding.etCode.text.toString())
         }
         var role = ""
 
@@ -311,6 +304,49 @@ class RegisterActivity : BaseActivity() {
             showToastError("Não foi possível baixar os dados, tente mais tarde!")
         }
     }
+
+
+    private fun getSecutityCode(
+        securityCode: String
+    ) {
+        if (Constants.isNetworkAvailable(this)) {
+            val retrofit: Retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val service: ClockworkService = retrofit.create(ClockworkService::class.java)
+            val listCall = service.getSecurity(
+                securityCode
+            )
+            listCall.enqueue(object : Callback<SecurityResponse> {
+                override fun onResponse(
+                    call: Call<SecurityResponse>,
+                    response: Response<SecurityResponse>
+                ) {
+                    val security = response.body()
+                    println("Retorno: $security")
+                    if (security == null) {
+                        showToastError("Código inválido!")
+                        mBinding.etCode.setText("")
+                    } else {
+                        mBinding.etCode.setText("")
+                        showToastSuccess("Código correto!")
+                        mBinding.vwRegister.visibility = View.VISIBLE
+                        mBinding.vwCode.visibility = View.GONE
+                    }
+
+                }
+
+                override fun onFailure(
+                    call: Call<SecurityResponse>,
+                    t: Throwable
+                ) {
+                }
+            })
+        } else {
+            showToastError("Não foi possível baixar os dados, tente mais tarde!")
+        }
+    }
+
     companion object {
         val USER_REG = "user_reg"
     }

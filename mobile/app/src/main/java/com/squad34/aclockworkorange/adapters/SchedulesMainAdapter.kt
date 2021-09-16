@@ -1,6 +1,7 @@
 package com.squad34.aclockworkorange.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,13 @@ open class SchedulesMainAdapter(
         val model = list[position]
 
         if (holder is MyViewHolder) {
+
+            if (model.type == "Sala de Reuniões") {
+                holder.itemView.tv_unit_in_main_recycler.setTextColor(Color.parseColor("#FE4400"))
+                holder.itemView.tv_shift_in_main_recycler.setTextColor(Color.parseColor("#FE4400"))
+                holder.itemView.tv_date_in_main_recycler.setTextColor(Color.parseColor("#FE4400"))
+            }
+
             holder.itemView.tv_unit_in_main_recycler.text = model.location
             holder.itemView.tv_shift_in_main_recycler.text = model.shift
             holder.itemView.tv_date_in_main_recycler.text = model.date
