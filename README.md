@@ -117,7 +117,6 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Node.js](https://nodejs.org/en/)
 - [React](https://pt-br.reactjs.org/)
 - [Kotlin](https://reactnative.dev/)
-- [TypeScript](https://kotlinlang.org/)
 
 ### Autores
 ---
@@ -143,9 +142,30 @@ As seguintes ferramentas foram usadas na construção do projeto:
  #### Eduardo Wasem
   
 
- [![Linkedin Badge](https://img.shields.io/badge/-EduardoWasem-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/eduardo-wasem-225a3748/)](https://www.linkedin.com/in/eduardo-wasem-225a3748/)
+ [![Linkedin Badge](https://img.shields.io/badge/-eduardowasem-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/eduardo-wasem-225a3748/)](https://www.linkedin.com/in/eduardo-wasem-225a3748/)
  |
  [![Github Badge](https://img.shields.io/badge/-Github-000?style=flat-square&logo=Github&logoColor=white&link=https://github.com/ewasem)](https://github.com/ewasem)
+
+
+## UX/UI
+<a href="">
+ <img style="border-radius: 50%;" src="https://media-exp1.licdn.com/dms/image/C4E03AQF9ssCgTw8t4Q/profile-displayphoto-shrink_800_800/0/1602801522010?e=1637193600&v=beta&t=10Uq0zgtoOMkfXadsVi_4pEE20zhKKdrozihd3htV5o" width="100px;" alt=""/>
+  </a>
+  
+ #### Thainá Bordin
+  
+
+ [![Linkedin Badge](https://img.shields.io/badge/-thainábordin-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/thaynabordin/)](https://www.linkedin.com/in/thaynabordin/)
+ 
+ 
+ <a href="">
+ <img style="border-radius: 50%;" src="https://media-exp1.licdn.com/dms/image/C4E03AQEL62ML9Svg8w/profile-displayphoto-shrink_800_800/0/1628510673474?e=1637193600&v=beta&t=UUB35CC-EkdKwtinBJy--0m0nAcFcIBCvtySq1037Ug" width="100px;" alt=""/>
+  </a>
+  
+ #### Mariana Palhano
+  
+
+ [![Linkedin Badge](https://img.shields.io/badge/-marianapalhano-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/maripalhano/)](https://www.linkedin.com/in/maripalhano/)
 
 
 
