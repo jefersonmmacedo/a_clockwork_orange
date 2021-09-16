@@ -10,7 +10,11 @@ function AuthProvider({children}) {
     const history = useHistory();
     const [user, setUser] = useState(null);
     const [newEmail, setNewEmail] = useState('');
+    const [name, setName] = useState('');
+    const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
+    const [role, setRole] = useState('');
+    const [id, setId] = useState('');
     const [codeSecurity, setCodeSecurity] = useState('');
     const [loading, setLoading] = useState(true);
     const [dataUser, setDataUser] = useState([]);
@@ -41,7 +45,7 @@ function AuthProvider({children}) {
              history.push('/codesecurity');
         } else {
             toast.success(`Seja bem-vindo de volta, entre com sua senha por favor!`);
-            setEmail(res.data)
+            setEmail(res.data.email)
             console.log(res.data)
             history.push('/password')
           }
@@ -55,6 +59,31 @@ function AuthProvider({children}) {
           } else {
              setCodeSecurity(res.data)
               history.push('/register')
+          }
+    }
+
+    async function EmailRecuperation(email) {
+        const res = await api.get(`/api/validator/${email}`);
+        if(res.status === 200) {
+             setNewEmail(res.data.email)
+             setName(res.data.name)
+             setLastname(res.data.lastname)
+             setRole(res.data.role)
+             setId(res.data._id)
+             toast.warning('Entre com o código de verificação');
+             history.push('/code-recuperation');
+        } else {
+            toast.success(`E-mail não econtrado em nossa base de dados`);
+          }
+    }
+
+    async function CodeRecuperation(code) {
+        const res = await api.get(`/api/securitycode/${code}`);
+        if(res.data === null) {
+            toast.warning('Códifo Inválido ou Expirado');
+          } else {
+             setCodeSecurity(res.data)
+              history.push('/password-recuperation')
           }
     }
 
@@ -220,11 +249,23 @@ function AuthProvider({children}) {
          const res = await api.put(`/api/user/${_id}`, data);
          if(res.status===200) {
             toast.success('Atualização efetuada com sucesso!');
-             window.location.reload(false);
+            history.push('/dashboard/account')
          } else {
             toast.error('Deu algo errado ao atualizar!');
          }
      }
+
+     async function updatePassword(_id, name, lastname, email, role, password) {
+        const data = {_id, name, lastname, email, role, password};
+       console.log("DATA: " + data)
+        const res = await api.put(`/api/user/${_id}`, data);
+        if(res.status===200) {
+           toast.success('Senha alterada. Faça seu login!');
+           history.push('/login')
+        } else {
+           toast.error('Deu algo errado ao atualizar!');
+        }
+    }
 
     function storageUser(data) {
         localStorage.setItem("fcamara", JSON.stringify(data));
@@ -249,8 +290,15 @@ function AuthProvider({children}) {
             deleteSheduling,
             findOndeScheduling,
             updateUser,
+            EmailRecuperation,
+            CodeRecuperation,
+            updatePassword,
             oneScheduling,
+            name,
+            lastname,
+            role,
             email,
+            id,
             newEmail,
             codeSecurity,
             signed: !!user,

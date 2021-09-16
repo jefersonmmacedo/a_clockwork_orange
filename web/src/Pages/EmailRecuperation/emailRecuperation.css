@@ -1,11 +1,11 @@
-.password{
+.emailRecuperation{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
 }
 
-.password .infos{
+.emailRecuperation .infos{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -13,12 +13,13 @@
     margin-bottom: 50px;
 }
 
-.password .infos .image {
+
+.emailRecuperation .infos .image {
     padding: 20px;
+
 }
 
-
-.password .infos .itens{
+.emailRecuperation .infos .itens{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,11 +27,11 @@
     padding: 70px;
 }
 
-.password .infos .itens img {
+.emailRecuperation .infos .itens img {
     margin-bottom: 30px;
 }
 
-.password .infos .itens span {
+.emailRecuperation .infos .itens span {
     margin: 0 0 10px 16px;
     font-weight: 400;
     font-size: 16px;
@@ -38,16 +39,11 @@
     align-self: start;
 }
 
-.password .infos .itens input {
+.emailRecuperation .infos .itens input {
     margin-bottom: 20px;
 }
 
-.password .infos .itens button {
+.emailRecuperation .infos .itens button {
     width: 358px;
-    margin-bottom: 20px;
 }
 
-a {
-    margin: 0 0 10px 0px;
-    align-self: start;
-}

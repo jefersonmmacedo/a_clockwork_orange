@@ -9,6 +9,10 @@ h1, h2, h3, h4, h5, h6, p, span, label {
   font-family: "Metropolis", sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
 :root{
 --Primary: #FE4400;
 --PrimaryDark: #D03800;

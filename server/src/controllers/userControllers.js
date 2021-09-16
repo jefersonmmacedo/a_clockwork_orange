@@ -28,7 +28,7 @@ module.exports = {
                res.json(data)           
             } else {
                console.log(data.email)
-               res.json(data.email)
+               res.json(data)
             
            }
    
@@ -45,6 +45,7 @@ module.exports = {
         const dataUser = {name, lastname, email, role, password}
         const data = await User.findOneAndUpdate({_id}, dataUser, {new: true});
         return res.json(data)
+
      },
 
     async create(req, res){

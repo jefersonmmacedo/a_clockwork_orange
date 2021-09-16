@@ -1,4 +1,4 @@
-import './password.css';
+import './passwordRecuperation.css';
 import React, { useContext, useState } from 'react';
 import work from '../../assets/images/work.svg';
 import logoAside2 from '../../assets/images/logoAside2.svg';
@@ -6,18 +6,18 @@ import Footer from '../../Components/Footer/Footer';
 import ImageBody from '../../Components/ImageBody/ImageBody';
 import { AuthContext } from '../../Contexts/Auth';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
 
 
 
-export default function Password() {
+export default function PasswordRecuperation() {
  const [password, setPassword] = useState('');
- const {email, login} = useContext(AuthContext);
+ const [passwordConfirm, setPasswordConfirm] = useState('');
+ const {id, name, email, role, lastname, updatePassword} = useContext(AuthContext);
 
  function handleLogin() {
-   if(password !== '') {
-     console.log(email)
-    login(email,password)
+   if(password === passwordConfirm) {
+     console.log(id)
+     updatePassword(id, name, lastname, email, role ,password)
    } else {
      toast.error('Favor preencher o campo senha')
    }
@@ -26,15 +26,16 @@ export default function Password() {
   return (
     <div className="container">
       <div className="content">
-        <div className="password">
+        <div className="passwordRecuperation">
           <div className="infos">
           <ImageBody image={work} alt="image-computer"/>
             <div className="itens">
                 <img src={logoAside2} alt="Logo" />
                 <span>Senha</span>
                 <input type="password" placeholder="Digite sua senha" defaultValue={password} onChange={(e) => setPassword(e.target.value)}/>
+                <span>Confirmar Senha</span>
+                <input type="password" placeholder="Digite sua senha" defaultValue={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value)}/>
                 <button className="button-primary" onClick={handleLogin}>Entrar</button>
-                <Link to="/email-recuperation"><span>Esqueci a Senha</span></Link>
             </div>
           </div>
            </div>
