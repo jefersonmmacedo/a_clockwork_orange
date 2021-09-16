@@ -99,3 +99,23 @@
     font-size: 18px;
     margin: 5px 0 2px 0;
 }
+
+.inputs-class {
+    margin: 5px 0 15px 0;
+}
+
+.inputs-class span {
+    margin-left: 20px;
+}
+
+.inputs-class input{
+    margin: 5px 0;
+}
+
+.inputs-class select{
+    margin: 5px 0;
+}
+
+.inputs-desable {
+    display: none;
+}

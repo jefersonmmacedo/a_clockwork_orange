@@ -45,7 +45,7 @@ module.exports = {
     async indexFilter(req, res) {
         const {location, type, shift, date} = req.body;
         const infos = {location, type, shift, date}
-        console.log(infos)
+        console.log("Infos: " + location, type, shift, date)
 
         const data = await Scheduling.find( {
                     location: new RegExp(`^${location}$`, 'i'), 
@@ -68,7 +68,7 @@ module.exports = {
 
         const data = await Scheduling.find( {
                     _idUser: new RegExp(`^${_idUser}$`, 'i')       
-          }).limit(limit);
+          }).limit(limit).sort({location: -1,date: -1 });
              console.log(data.length)
               res.json({ result: data,
                          length: data.length
