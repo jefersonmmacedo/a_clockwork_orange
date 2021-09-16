@@ -1,5 +1,5 @@
 import './scheduling.css';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import userScheduling from '../../../assets/images/userScheduling.svg';
 import {useHistory} from 'react-router-dom'
 import Footer from '../../../Components/Footer/Footer';
@@ -8,8 +8,10 @@ import Navbar from '../../../Components/Navbar/Navbar';
 import ImageBody from '../../../Components/ImageBody/ImageBody';
 import Modal from 'react-modal'
 import { AuthContext } from '../../../Contexts/Auth';
+import api from '../../../services/api';
+import {format, parseISO} from 'date-fns';
 
- 
+
 
 
 export default function Scheduling() {
@@ -21,10 +23,47 @@ export default function Scheduling() {
   const [date, setDate] = useState('');
   const [recurrent, setRecurrent] = useState('unic');
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [length, setLength] = useState('');
+  const [buttonCss, setButtonCss] = useState('button-primary');
+  const [message, setMessage] = useState('disponible');
 
 
 
+let dateNew;
+if(date === "") {
+} else {
+  dateNew = format(parseISO(date),'dd/MM/yyyy');
+}
+const day = parseISO(date) ;
 
+const daySem = day.getDay();
+
+
+
+useEffect(() => {
+  async function filterSchedulingSaoPaulo() {
+    const scheduling = {location: location, type: type, shift: shift, date:dateNew};
+    console.log(scheduling)
+    const res = await api.post('/api/filter', scheduling);
+
+     setLength(res.data.length);
+      console.log(res.data.length);
+
+        if(length > 3 ) {
+        setButtonCss("button-primary-disabled")
+        setMessage('indisponible')
+      }else if (daySem === 0 || daySem === 6){
+        setButtonCss()
+        setMessage("Weekend")
+      } else{
+        setButtonCss('button-primary-disabled')
+        setMessage("disponible")
+      }
+  }
+
+  filterSchedulingSaoPaulo()
+
+}, [location, type, date, shift, dateNew, length])
 
   function handleOpenModal() {
     setIsOpenModal(true)
@@ -130,20 +169,35 @@ export default function Scheduling() {
                 </select>
                 }
                
+
+               
+
+                {message === 'disponible' ?
+                
                 <div className="text">
                   <p>Agende o mesmo dia da semana por 4 vezes consecutivas.</p>
                 </div>
+                : message === 'Weekend' ?
+                <div className="text-Weekend">
+                <p>Nosso horário de funcionemento: <br />
+                  Segunda à Sexta - 08h às 18h <br />
+                  Agende outra data por favor!.</p>
+              </div>
+                :
+                <div className="text-warning">
+                  <p>Esta data chegou a sua lotação máxima. <br /> Ou está agendando  Favor escolher outra data.</p>
+                </div>
+              }
 
-                <span>Escolha uma data</span>
+                  <span>Escolha uma data</span>
                 <input id="date" type="date" defaultValue={date} onChange={(e) => setDate(e.target.value)}/>
-
 
                 <p>Deseja adicionar mais um período de dias? <FiPlusCircle />
                   </p>
                  <div className="buttons">
 
                 <button className="button-White" onClick={handleRedirect}>Voltar</button>
-                <button className="button-primary" onClick={handleScheduling}>Agendar</button>
+                <button className={buttonCss} onClick={handleScheduling}>Agendar</button>
                 </div>
                  </div>
             </div>
