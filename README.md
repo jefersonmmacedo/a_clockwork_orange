@@ -110,6 +110,21 @@ $ Para o IP da sua máquina que você viu acima
 # Pronto, é só rodar pelo emulador ou conectando o celular
 ```
 
+
+### 🎲 Código para inclusão de usuário e recuperação de senha
+
+```bash
+# Tanto no aplicativo Web, quanto no mobile
+$ use a senha FCAMARA2102SQUAD34 para passar pela inclusão de usuário e recuperação de senha
+
+# Lembrando que para passar pela verificação inicial, você deve utilizar o email com final @fcamara.com.br
+```
+
+### 🎲 Documentação API
+
+```bash
+# http://localhost:3001/api-documentation/
+```
 ### 🛠 Tecnologias
 
 As seguintes ferramentas foram usadas na construção do projeto:
