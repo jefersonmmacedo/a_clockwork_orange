@@ -120,6 +120,11 @@ $ use a senha FCAMARA2102SQUAD34 para passar pela inclusão de usuário e recupe
 # Lembrando que para passar pela verificação inicial, você deve utilizar o email com final @fcamara.com.br
 ```
 
+### 🎲 Documentação API
+
+```bash
+# http://localhost:3001/api-documentation/
+```
 ### 🛠 Tecnologias
 
 As seguintes ferramentas foram usadas na construção do projeto:
