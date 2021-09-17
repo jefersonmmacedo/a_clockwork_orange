@@ -35,7 +35,7 @@ export default function CodeSecurity() {
                   </p>
                 </div>
                 <span>Código de acesso</span>
-                <input type="text" placeholder="Digiteseu código de acesso" defaultValue={codeSecurity} onChange={(e) => setCodeSecurity(e.target.value)}/>
+                <input type="text" placeholder="Digite seu código de acesso" defaultValue={codeSecurity} onChange={(e) => setCodeSecurity(e.target.value)}/>
                 <button className="button-primary" onClick={handleValidateCode}>Validar</button>
             </div>
           </div>

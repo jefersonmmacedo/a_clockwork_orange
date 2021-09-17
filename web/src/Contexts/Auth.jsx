@@ -54,7 +54,7 @@ function AuthProvider({children}) {
     async function validateCode(code) {
         const res = await api.get(`/api/securitycode/${code}`);
         if(res.data === null) {
-            toast.warning('Códifo Inválido ou Expirado');
+            toast.warning('Código Inválido ou Expirado');
           } else {
              setCodeSecurity(res.data)
               history.push('/register')
@@ -79,7 +79,7 @@ function AuthProvider({children}) {
     async function CodeRecuperation(code) {
         const res = await api.get(`/api/securitycode/${code}`);
         if(res.data === null) {
-            toast.warning('Códifo Inválido ou Expirado');
+            toast.warning('Código Inválido ou Expirado');
           } else {
              setCodeSecurity(res.data)
               history.push('/password-recuperation')
@@ -229,7 +229,7 @@ function AuthProvider({children}) {
      async function deleteSheduling(id) {
          const res = await api.delete(`/api/scheduling/${id}`)
          if(res.status===200) {
-            toast.success('Agendamentos efetuados com sucesso!');
+            toast.success('Agendamento deletado com sucesso!');
              window.location.reload(false);
          } else {
             toast.error('Deu algo errado ao deletar!');
