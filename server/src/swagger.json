@@ -1,0 +1,522 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "A Clockwork Orange API",
+        "description": "Api de manipulação de dados",
+        "contact": {
+            "email":"jefersonmacedowgf@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3001",
+            "description": "API tests"
+        }
+    ],
+    "paths": {
+        "/api/user": {
+            "post": {
+                "summary": "Cadastro de Usuário",
+                "description": "Rota para cadastro de Percentage",
+                "tags": ["User"],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                               "$ref":"#/components/schemas/User"
+                            },
+                            "examples": {
+                               "user": {
+                                   "value": {
+                                    "name": "Jeferson",
+                                    "lastname": "Macedo",
+                                    "email": "jefersonmacedowgf@gmail.com",
+                                    "role": "Fullstack Developer",
+                                    "passowrd": "123456789"
+                                   }
+                               }
+                            }
+                        }
+                    }
+                }, "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Busca de Percentage",
+                "description": "Rota para buscar Percentage",
+                "tags": ["User"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Busca de Percentage pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar Percentage ",
+                "description": "Rota para deletar de Percentage",
+                "tags": ["User"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Deletar usuário pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/Percentage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualização de Percentage",
+                "description": "Rota para Atualizaçãor de Percentage",
+                "tags": ["User"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Atualização de Percentage pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/scheduling": {
+            "post": {
+                "summary": "Cadastro de agendamentos",
+                "description": "Rota para cadastro de agendamentos",
+                "tags": ["Scheduling"],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                               "$ref":"#/components/schemas/Scheduling"
+                            },
+                            "examples": {
+                               "Scheduling": {
+                                   "value": {
+                                    "_id": "613f051096d33e789e88ac16",
+                                            "location": "São Paulo",
+                                            "shift": "Manhã",
+                                            "type": "Estação de trabalho",
+                                            "date": "28/09/2021",
+                                            "day": "Terça-Feira",
+                                            "_idUser": "613786574b4c78d9fa37784e",
+                                            "name": "Jeferson",
+                                            "lastname": "Macedo",
+                                            "email": "jefersonmmacedo@fcamara.com.br",
+                                            "role": "Fullstack Developer"
+                                   }
+                               }
+                            }
+                        }
+                    }
+                }, "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/Scheduling"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Busca de agendamentos",
+                "description": "Rota para buscar agendamentos",
+                "tags": ["Scheduling"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Busca de agendamentos pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/Scheduling"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar agendamentos ",
+                "description": "Rota para deletar agendamentos",
+                "tags": ["Scheduling"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Deletar agendamentos pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/Scheduling"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualização de agendamentos",
+                "description": "Rota para Atualização de agendamentos",
+                "tags": ["Scheduling"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Atualização de agendamentos pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/Scheduling"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/securitycode": {
+            "post": {
+                "summary": "Cadastro de SecurityCode",
+                "description": "Rota para cadastro de SecurityCode",
+                "tags": ["SecurityCode"],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                               "$ref":"#/components/schemas/SecurityCode"
+                            },
+                            "examples": {
+                               "SecurityCode": {
+                                   "value": {
+                                    "securityCode": "FCAMARA2102SQUAD34"
+                                   }
+                               }
+                            }
+                        }
+                    }
+                }, "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/SecurityCode"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Busca de usuários de SecurityCode",
+                "description": "Rota para buscar de SecurityCode",
+                "tags": ["SecurityCode"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Busca de SecurityCode pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/SecurityCode"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar SecurityCode ",
+                "description": "Rota para deletar de SecurityCode",
+                "tags": ["SecurityCode"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Deletar usuário pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/SecurityCode"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualização de SecurityCode",
+                "description": "Rota para Atualizaçãor de SecurityCode",
+                "tags": ["SecurityCode"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Atualização de SecurityCode pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/SecurityCode"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/percentage": {
+            "post": {
+                "summary": "Cadastro de Percentage",
+                "description": "Rota para cadastro de Percentage",
+                "tags": ["Percentage"],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                               "$ref":"#/components/schemas/Percentage"
+                            },
+                            "examples": {
+                               "Percentage": {
+                                   "value": {
+                                    "percentage": 40
+                                   }
+                               }
+                            }
+                        }
+                    }
+                }, "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/Percentage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Busca de Percentage",
+                "description": "Rota para buscar Percentage",
+                "tags": ["Percentage"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Busca de Percentage pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/Percentage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar Percentage ",
+                "description": "Rota para deletar Percentage",
+                "tags": ["Percentage"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Deletar Percentage pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/Percentage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualização de Percentage",
+                "description": "Rota para Atualizaçar Percentage",
+                "tags": ["Percentage"],
+                "parameters": [{
+                    "_id": "_id",
+                    "in": "query",
+                    "description": "Atualização de Percentage pelo ID",
+                    "required": true
+                }], "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                        "$ref":"#/components/schemas/Percentage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Sheduling": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string"
+                    },
+                    "shift": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "day": {
+                        "type": "string"
+                    },
+                    "_idUser": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SecurityCode": {
+                "type": "object",
+                "properties": {
+                    "ecurityCode": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Percentage": {
+                "type": "object",
+                "properties": {
+                    "percentage": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    }
+
+}

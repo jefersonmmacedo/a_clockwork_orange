@@ -50,16 +50,29 @@ useEffect(() => {
      setLength(res.data.length);
       console.log(res.data.length);
 
-        if(length > 3 ) {
-        setButtonCss("button-primary-disabled")
-        setMessage('indisponible')
-      }else if (daySem === 0 || daySem === 6){
-        setButtonCss('button-primary-disabled')
-        setMessage("Weekend")
-      } else{
-        setButtonCss('button-primary')
-        setMessage("disponible")
-      }
+       if(location === "São Paulo") {
+        if(length >= 240 ) {
+          setButtonCss("button-primary-disabled")
+          setMessage('indisponible')
+        }else if (daySem === 0 || daySem === 6){
+          setButtonCss('button-primary-disabled')
+          setMessage("Weekend")
+        } else{
+          setButtonCss('button-primary')
+          setMessage("disponible")
+        }
+       } else if (location === "Santos") {
+        if(length >= 40 ) {
+          setButtonCss("button-primary-disabled")
+          setMessage('indisponible')
+        }else if (daySem === 0 || daySem === 6){
+          setButtonCss('button-primary-disabled')
+          setMessage("Weekend")
+        } else{
+          setButtonCss('button-primary')
+          setMessage("disponible")
+        }
+       }
   }
 
   filterSchedulingSaoPaulo()
